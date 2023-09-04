@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Avatar, Button } from "antd";
-import { BoxWrapper } from "../../../components";
+import { BoxWrapper, NoDataFound } from "../../../components";
 import { SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
 interface ISETTINGCOMMONARRAY {
@@ -81,7 +81,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                   Select all
                 </p>
                 <div className="h-[320px] box-wrapper-content">
-                  {selectArrayData?.map((data: any, index: number) => {
+                  {selectArrayData.length === 0 ? <p className="font-semibold text-success-placeholder-color">No interns Found</p> : selectArrayData?.map((data: any, index: number) => {
                     return (
                       <div
                         key={index}
@@ -125,7 +125,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                   <div className="h-[320px] box-wrapper-content">
                     {deselectArrayData.map((data: any, index: number) => {
                       return (
-                        <div
+                        <div 
                           key={index}
                           className="py-3 flex justify-between cursor-pointer "
                           onClick={() => {

@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from "antd";
+import { Button, Col, Form, Row, Input as AntInput, Select, DatePicker } from "antd";
 import { Input } from "../../../Input/input";
 import React, { useState } from "react";
 import { DropDown } from "../../../Dropdown/DropDown";
@@ -8,11 +8,13 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
+import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 
 const Reminder = (props: any) => {
   const { onClose, addReminder, getData, form } = props;
   // const [form] = Form.useForm();
-
+  const reminderArray = ["0 minutes", "5 minutes", "15 minutes", "30 minutes"];
+  const recurrenceTypes = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const [formValues, setFormValues] = useState({
     title: "",
     reminder: "",
@@ -25,12 +27,15 @@ const Reminder = (props: any) => {
   const [openDate, setOpenDate] = useState({ from: false, to: false });
   const [openTime, setOpenTime] = useState(false);
   const [activeDay, setActiveDay] = useState<string[]>([]);
+  const [weekDuration, setWeekDuration] = useState(0);
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const handleSubmitForm = (values: any) => {
     const payload = {
@@ -46,22 +51,56 @@ const Reminder = (props: any) => {
       onClose(false);
       form.resetFields();
       getData();
+      setWeekDuration(0);
+      setFormValues({
+        title: "",
+        reminder: "",
+        recurrence: "",
+        dateForm: "",
+        dateTo: "",
+        time: "",
+      });
     });
   };
   const handleDisableDate = (current: any) => {
     return current.isBefore(dayjs().startOf("day"));
+  };
+  const calculateWeeks = () => {
+    const dateFrom = form.getFieldValue("dateFrom");
+    const dateTo = form.getFieldValue("dateTo");
+    if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
+      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+    } else {
+      setWeekDuration(0);
+    }
+  };
+
+  const resetFields = () => {
+    onClose(false);
+    form.resetFields();
+    setWeekDuration(0);
+    setFormValues({
+      title: "",
+      reminder: "",
+      recurrence: "",
+      dateForm: "",
+      dateTo: "",
+      time: "",
+    });
   };
 
   return (
     <div className="remindar-wrapper">
       <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
         <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input
+          <AntInput
             // label="Title"
+            className="input"
             type="text"
             value={formValues.title}
-            handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
+            onChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
             placeholder="Title"
+            prefix={<></>}
           />
         </Form.Item>
 
@@ -69,7 +108,7 @@ const Reminder = (props: any) => {
           <Col xs={12}>
             <Form.Item className="reminder" label="Reminder" name="reminder" rules={[{ required: true }]}>
               {/* <label className="label block mb-[5px]">Reminder</label> */}
-              <DropDown
+              {/* <DropDown
                 name="Select"
                 options={["0 minutes", "5 minutes", "15 minutes", "30 minutes"]}
                 value={formValues.reminder}
@@ -77,16 +116,31 @@ const Reminder = (props: any) => {
                   setFormValues({ ...formValues, reminder: val });
                   form.setFieldValue("reminder", val);
                 }}
-              />
+              /> */}
+              <Select
+                placeholder="Select"
+                value={formValues.reminder}
+                className="w-[100%] capitalize"
+                onChange={(e: any) => {
+                  setFormValues({ ...formValues, reminder: e });
+                  form.setFieldValue("reminder", e);
+                }}
+              >
+                {reminderArray.map((recr: any) => (
+                  <Select.Option className="capitalize" value={recr}>
+                    {recr}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
 
           <Col xs={12}>
             <Form.Item className="recurrence" label="Recurrence" name="recurrence" rules={[{ required: true }]}>
               {/* <label className="label block mb-[5px]">Recurrence</label> */}
-              <DropDown
+              {/* <DropDown
                 name="Select"
-                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly"]}
+                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
                 value={formValues.recurrence}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, recurrence: val });
@@ -100,22 +154,55 @@ const Reminder = (props: any) => {
                     );
                   } else setActiveDay([]);
                 }}
-              />
+              /> */}
+              <Select
+                placeholder="Select"
+                value={formValues.recurrence}
+                className="w-[100%] capitalize"
+                onChange={(val: any) => {
+                  setFormValues({ ...formValues, recurrence: val });
+                  form.setFieldValue("recurrence", val);
+                  if (val === "every weekday (mon-fri)") {
+                    const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                    setActiveDay(updatedDays);
+                    form.setFieldValue(
+                      "repeatDay",
+                      updatedDays.map((active) => days.indexOf(active).toString())
+                    );
+                  } else setActiveDay([]);
+                }}
+              >
+                {recurrenceTypes.map((recr: any) => (
+                  <Select.Option className="capitalize" value={recr}>
+                    {recr}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
 
           <Col xs={12}>
             <Form.Item className="mt-[-25px]" label="Date From" name="dateFrom" rules={[{ required: true }]}>
-              <CommonDatePicker
+              {/* <CommonDatePicker
                 className="date-from"
                 // label="Date From"
                 open={openDate.from}
                 disabledDates={handleDisableDate}
-                setOpen={() => setOpenDate({ from: !openDate.from, to: false })}
+                setOpen={() => {
+                  setOpenDate({ from: !openDate.from, to: false });
+                  calculateWeeks();
+                }}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, dateForm: val });
                   form.setFieldValue("dateFrom", val);
                 }}
+              /> */}
+              <DatePicker
+                value={undefined}
+                suffixIcon={<IconDatePicker />}
+                clearIcon={<IconCloseModal />}
+                disabledDate={handleDisableDate}
+                onOpenChange={(val) => calculateWeeks()}
               />
             </Form.Item>
           </Col>
@@ -134,13 +221,23 @@ const Reminder = (props: any) => {
                 }),
               ]}
             >
-              <CommonDatePicker
+              {/* <CommonDatePicker
                 className="date-to"
                 // label="Date To"
                 open={openDate.to}
                 disabledDates={handleDisableDate}
-                setOpen={() => setOpenDate({ from: false, to: !openDate.to })}
+                setOpen={() => {
+                  setOpenDate({ from: false, to: !openDate.to });
+                  calculateWeeks();
+                }}
                 setValue={(val: string) => setFormValues({ ...formValues, dateTo: val })}
+              /> */}
+              <DatePicker
+                value={undefined}
+                suffixIcon={<IconDatePicker />}
+                clearIcon={<IconCloseModal />}
+                disabledDate={handleDisableDate}
+                onOpenChange={(val) => calculateWeeks()}
               />
             </Form.Item>
           </Col>
@@ -151,7 +248,7 @@ const Reminder = (props: any) => {
                 <div className="repeat-weekday">
                   <label className="label">Repeat Every</label>
                   <div className="flex items-center gap-3">
-                    <p className="total-count rounded-[8px] flex items-center justify-center">1</p>
+                    <p className="total-count rounded-[8px] flex items-center justify-center">{weekDuration}</p>
                     <p className="weeks">Week(s)</p>
                   </div>
                   <div className="flex items-center gap-3 mt-3">
@@ -203,13 +300,7 @@ const Reminder = (props: any) => {
           </Col>
         </Row>
         <div className="flex justify-end gap-4">
-          <ButtonThemeSecondary
-            className="cancel-btn"
-            onClick={() => {
-              onClose(false);
-              form.resetFields();
-            }}
-          >
+          <ButtonThemeSecondary className="cancel-btn" onClick={resetFields}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">

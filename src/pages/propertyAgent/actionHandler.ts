@@ -1,7 +1,6 @@
 import React from "react";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import constants from "../../config/constants";
 import {
   getAllListingState,
   getListingGraphState,
@@ -18,8 +17,7 @@ import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
 
 const useCustomHook = () => {
-  const [propertListingData, setPropertListingData] =
-    useRecoilState(getListingState);
+  const [propertListingData, setPropertListingData] =useRecoilState(getListingState);
   const [totalData, setTotalData] = useRecoilState(getPropertAgents);
   const [recentListing, setRecentLisiting] = useRecoilState(getRecentListingState);
   const [generalActivity, setGeneralActivity] =useRecoilState(getRecentActivities);
@@ -41,10 +39,8 @@ const useCustomHook = () => {
     GET_ALL_LISTINGS,
     BLOCK_PROPERTY_ACCESS,
     UNBLOCK_PROPERTY_ACCESS,
-    AGENT_FILTER,
     SUBMIT_INSPECTION_REPORT,
   } = apiEndpints;
-
 
   const submitInspectionReport = async (body: any,onSuccess?: () => void): Promise<any> => {
     const { data } = await api.post(SUBMIT_INSPECTION_REPORT, body);
@@ -91,12 +87,11 @@ const useCustomHook = () => {
 
   // graph
   const getAllStatsGraph = async () => {
-    const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
+    const data = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
   };
 
   // GET ALL LISTING
-
   const getAllListingData = async (param: any) => {
     const { data } = await api.get(GET_ALL_LISTINGS, param);
     setAllListing(data);

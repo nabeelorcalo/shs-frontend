@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Alert, BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
+import { Alert, BoxWrapper, Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary, Loader, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
@@ -80,7 +80,6 @@ const AssessmentFormCaseStudies = () => {
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
@@ -94,13 +93,10 @@ const AssessmentFormCaseStudies = () => {
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
 
-  console.log("feedbackFormData", feedbackFormData);
-
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      {/* for destop */}
       {isLoading ? (
         <Loader />
       ) : (
@@ -237,13 +233,10 @@ const AssessmentFormCaseStudies = () => {
             </Form>
             <div className="flex justify-end gap-5 my-5 assessment-footer">
               {["approved", "rejected"]?.includes(managerStatus) ? (
-                <Button
+                <ButtonThemeSecondary
                   onClick={() => navigate(-1)}
-                  type="primary"
-                  className="white-bg-color teriary-color save-btn font-semibold "
-                >
-                  Back
-                </Button>
+                  className=""
+                > Back</ButtonThemeSecondary>
               ) : (
                 <>
                   <Button
@@ -253,20 +246,11 @@ const AssessmentFormCaseStudies = () => {
                   >
                     Reject
                   </Button>
-                  {/* <Button
-                    onClick={() => handleSubmit("Draft")}
-                    type="primary"
-                    className="white-bg-color teriary-color save-btn font-semibold "
-                  >
-                    Save Draft
-                  </Button> */}
-                  <Button
-                    type="primary"
-                    className="teriary-bg-color  white-color  finalise-btn font-semibold  "
+                  <ButtonThemePrimary
                     onClick={() => handleSubmit("Approved")}
                   >
                     Finalise
-                  </Button>
+                  </ButtonThemePrimary>
                 </>
               )}
             </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button, Select, Avatar } from "antd";
+import { Col, Form, Row, Radio, Button, Select, Avatar, Input as AntInput, DatePicker } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
-import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
+import { ArrowDownDark, IconCloseModal, IconDatePicker, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
 // import { DropDown } from "../../../Dropdown/DropDown";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
@@ -11,16 +11,19 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TextArea, TimePickerFormat, ButtonThemeSecondary, ButtonThemePrimary } from "../../../../components";
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
-import { attendesListState } from "../../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { attendesListState, calendarLocationState, newLocationsDataState } from "../../../../store";
 import { dateValidator, timeValidator } from "../../../../helpers/dateTimeValidator";
 import constants from "../../../../config/constants";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+
+dayjs.extend(weekOfYear);
 
 const Meeting = (props: any) => {
   const { onClose, addEvent, getData, form } = props;
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [searchUser, setSearchUser] = useState("");
-
+  const [weekDuration, setWeekDuration] = useState(0);
   const [formValues, setFormValues] = useState({
     title: "",
     attendees: "",
@@ -39,13 +42,16 @@ const Meeting = (props: any) => {
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
+  const locationsData = useRecoilValue(calendarLocationState);
 
-  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -66,7 +72,7 @@ const Meeting = (props: any) => {
   const handleSubmitForm = (e: any) => {
     const payload = {
       title: e.title,
-      address: formValues?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : " https://zoom.com/call/0234",
+      address: formValues?.location === "onSite" ? e?.address2 : e?.address,
       description: e?.description,
       eventType: "MEETING",
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
@@ -82,6 +88,19 @@ const Meeting = (props: any) => {
       onClose(false);
       form.resetFields();
       getData();
+      setWeekDuration(0);
+      setFormValues({
+        title: "",
+        attendees: "",
+        recurrence: "",
+        date: "",
+        dateFrom: "",
+        dateTo: "",
+        startTime: "",
+        endTime: "",
+        location: "virtual",
+        description: "",
+      });
     });
   };
 
@@ -89,17 +108,47 @@ const Meeting = (props: any) => {
     return current.isBefore(dayjs().startOf("day"));
   };
 
+  const calculateWeeks = () => {
+    const dateFrom = form.getFieldValue("dateFrom");
+    const dateTo = form.getFieldValue("dateTo");
+    if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
+      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+    } else {
+      setWeekDuration(0);
+    }
+  };
+
+  const resetFields = () => {
+    onClose(false);
+    form.resetFields();
+    setWeekDuration(0);
+    setFormValues({
+      title: "",
+      attendees: "",
+      recurrence: "",
+      date: "",
+      dateFrom: "",
+      dateTo: "",
+      startTime: "",
+      endTime: "",
+      location: "virtual",
+      description: "",
+    });
+  };
+
   return (
     <div className="meeting-wrapper">
       <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
         <Form.Item name={"title"} label="Title" rules={[{ required: true }]}>
-          <Input
+          <AntInput
+            className="input"
             // label="Title"
             value={formValues.title}
             name="title"
             type="text"
             placeholder="Select"
-            handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
+            prefix={<></>}
+            onChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
         <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }, { type: "array" }]}>
@@ -179,7 +228,7 @@ const Meeting = (props: any) => {
 
         <Form.Item name={"recurrence"} label="Recurrence" className="recurrence" rules={[{ required: true }]}>
           {/* <label className="label">Recurrence</label> */}
-          <DropDown
+          {/* <DropDown
             value={formValues.recurrence}
             options={recurrenceData}
             setValue={(e: string) => {
@@ -195,7 +244,30 @@ const Meeting = (props: any) => {
               } else setActiveDay([]);
             }}
             name="Select"
-          />
+          /> */}
+          <Select
+            placeholder="Select"
+            value={formValues.recurrence}
+            className="w-[100%] capitalize"
+            onChange={(e: any) => {
+              setFormValues({ ...formValues, recurrence: e });
+              form.setFieldValue("recurrence", e);
+              if (e === "every weekday (mon-fri)") {
+                const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                setActiveDay(updatedDays);
+                form.setFieldValue(
+                  "repeatDay",
+                  updatedDays.map((active) => days.indexOf(active).toString())
+                );
+              } else setActiveDay([]);
+            }}
+          >
+            {recurrenceData.map((recr: any) => (
+              <Select.Option className="capitalize" value={recr}>
+                {recr}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         {/* {formValues.recurrence === "does not repeat" && (
           <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
@@ -211,11 +283,22 @@ const Meeting = (props: any) => {
           <Row gutter={[15, 15]}>
             <Col xs={12}>
               <Form.Item className="date-from" name="dateFrom" label="Date From" rules={[{ required: true }]}>
-                <CommonDatePicker
+                {/* <CommonDatePicker
                   // label="Date From"
                   disabledDates={handleDisableDate}
                   open={openDate.from}
-                  setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
+                  setOpen={() => {
+                    setOpenDate({ from: !openDate.from, to: false, date: false });
+                    calculateWeeks();
+                  }}
+                  className="date-picker-color-change"
+                /> */}
+                <DatePicker
+                  value={undefined}
+                  suffixIcon={<IconDatePicker />}
+                  clearIcon={<IconCloseModal />}
+                  disabledDate={handleDisableDate}
+                  onOpenChange={(val) => calculateWeeks()}
                 />
               </Form.Item>
             </Col>
@@ -234,12 +317,22 @@ const Meeting = (props: any) => {
                   }),
                 ]}
               >
-                <CommonDatePicker
+                <DatePicker
+                  value={undefined}
+                  suffixIcon={<IconDatePicker />}
+                  clearIcon={<IconCloseModal />}
+                  disabledDate={handleDisableDate}
+                  onOpenChange={(val) => calculateWeeks()}
+                />
+                {/* <CommonDatePicker
                   // label="Date To"
                   disabledDates={handleDisableDate}
                   open={openDate.to}
-                  setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
-                />
+                  setOpen={() => {
+                    setOpenDate({ from: false, to: !openDate.to, date: false });
+                    calculateWeeks();
+                  }}
+                /> */}
               </Form.Item>
             </Col>
           </Row>
@@ -251,7 +344,7 @@ const Meeting = (props: any) => {
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
                 <p className="total-count rounded-[8px] flex items-center justify-center">
-                  <input type="number" name="repeatWeeks" value={1} className="repeat-week w-[20px] border-none text-center" />
+                  <input type="number" name="repeatWeeks" value={weekDuration} className="repeat-week w-[20px] border-none text-center" />
                 </p>
                 <p className="weeks">Week(s)</p>
               </div>
@@ -332,17 +425,35 @@ const Meeting = (props: any) => {
             <Radio value={"onSite"}>On Site</Radio>
           </Radio.Group>
           {formValues?.location === "virtual" ? (
-            <div className="virtual-link mt-[20px] rounded-lg p-[15px]">
-              <VideoRecoder className="mr-[15px]" />
-              <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
+            <div className=" mt-[20px] rounded-lg ">
+              <Form.Item name="address" rules={[{ required: true }, { pattern: /^https?:\/\//, message: "Please enter a valid Link" }]}>
+                {/* <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
                 https://zoom.com/call/0234
-              </a>
+              </a> */}
+                {/* <VideoRecoder className="mr-[15px]" /> */}
+                <AntInput
+                  className="input"
+                  // label="Title"
+                  type="text"
+                  placeholder="Enter Zoom link"
+                  prefix={<VideoRecoder className="mr-[15px]" />}
+                />
+              </Form.Item>
             </div>
           ) : (
-            <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
-              <LocationDarkIcon className="mr-[20px]" />
-              <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
-            </div>
+            <Form.Item name="address2" rules={[{ required: true }]} className="mt-[20px]">
+              <AntInput
+                className="input"
+                // label="Title"
+                type="text"
+                placeholder="Enter address"
+                prefix={<LocationDarkIcon className="mr-[15px]" />}
+              />
+            </Form.Item>
+            // <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
+            //   <LocationDarkIcon className="mr-[20px]" />
+            //   <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
+            // </div>
           )}
         </Form.Item>
 
@@ -352,13 +463,7 @@ const Meeting = (props: any) => {
         </Form.Item>
 
         <div className="flex gap-4 justify-end">
-          <ButtonThemeSecondary
-            className="cancel-btn"
-            onClick={() => {
-              onClose(false);
-              form.resetFields();
-            }}
-          >
+          <ButtonThemeSecondary className="cancel-btn" onClick={resetFields}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">

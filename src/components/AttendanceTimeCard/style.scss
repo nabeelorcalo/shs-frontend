@@ -14,12 +14,21 @@
   .heading{
     color: $light-grey-color;
   }
+  .card-divider{
+    background-color: #ccc;
+    font-size: 60px;
+    margin-left: 50px;
+    @media only screen and (max-width:1600px) {
+      display: none;
+    }
+  }
+
 }
 
-.border-right{
-  border-right: 1px solid #ccc;
-  @media only screen and (max-width:1125px) {
-    border-right: none;
-    border-bottom:  1px solid #ccc;  
-  }
-}
+// .border-right{
+//   border-right: 1px solid #ccc;
+//   @media only screen and (max-width:1125px) {
+//     border-right: none;
+//     border-bottom:  1px solid #ccc;  
+//   }
+// }

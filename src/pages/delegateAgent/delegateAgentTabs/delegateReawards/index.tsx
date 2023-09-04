@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row, Space, Typography, Modal } from "antd";
-import { rewardForm } from "./rewardMock";
 import "../../style.scss";
 import useCustomHook from "../../actionHandler";
 import { GlobalTable } from "../../../../components";
@@ -9,8 +8,6 @@ import { getRewardState } from "../../../../store/delegate";
 import { Select } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons/lib/icons';
 import constants from "../../../../config/constants";
-
-const limit = 100;
 
 const Rewards = () => {
   const [open, setOpen] = useState({ isOpen: false, id: '' });
@@ -96,7 +93,6 @@ const Rewards = () => {
     } else if (role === constants.DELEGATE_AGENT) {
       rewards.push({ role: constants.DELEGATE_AGENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
     }
-    // Call the API with the updated rewards object
     action.addRewards({ rewards });
     setOpen({
       isOpen: false,

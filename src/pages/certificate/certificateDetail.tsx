@@ -1,8 +1,8 @@
 import { Avatar, Button, Col, Row } from 'antd';
 import { useLocation, useParams } from 'react-router-dom';
 import { tableMockData } from './certificateTable/tableMock';
-import { Alert, Breadcrumb, OverAllPerfomance, BoxWrapper } from '../../components';
-import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
+import { Alert, Breadcrumb, OverAllPerfomance, BoxWrapper, PdfPreviewModal } from '../../components';
+import { AppreciationTemplateBlue, AppreciationTemplateRed, CertificateEyeIcon, CertificateImg, CompletionCertificateImgTwo, CompletionTemplateBlue, CompletionTemplateRed, CvIcon, ThreeDots } from '../../assets/images';
 import { useEffect, useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
@@ -18,7 +18,10 @@ import { useRecoilState } from 'recoil';
 import { certificateDetailsState } from '../../store';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { AppreciationCertificateImg, CompletionCertificateImg } from '../../assets/images';
+import {
+  AppreciationCertificateImg, CompletionCertificateImg,
+  AppreciationCertificateImgTwo, AppreciationCertificateSampleOne
+} from '../../assets/images';
 import "./style.scss";
 
 const CertificateDetail = () => {
@@ -36,6 +39,12 @@ const CertificateDetail = () => {
   const [previewModal, setPreviewModal] = useState(false);
   // const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
 
   const { getSettingLeaves, settingLeaveData, } = useLeavesHook();
   const { getProfile } = useInternHook();
@@ -55,7 +64,7 @@ const CertificateDetail = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getCadidatesData(null, null);
+    getCadidatesData(null, setLoading);
     getCertificates(internData.id)
     getPerformnaceEvaluation(internData?.userDetail?.id)
     getSettingLeaves()
@@ -124,10 +133,9 @@ const CertificateDetail = () => {
 
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
-
       // Add the PDF file to the params object
       const params: any = {
-        internId: certificateDetails?.internId,
+        internId: internData?.id,
         email: 'shayan.ulhaq@ceative.co.uk',
         templateId: certificateDetails?.templateId,
         certificateType: certificateDetails?.type,
@@ -156,10 +164,19 @@ const CertificateDetail = () => {
         //   ]
         // }
         // sendCertificateEmail(respDetails);
+        // getCertificates(internData?.id)
         setOpenSignatureModal(false);
         setTogglePreview(false);
         setLoading(false);
-      });
+      }).catch(() => {
+        setLoading(false);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
+      }).finally(() => {
+        setLoading(false);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
+      });;
     });
   };
 
@@ -193,6 +210,16 @@ const CertificateDetail = () => {
     clearAll();
   }
 
+  const handleCertificateImage: any = (item: any) => {
+    switch (item) {
+      case 'COMPLETION_CERTIFICATE_TEMPLATE_TWO': return <CompletionTemplateBlue />
+      case 'COMPLETION_CERTIFICATE_TEMPLATE_THREE': return <CompletionTemplateRed />
+      case 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO': return <AppreciationTemplateBlue />
+      case 'APPRECIATION_CERTIFICATE_TEMPLATE_THREE': return <AppreciationTemplateRed />
+      default: return <CvIcon className='w-[90%] h-[200px] mx-auto block' />
+    }
+  }
+
   return (
     <div className='certificate-detail-wrapper'>
       <Breadcrumb breadCrumbData={[{ name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
@@ -218,13 +245,13 @@ const CertificateDetail = () => {
             </Button>
           </BoxWrapper>
         </Col>
-        <Col xxl={14} xl={24} xs={24} className='over-all-performance'>
+        <Col xxl={13} xl={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             data={performanceEvaulation}
             heading={'Overall Performance'}
-          />
+          />  
         </Col>
-        <Col xxl={5} xl={12} xs={24}>
+        <Col xxl={6} xl={12} xs={24}>
           <LeaveChart heading='Leaves' leavesData={internLeaves} />
         </Col>
       </Row>
@@ -246,19 +273,21 @@ const CertificateDetail = () => {
         </p>
         {/* <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} /> */}
         <IssueCertificateBtn onClick={handleIssueCertificateClick} />
-
       </div>
 
       <div className="certificate-cards">
         <Row gutter={[15, 15]}>
           {/* findUser?.certificates ? findUser?.certificates?. */}
           {certificatesList?.length !== 0 ? certificatesList?.map((certificate: any, i: number) => {
+            // console.log(`${constants.MEDIA_URL}/${certificate?.attachments[1]?.mediaId}.${certificate?.attachments[1]?.metaData?.extension}`);
+
             return <Col xl={6} lg={8} sm={12} xs={24} key={i}>
               <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
                 <div className="flex items-center justify-between mb-[30px]">
                   <p className='font-medium title text-xl'>
                     {/* Certificate of &nbsp; */}
-                    <span className='capitalize'>{certificate?.certificateType}</span>
+                    <span className=''>{certificate?.certificateType === "certificateOfAppreciation" ?
+                      "Certificate of Appreciation" : "Certificate of Completion"}</span>
                   </p>
                   <DropDownNew items={[
                     // {label: <p onClick={() => setOpenIssueCertificate(true)}>Edit</p>,
@@ -266,16 +295,14 @@ const CertificateDetail = () => {
                     {
                       label: <p onClick={() => {
                         setCertificateDetails({
-                          ...certificateDetails, certificateId: certificate?.template?.id,
-                          attachmentId: certificate?.template?.attachmentId
+                          ...certificateDetails, certificateId: certificate?.id,
                         });
                         setDeleteModal(true)
                       }}>Delete</p>, key: 'delete'
                     },
                   ]}
                     placement={'bottomRight'}
-                    overlayStyle={{ width: '100px' }}
-                  >
+                    overlayStyle={{ width: '100px' }}>
                     <ThreeDots
                       className='cursor-pointer'
                       onClick={() => setCertificateDetails({
@@ -287,24 +314,28 @@ const CertificateDetail = () => {
                     />
                   </DropDownNew>
                 </div>
-                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%]  rounded-xl h-[232px]">
-                  <img
-                    src={`${constants.MEDIA_URL}/${certificate?.template?.attachment?.mediaId}.${certificate?.template?.attachment?.metaData?.extension}`}
+
+                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl text-center">
+                  {handleCertificateImage(certificate?.template?.attachment?.filename)}
+                  {/* <CvIcon className='w-[90%] h-[200px] mx-auto block' /> */}
+                  {/* <img src={`${constants.MEDIA_URL}/${certificate?.attachments[1]?.mediaId}.${certificate?.attachments[1]?.metaData?.extension}`}
                     className='w-[90%] mx-auto block'
                     alt='certificate_img'
-                  />
+                  /> */}
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
                     onClick={() => { setPreviewModal(true) }}>
                     <CertificateEyeIcon
                       className='eye-icon'
                       height={70}
                       width={70}
-                      onClick={() => setCertificateDetails({
-                        ...certificateDetails,
-                        // name: findUser?.name,
-                        type: certificate?.certificateType,
-                        desc: certificate?.desc
-                      })}
+                      onClick={() => {
+                        setOpenPreview(true);
+                        setPreViewModal({
+                          extension: certificate?.attachments[0]?.metaData?.extension,
+                          url: `${constants.MEDIA_URL}/${certificate?.attachments[0]?.mediaId}.${certificate?.attachments[0]?.metaData?.extension}`,
+                        })
+                      }
+                      }
                     />
                   </div>
                 </div>
@@ -336,8 +367,7 @@ const CertificateDetail = () => {
             <>
               <Button
                 className='signature-cancel-btn'
-                onClick={() => setTogglePreview(!togglePreview)}
-              >
+                onClick={() => setTogglePreview(!togglePreview)}>
                 Back
               </Button>
 
@@ -345,8 +375,7 @@ const CertificateDetail = () => {
                 type='primary'
                 className='signature-submit-btn'
                 onClick={handleIssueCertificate}
-                loading={loading}
-              >
+                loading={loading}>
                 Issue
               </Button>
             </>
@@ -354,8 +383,9 @@ const CertificateDetail = () => {
         />
       }
 
-      {/* Letters preview  */}
-      {previewModal &&
+      {/* Letters details preview  */}
+      {openPreview && <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />}
+      {/* {previewModal &&
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
@@ -363,7 +393,7 @@ const CertificateDetail = () => {
         // type={issuewNewCertificate?.type}
         // desc={issuewNewCertificate?.desc}
         />
-      }
+      } */}
 
       {openSignatureModal &&
         <SignatureAndUploadModal
@@ -405,7 +435,8 @@ const CertificateDetail = () => {
           icon={''}
           cancelBtntxt={'Cancel'}
           okBtntxt={'Delete'}
-          okBtnFunc={() => deleteCertificate(certificateDetails?.certificateId, certificateDetails?.attachmentId)}>
+          okBtnFunc={() => deleteCertificate(certificateDetails?.certificateId, internData.id)}
+        >
           <p className='font-medium text-[#4E4B66]'>
             Are you sure you want to delete this cetificate?
           </p>

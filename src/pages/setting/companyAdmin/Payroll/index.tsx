@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Row, Col, Button, Input } from "antd";
+import { Typography, Row, Col, Input } from "antd";
 import { GlassMagnifier, SettingPayrollAddIcon } from "../../../../assets/images";
-import { Alert, Loader, NoDataFound } from "../../../../components";
+import { Alert, ButtonThemePrimary, Loader, NoDataFound } from "../../../../components";
 import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -27,9 +27,12 @@ const SettingPayroll: React.FC = () => {
   const { getPayrollData, payrollData, deletePayroll, isLoading, debouncedSearch } = usePayrollCustomHook();
 
   useEffect(() => {
-    getPayrollData(state,searchValue)
+    getPayrollData(state, searchValue)
   }, [searchValue])
-  
+
+  console.log(payrollData, 'datadata');
+
+
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -60,12 +63,11 @@ const SettingPayroll: React.FC = () => {
           </div>
 
           <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
-            <Button
-              onClick={() => setState({ ...state, action: 'add' })}
-              size="middle"
-              className="flex gap-2 setting-add-button white-color teriary-bg-color">
-              <SettingPayrollAddIcon /> Add Payroll cycle 
-            </Button>
+            <ButtonThemePrimary
+              icon={<SettingPayrollAddIcon />}
+              onClick={() => setState({ ...state, action: 'add' })}>
+              Add Payroll cycle
+            </ButtonThemePrimary>
           </NavLink>
         </div>
       </div>

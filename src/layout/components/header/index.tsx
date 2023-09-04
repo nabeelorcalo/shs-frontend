@@ -1,9 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import organizationLogo from "../../../assets/images/header/organisation.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import { currentUserRoleState, currentUserState, OrgLogoState } from "../../../store";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useSearchOptions from "./searchOptions";
@@ -56,7 +55,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -73,6 +72,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
+  const orgLogo = useRecoilValue(OrgLogoState);
+
   // notifications
   const { getNotifications, appNotifications, handleSeenNotification } = useCustomHook()
   useEffect(() => {
@@ -241,9 +242,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
-              <div className="organisation-logo">
-                <img src={organizationLogo} />
-              </div>
+              {orgLogo ? (
+                <div className="organisation-logo">
+                  <img src={orgLogo} />
+                </div>
+              ) : (
+                <div className="organisation-name">{currentUser?.company?.businessName}</div>
+              )}
             </div>
           )}
           {/* Global Search */}
@@ -341,7 +346,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                       <ExtendedButton
                         disabled={!currentUser?.intern}
                         customType="secondary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Intern
@@ -350,9 +355,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton 
+                      <ExtendedButton
                         customType="tertiary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Student
@@ -389,9 +394,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
-                      {item?.firstName && item?.firstName[0]}
-                      {item?.lastName && item?.lastName[0]}
+                    <Avatar size={32} src={getUserAvatar({ profileImage: item?.profileImage })} alt="">
+                      {item?.firstName ? item?.firstName[0] : "u"}
+                      {item?.lastName ? item?.lastName[0] : "k"}
                     </Avatar>
                   }
                   title={item?.description}

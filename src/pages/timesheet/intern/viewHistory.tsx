@@ -24,6 +24,9 @@ const ViewHistory = () => {
   const PdfHeader = ["Date", "Total Tasks", "Total Time"];
 
   const PdfBody = taskDateRange?.map((task: any) => [task?.date, task?.tasks, task?.totalTime]);
+  useEffect(() => {
+    return () => setDateRange("this week");
+  }, []);
 
   useEffect(() => {
     fetchUserData();

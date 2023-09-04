@@ -12,6 +12,7 @@ import { gutter } from "..";
 import AgencyCard from "../../../components/AgencyCard";
 import constants from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 
 const University = () => {
   // for cleanup re-rendering
@@ -19,22 +20,26 @@ const University = () => {
   const {
     currentUser,
     topPerformerList,
-    universityLoaders,
     getTopPerformerList,
-    getAllCompaniesData,
-    universityCompanies,
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
+
+    commonLoaders
+  } = useMainCustomHook();
+
+  const {
+    universityLoaders,
+    getAllCompaniesData,
+    universityCompanies,
     // university dashboard
     getUniversityDashboardWidget,
     universityWidgets,
     getUniversityAttendanceGraph,
     universityAttendanceGraph,
-    commonLoaders
-  } = useMainCustomHook();
+  } = useCustomHook()
 
-  const { isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading } = commonLoaders;
-
+  const { isPerformanceLoading, isopPerformersLoading } = commonLoaders;
+  const { isWidgetsLoading, isUniversityCompaniesLoading, isAttendanceLoading } = universityLoaders
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
@@ -104,7 +109,7 @@ const University = () => {
         </Row>
       </Col>
       <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
-        <AgencyCard agnecyList={universityCompanies} isloading={universityLoaders?.isUniversityCompaniesLoading} />
+        <AgencyCard agnecyList={universityCompanies} isloading={isUniversityCompaniesLoading} />
       </Col>
       <Col xs={24} sm={24} xl={12} xxl={5}>
         <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} loading={isopPerformersLoading} />

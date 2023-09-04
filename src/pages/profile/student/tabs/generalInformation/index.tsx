@@ -20,6 +20,7 @@ import useCustomeHook from "../../../../universities/actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   studentProfileState,
+  systemCompanyPaginationState,
   universitySystemAdminState,
 } from "../../../../../store";
 import { CaretDownOutlined } from "@ant-design/icons";
@@ -136,6 +137,7 @@ const relationShip = [
 
 const GeneralInformation = () => {
   const { getSubAdminUniversity } = useCustomeHook();
+  const [tableParams, setTableParams]: any = useRecoilState(systemCompanyPaginationState);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [value, setValue] = useState("");
@@ -191,7 +193,7 @@ const GeneralInformation = () => {
   };
 
   useEffect(() => {
-    getSubAdminUniversity("");
+    getSubAdminUniversity('',tableParams, setTableParams);
     action.getStudentProfile().then((data: any) => {
       const {
         course,

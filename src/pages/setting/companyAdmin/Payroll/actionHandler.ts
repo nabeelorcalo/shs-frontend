@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import 'jspdf-autotable';
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
-import { payrollDataState, payrollInternState } from '../../../../store';
+import { payrollInternState, settingsPayrollDataState } from '../../../../store';
 import { debounce } from 'lodash';
 import { Notifications } from "../../../../components/Notification";
 import dayjs from "dayjs";
@@ -14,8 +14,8 @@ import dayjs from "dayjs";
 const usePayrollCustomHook = () => {
   //get Payroll data from BE side
   const { PAYROLL_FINDALL, DELETE_PAYROLL,
-    ADD_PAYROLL, EDIT_PAYROLL, INTERN_LIST } = apiEndpints;
-  const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
+    ADD_PAYROLL, EDIT_PAYROLL, AVAILABLE_PAYROLL_INTERNS } = apiEndpints;
+  const [payrollData, setPayrollData] = useRecoilState(settingsPayrollDataState);
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,13 +84,10 @@ const usePayrollCustomHook = () => {
   };
 
   // Getting all interns data 
-  const getAllInterns = async (companyId: any) => {
-    const params = {
-      companyId: companyId
-    }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+  const getAllInterns = async () => {
+
     setIsLoading(true);
-    const { data } = await api.get(INTERN_LIST, query);
+    const { data } = await api.get(AVAILABLE_PAYROLL_INTERNS);
     setInternsData(data)
     setIsLoading(false);
   };

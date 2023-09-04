@@ -1,15 +1,13 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
-import { Col, Divider, Row, Typography, Form } from "antd";
+import React, { SyntheticEvent, useRef, useState } from "react";
+import { Col, Row } from "antd";
 import AppTabs from "../../../components/Tabs";
 import ListingRequest from "../listingRequest";
 import PropertyAgentTable from "../propertAgentTable";
 import MainDashboard from "./Dashboard";
-import "../style.scss";
 import { PageHeader } from "../../../components";
-import useCustomHook from "../actionHandler";
+import "../style.scss";
 
 const PropertyDashboard = () => {
-  const action = useCustomHook();
   const [activeTab, setActiveTab] = useState('1');
   const propertyAgentRef = useRef<any>(null)
   const listingRequestRef = useRef<any>(null)
@@ -33,7 +31,7 @@ const PropertyDashboard = () => {
     {
       key: '2',
       label: "Listings Request",
-      children: <ListingRequest ref={listingRequestRef}  />,
+      children: <ListingRequest ref={listingRequestRef} />,
     },
     {
       key: 3,
@@ -49,7 +47,12 @@ const PropertyDashboard = () => {
           <PageHeader title="Property Agent" bordered={true} />
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <AppTabs items={items} activeTab={activeTab} onChange={handleTabChange} setActiveTab={setActiveTab} />
+          <AppTabs
+            items={items}
+            activeTab={activeTab}
+            onChange={handleTabChange}
+            setActiveTab={setActiveTab}
+          />
         </Col>
       </Row>
     </>

@@ -9,7 +9,6 @@ import {
   StarOutlinedIcon,
   PlayIconNew,
 } from "../../assets/images";
-// import "./style.scss";
 import DropDownNew from "../Dropdown/DropDownNew";
 import { FC } from "react";
 import { Avatar } from "antd";

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {PageHeader} from "../../components/PageHeader";
 import AppTabs from "../../components/Tabs";
 import WithDrawalRequest from "./studentWithDrawalRequest";
@@ -62,4 +62,4 @@ const EarnWithUs = () => {
   )
 }
 
-export default EarnWithUs
+export default EarnWithUs;

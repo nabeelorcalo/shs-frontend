@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Col, Divider, Row, Typography, Button, Space, Modal, Form, Input, TimePicker } from "antd";
+import {
+  Col,
+  Divider,
+  Row,
+  Typography,
+  Button, Space, Modal, Form, Input, TimePicker
+} from "antd";
 import '../../../style.scss';
 import { CloseCircleFilled } from "@ant-design/icons";
 import { ButtonThemePrimary, CommonDatePicker } from "../../../../../components";
@@ -173,7 +179,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Property

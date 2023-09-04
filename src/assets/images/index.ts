@@ -212,6 +212,11 @@ export { ReactComponent as AppreciationCertificateImgTwo } from "../images/certi
 export { ReactComponent as CompletionCertificateImgOne } from "../images/certificates-img/completion-certificate-1.svg";
 export { ReactComponent as CompletionCertificateImgTwo } from "../images/certificates-img/completion-certificate-2.svg";
 
+export { ReactComponent as AppreciationTemplateRed } from "../images/certificates-img/apprecation-red.svg";
+export { ReactComponent as AppreciationTemplateBlue } from "../images/certificates-img/appreciation-blue.svg";
+export { ReactComponent as CompletionTemplateRed } from "../images/certificates-img/certificate-completion-red.svg";
+export { ReactComponent as CompletionTemplateBlue } from "../images/certificates-img/certificate-completion-blue.svg";
+
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "./accommodation/icon-filters-angle.svg";
@@ -474,6 +479,7 @@ export { ReactComponent as Call } from './other-imgs/call.svg';
 export { ReactComponent as TimerPlayIcon } from './timesheet/TimePlayIcon.svg';
 export { ReactComponent as TimerPauseIcon } from './timesheet/TimePauseIcon.svg';
 export { ReactComponent as PreviewIcon } from './candidates/preview.svg';
+export { ReactComponent as SendBtnIcon } from './candidates/SendIcon.svg';
 
 //Grievances
 export { ReactComponent as AllGrievances } from "./Grievances/all-grievances.svg";
@@ -587,6 +593,7 @@ export { ReactComponent as IconRentBilling } from "./listings/icon-rent-billing.
 export { ReactComponent as IconRulesRef } from "./listings/icon-rules-ref.svg";
 export { ReactComponent as IconRentalConditon } from "./listings/icon-rental-condition.svg";
 export { ReactComponent as IconRemoveAttachment } from "./listings/icon-remove-attachment.svg";
+export { ReactComponent as CheckSuccess} from "./listings/icon-check-success.svg";
 
 // Attendance Icons
 export { ReactComponent as Absent } from "./Attendance/Absent.svg";
@@ -703,6 +710,12 @@ export { ReactComponent as NoData } from "../../assets/images/other-imgs/NoData.
 // Personalization
 export { ReactComponent as OrcaloLogo } from "./Personlization/orcalologo.svg";
 export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
+export { ReactComponent as OrgUpload } from "./Personlization/Upload.svg";
+export { ReactComponent as ColorReset } from "./Personlization/Refresh.svg";
+export { ReactComponent as CompanyLogoEdit } from "./Personlization/Edit.svg";
+export { ReactComponent as CompanyLogoDelete } from "./Personlization/delete.svg";
+export { ReactComponent as EditPlaceholder } from "./Personlization/edit-placeholder.svg";
+export { ReactComponent as UploadedImageIcon } from "./Personlization/DocumentCard.svg";
 export { default as PIconDashboard } from './Personlization/SideMenuIcons/icon-dashboard';
 export { default as PIconPeoples } from './Personlization/SideMenuIcons/icon-peoples';
 export { default as PIconClipboardTick } from './Personlization/SideMenuIcons/icon-clipboard-tick';

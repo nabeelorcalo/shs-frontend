@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, Loader, ButtonThemePrimary, ButtonThemeSecondary, SearchBar
+  BoxWrapper, NoDataFound, ButtonThemePrimary, ButtonThemeSecondary, SearchBar
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Col, Row, Input } from 'antd'
+import { Col, Row } from 'antd'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import UserSelector from '../../../components/UserSelector'
 import { useRecoilState } from 'recoil'
-import { currentUserState, internshipFilterState, internshipPaginationState } from '../../../store'
+import { currentUserState, internshipFilterState } from '../../../store'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
@@ -29,7 +29,7 @@ const InternshipsCompanyAdmin = () => {
   const currentUser = useRecoilState(currentUserState);
 
   const statusArr = [
-    { value: "All", label: "All" },
+    { value: "ALL", label: "All" },
     { value: "PUBLISHED", label: "Published" },
     { value: "REJECTED", label: "Rejected" },
     { value: "CLOSED", label: "Closed" },
@@ -181,15 +181,9 @@ const InternshipsCompanyAdmin = () => {
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
                     <ButtonThemeSecondary
-                      // type="default"
-                      // size="middle"
-                      // className="button-default-tertiary"
                       onClick={handleResetFilter}>Reset
                     </ButtonThemeSecondary>
                     <ButtonThemePrimary
-                      // type="primary"
-                      // size="middle"
-                      // className="button-tertiary"
                       onClick={handleApplyFilter}>Apply
                     </ButtonThemePrimary>
                   </div>

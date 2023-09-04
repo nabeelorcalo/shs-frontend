@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Row, Col } from "antd";
 import {
   AnnouncementList,
@@ -18,6 +18,7 @@ import { gutter } from "..";
 import { useRecoilValue } from "recoil";
 import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 const Manager = () => {
   // for cleanup re-rendering
@@ -38,17 +39,19 @@ const Manager = () => {
     // manager and companies university list
     getManagerCompanyUniversitiesList,
     managerCompanyUniversitiesList: universityList = [],
-    // manager dashboard widgets
-    getManagerWidgets,
-    managerWidgets,
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
     commonLoaders,
     isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
+  const {
+    // manager dashboard widgets
+    getManagerWidgets, managerWidgets, managerLoaders
+  } = useCustomHook()
 
-  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+  const { isWidgetsLoading } = managerLoaders;
 
   const announcementData: any = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -147,8 +150,8 @@ const Manager = () => {
           <Col xs={24}>
             <Row gutter={gutter} justify="space-between">
               {isUniversitiesLoading ? <div className="h-[145px]"><Loader /></div> :
-                universityList?.map(({ logo, title, internList }: any) => (
-                  <Col flex={1}>
+                universityList?.map(({ logo, title, internList }: any, index: number) => (
+                  <Col key={index} flex={1}>
                     <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>
                 ))}

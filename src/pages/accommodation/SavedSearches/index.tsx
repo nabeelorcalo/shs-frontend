@@ -23,7 +23,6 @@ const SavedSearches = () => {
   const [loading, setLoading] = useState(false);
   const { unsaveProperty } = useAccommodationHook();
   const [isSave, setIsSave] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
 
 
 

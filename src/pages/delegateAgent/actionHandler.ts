@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "../../api";
 import constants from "../../config/constants";
 import { useRecoilState } from "recoil";
@@ -24,6 +24,8 @@ const useCustomHook = () => {
   const [currentReward, setCurrentReward] = useRecoilState(addDelegateRewardState);
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
   const [recieptData, setRecieptData] = useRecoilState(recieptState);
+  const [paginationObject, setPaginationObject] = useState<any>(null);
+  const [withDrawalpaginationObject, setWithDrawalPaginationObject] = useState<any>(null);
 
   const limit = 100;
 
@@ -46,27 +48,31 @@ const useCustomHook = () => {
       pagination: {
         ...tableParams.pagination,
         total: count,
-        page : count?.page
+        page: count?.page,
       },
     });
     setWithDrawalItems(data);
+    setWithDrawalPaginationObject(count)
   };
   const getDelegateAdmin = async () => {
     const { data } = await api.get(GET_DELEGATE_ADMIN_DASHBOARD);
-    setGetDelegate(data);
+    setGetDelegate(data); 
   };
 
-  const getAgentDelegate = async (param:any, tableParams: any, setTableParams: any) => {
+  const getAgentDelegate = async (param: any, tableParams: any, setTableParams: any) => {
     const { data, pagination } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
     setTableParams({
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
         total: pagination?.totalResult,
-        page : pagination?.page
+        page: pagination?.page,
+        current:1
       },
     });
     setGetDelegateAgents(data);
+    setPaginationObject(pagination)
+
   };
 
   const addRewards = async (body: any, onSuccess?: () => void): Promise<any> => {
@@ -172,7 +178,9 @@ const useCustomHook = () => {
     delegateAccess,
     withDrawalAccess,
     downloadPdfOrCsv,
-    getRewardReciept
+    getRewardReciept,
+    paginationObject,
+    withDrawalpaginationObject
   };
 };
 

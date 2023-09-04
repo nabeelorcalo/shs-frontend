@@ -1,9 +1,8 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   adminDashboardIssueState,
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
-  currentUserRoleState,
   getRoleBaseUsers,
   growthAnalyticsDashboardState,
   helpDeskDetailState,
@@ -76,8 +75,24 @@ const useCustomHook = () => {
     });
   };
 
-  const addHelpDeskComment = (payload: any, onSuccess?: () => void) => {
-    api.post(CREATE_HELPDESK_COMMENT, payload).then((result) => {
+  const addHelpDeskComment = async (payload: any, onSuccess?: () => void) => {
+    const formData = new FormData();
+    formData.append('otherField', payload.otherField);
+    formData.append("entityId", payload.entityId);
+    formData.append("entityType", payload.entityType);
+    formData.append("comment", payload.comment);
+    payload?.parentId && (formData.append("parentId", payload?.parentId))
+    formData.delete("media");
+    if (payload?.media?.length > 0) {
+      payload?.media?.forEach((file: any) => {
+        formData.append("media", file);
+      });
+    }
+    await api.post(CREATE_HELPDESK_COMMENT, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((result) => {
       if (onSuccess) onSuccess();
       return result;
     });

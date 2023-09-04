@@ -25,11 +25,7 @@ const NewPasswordModal = (props: any) => {
     }
     form.resetFields();
   };
-  // const onChange = (checked: boolean) => {
-  //   setIsModal(checked && true);
-  //   setIsEnablePassword(checked)
-  // }
-
+  
   return (
     <div>
       <Modal

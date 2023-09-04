@@ -19,7 +19,7 @@ const SystemAdmin = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false);
-  const [rangeFilter, setRangeFilter] = useState<string[]>([]);
+  const [, setRangeFilter] = useState<string[]>([]);
   const {
     totalMembersData: {
       totalUsers,
@@ -149,3 +149,4 @@ const SystemAdmin = () => {
 };
 
 export default SystemAdmin;
+ 

@@ -26,13 +26,14 @@ const NewTemplateCertificationOfAppreciation = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
-  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
+  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO');
   const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
+
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -58,13 +59,13 @@ const NewTemplateCertificationOfAppreciation = () => {
   const templateArray = [
     {
       id: 1,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_ONE",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
       template: TemplateCertificateSmall,
       name: 'Template 1'
     },
     {
       id: 2,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_THREE",
       template: TemplateTow,
       name: 'Template 2'
     }
@@ -96,6 +97,7 @@ const NewTemplateCertificationOfAppreciation = () => {
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
+      templateDesign: values.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO',
       textEditorValue: description,
       templateType: templateData?.templateType ?? templateData?.type,
     }
@@ -108,14 +110,12 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
-
   return (
     <div className="certificate-of-appreciation-new-template">
 
       <Breadcrumb
         breadCrumbData={breadcrumbArray}
-        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
-      />
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }} />
 
       <Divider />
 
@@ -234,14 +234,14 @@ const NewTemplateCertificationOfAppreciation = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <PopUpModal
+      {<PopUpModal
         open={showEditModal}
         title="Preview"
         footer={false}
         width={900}
         close={() => setShowEditModal(false)}>
-        {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
-      </PopUpModal>
+        {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
+      </PopUpModal>}
     </div>
   );
 };

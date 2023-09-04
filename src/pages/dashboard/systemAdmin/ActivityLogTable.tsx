@@ -54,7 +54,7 @@ const ActivityLogTable: FC<{ adminActivity: any[] }> = (props) => {
       <Row className="gap-5" align="middle">
         <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Activity Log</p>
       </Row>
-      <GlobalTable columns={columns} tableData={adminActivity} pagination={false} height={296} />
+      <GlobalTable columns={columns} tableData={adminActivity} pagination={false} height={296} hideTotal/>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Avatar, Col, Row, Typography } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
-import { BoxWrapper } from "../../../components";
+import { BoxWrapper, ButtonThemeSecondary } from "../../../components";
 import {
   AllGrievances,
   Clock24h,
@@ -57,7 +57,13 @@ const Grievance = (props: any) => {
       <div>
         <PageHeader actions bordered title="Grievances">
           <div className="flex items-center justify-end header-btn">
-            <Button className="button font-semibold px-8" onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)} label="All Grievances" />
+            <ButtonThemeSecondary
+              className=" font-semibold px-8"
+              onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)}
+              // label="All Grievances"
+            >
+              All Grievances
+            </ButtonThemeSecondary>
           </div>
         </PageHeader>
       </div>

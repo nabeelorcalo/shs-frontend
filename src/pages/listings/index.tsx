@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table';
 import type { PaginationProps } from 'antd';
@@ -6,7 +6,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader, SearchBar, Alert, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
-import dayjs from 'dayjs';
 import {
   IconAddListings,
   IconAngleDown,
@@ -14,8 +13,10 @@ import {
   IconLink,
   IconAddUpload,
   IconRemoveAttachment,
-  IconCloseModal
-} from '../../assets/images'
+  IconCloseModal,
+  CheckSuccess,
+  IconCheckSuccess
+} from '../../assets/images';
 import {
   Button,
   Table,
@@ -55,15 +56,14 @@ const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getListings, allProperties, totalRequests, createListing, deleteListing } = useListingsHook();
-  // const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false);
   const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loadingAddListing, setLoadingAddListing] = useState(false);
-  const [searchText, setSearchText] = useState({})
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [modalSuccessListingOpen, setModalSuccessListingOpen] = useState(false)
   const [stepCurrent, setStepCurrent] = useState(0);
   const [entireProperty, setEntireProperty] = useState(false);
   const [uploadURL, setUploadURL] = useState(false);
@@ -189,6 +189,14 @@ const Listings = () => {
   function closeModalDeleteListing() {
     setModalDeleteOpen(false)
     setPropertyID('')
+  }
+  
+  function openModalSuccessListing() {
+    setModalSuccessListingOpen(true)
+  }
+
+  function closeModalSuccessListing() {
+    setModalSuccessListingOpen(false);
   }
 
   const normFile = (e: any) => {
@@ -1189,8 +1197,8 @@ const Listings = () => {
     }
     if(!response.error) {
       setLoadingAddListing(false);
-      Notifications({ title: 'Success', description: response.message, type: 'success' })
       closeModalAddListing();
+      openModalSuccessListing();
       getListings({}, setLoadingAllProperties);
     }
   }
@@ -1297,8 +1305,33 @@ const Listings = () => {
           </div>
         </Form>
       </Modal>
-
       {/* ENDS MODAL: ADD LISTING 
+      ***********************************************************************************/}
+
+      {/* MODAL: SUCCESS CREATED LISTING 
+      ***********************************************************************************/}
+      <Modal
+        wrapClassName="modal-success-create-listing"
+        open={modalSuccessListingOpen}
+        onCancel={closeModalSuccessListing}
+        closeIcon={<IconCloseModal />}
+        footer={null}
+        width={570}
+      >
+        <div className="listing-success-content pt-[45px] pb-[20px]">
+          <div className="success-title flex items-center justify-center">
+            <CheckSuccess />
+            <span className="ml-[10px]">Success</span>
+          </div>
+          <div className="success-text mt-[30px]">
+            Congratulations!
+          </div>
+          <div className="success-text max-w-[413px] mx-auto">
+            Your listing has been sent for verification, it will take 4 to 5 working days before its published!
+          </div>
+        </div>
+      </Modal>
+      {/* ENDS MODAL: SUCCESS CREATED LISTING 
       ***********************************************************************************/}
 
       <Alert

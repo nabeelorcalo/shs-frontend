@@ -8,7 +8,7 @@ import api from "../../../../api";
 
 // Shifts operation and save into store
 const useShiftsCustomHook = () => {
-  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT, INTERN_LIST, EDIT_SHIFT } = endpoints;
+  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT,  AVAILABLE_SHIFT_INTERNS, EDIT_SHIFT } = endpoints;
   const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);
   const [internsData, setInternsData] = useRecoilState(settingInternsState);
   const [isLoading, setIsLoading] = useState(false)
@@ -28,13 +28,9 @@ const useShiftsCustomHook = () => {
   };
 
   // Getting all interns data 
-  const getAllInterns = async (companyId: any) => {
-    const params = {
-      companyId: companyId
-    }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+  const getAllInterns = async () => {
     setIsLoading(true);
-    const { data } = await api.get(INTERN_LIST, query);
+    const { data } = await api.get( AVAILABLE_SHIFT_INTERNS);
     setInternsData(data)
     setIsLoading(false);
   };

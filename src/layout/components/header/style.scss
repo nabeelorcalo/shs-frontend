@@ -237,6 +237,10 @@
         }
         .organisation-logo {
           min-width: 120px;
+          
+          & > img {
+            max-height: 36px;
+          }
         }
       }
     }

@@ -2,8 +2,6 @@
 
 .manager-main {
   .button {
-    // background-color: $white-bg-color;
-    // box-shadow: $accommodation-card-shadow;
     border: none !important;
     border-radius: 8px;
     width: 40px;
@@ -29,15 +27,13 @@
     width: 26px;
     height: 26px;
   }
-
 }
 
 .manager-profile {
   .card-style {
-    background: $white-bg-color;
+    background: $white-bg-color !important;
     box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
-    border: 3px soli red;
     min-height: 95vh;
     height: auto;
   }
@@ -50,5 +46,14 @@
 
   .ant-select .ant-select-selector :hover {
     background-color: $white-bg-color !important;
+  }
+}
+
+.manager-info-table {
+  .card-style {
+    background: $white-bg-color !important;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 8px;
+    height: auto;
   }
 }

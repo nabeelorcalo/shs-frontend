@@ -134,8 +134,11 @@
 
     .btn-cancel-verification {
       text-align: center;
-      background-color:$skip-bg-color;
+      background-color: $skip-bg-color;
       width: 100%;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      line-height: 22px !important;
     }
 
     .input-style {
@@ -193,7 +196,10 @@
     .btn-cancel-verification {
       text-align: center;
       width: 100%;
-      background-color:$skip-bg-color;
+      background-color: $skip-bg-color;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      line-height: 22px !important;
     }
 
     .input-style {
@@ -266,6 +272,11 @@
       border-radius: 4px;
     }
   }
+}
+
+.ant-tooltip-inner {
+  font-size: 12px !important;
+  font-weight: 400 !important;
 }
 
 .verify-modal {

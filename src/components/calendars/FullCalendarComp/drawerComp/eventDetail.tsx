@@ -30,7 +30,7 @@ const EventDetail = (props: any) => {
   dayjs.extend(weekOfYear);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
 
-  const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent, notifyAttendees } = props;
+  const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent, notifyAttendees, startFrom } = props;
   const [isReminder, setIsReminder] = useState(false);
 
   const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && eventCategory === event.category);
@@ -80,12 +80,12 @@ const EventDetail = (props: any) => {
           <img src={CalendarIcon} />
           {eventCategory !== "reminder" ? (
             <p className="event-info">
-              {formatTimeDate(selectedEvent?.start, "dddd, DD MMM YYYY")}
+              {formatTimeDate(startFrom || selectedEvent?.start, "dddd, DD MMM YYYY")}
               &nbsp;-&nbsp;
-              {formatTimeDate(selectedEvent?.end, "dddd, DD MMM YYYY")}
+              {formatTimeDate(startFrom || selectedEvent?.end, "dddd, DD MMM YYYY")}
             </p>
           ) : (
-            <p>{formatTimeDate(selectedEvent?.end, "dddd, DD MMM YYYY")}</p>
+            <p>{formatTimeDate(startFrom || selectedEvent?.end, "dddd, DD MMM YYYY")}</p>
           )}
         </div>
         <div className="flex items-center gap-3 my-[20px]">
@@ -191,7 +191,7 @@ const EventDetail = (props: any) => {
           >
             Delete Reminder
           </ButtonThemeSecondary>
-        ) : eventCategory === "meeting" ? (
+        ) : eventCategory === "meeting" || eventCategory === "interview" ? (
           <>
             <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
               {eventStatus === "pending" ? "cancel meeting" : "decline"}
@@ -206,7 +206,7 @@ const EventDetail = (props: any) => {
           </>
         ) : (
           <>
-            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
+            {/* <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
               Decline
             </ButtonThemeSecondary>
             <ButtonThemePrimary
@@ -214,7 +214,7 @@ const EventDetail = (props: any) => {
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
             >
               Accept
-            </ButtonThemePrimary>
+            </ButtonThemePrimary> */}
           </>
         )}
       </div>

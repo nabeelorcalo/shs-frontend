@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications, SearchBar
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Notifications, ButtonThemeSecondary, ButtonThemePrimary, SearchBar
 } from "../../components";
-import { GlassMagnifier, More } from "../../assets/images";
-import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input, TablePaginationConfig } from 'antd';
+import { More } from "../../assets/images";
+import { MenuProps, Dropdown, Avatar, Row, Col, TablePaginationConfig } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
@@ -106,7 +106,8 @@ const Application = () => {
   useEffect(() => {
     return () => {
       resetList();
-      resetTableParams()}
+      resetTableParams()
+    }
   }, []);
 
   const applicationsData = allApplicationsData?.data
@@ -240,10 +241,7 @@ const Application = () => {
     }
   );
 
-  // const handleTimeFrameValue = (val: any) => {
-  //   let item = timeFrameDropdownData.some(item => item === val)
-  //   setState({ ...state, timeFrame: val, dateRange: item });
-  // }
+
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameDropdownData?.some((item) => item === val);
     setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_"), currentDate: dayjs().format('YYYY-MM-DD').toString() });
@@ -316,78 +314,82 @@ const Application = () => {
                   type: "success",
                 });
               }} />
-            <Drawer
-              className="applications-drawer"
-              closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
-              title="Filters" >
-              <div>
-                <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-2">
-                    <p>Time Frame</p>
-                    <DropDown
-                      name="Select"
-                      options={timeFrameDropdownData}
-                      showDatePickerOnVal={'Date Range'}
-                      requireRangePicker placement="bottom"
-                      value={filter.filterType?.toLowerCase()?.replace("_", ' ')}
-                      setValue={(e: any) => handleTimeFrameValue(e)}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <UserSelector
-                      label="Nature of Work"
-                      placeholder="Select"
-                      value={filter.locationType}
-                      onChange={(event: any) => {
-                        setFilter({ ...filter, locationType: event })
-                      }}
-                      options={natureOfWorkArr}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <UserSelector
-                      label="Type of Work"
-                      placeholder="Select"
-                      value={filter.workType}
-                      onChange={(event: any) => {
-                        setFilter({ ...filter, workType: event })
-                      }}
-                      options={typeOfWorkArr}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <UserSelector
-                      label="Stage"
-                      placeholder="Select"
-                      value={filter.stage}
-                      onChange={(event: any) => {
-                        setFilter({ ...filter, stage: event })
-                      }}
-                      options={stageArr}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button className="button-default-tertiary"
-                      onClick={handleResetFilter}>Reset</Button>
-                    <Button className="button-tertiary"
-                      onClick={handleApplyFilter}>Apply</Button>
-                  </div>
+
+          </Col>
+          <Drawer
+            className="applications-drawer"
+            closable
+            open={showDrawer}
+            onClose={() => {
+              setShowDrawer(false);
+            }}
+            title="Filters" >
+            <div>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <p>Time Frame</p>
+                  <DropDown
+                    name="Select"
+                    options={timeFrameDropdownData}
+                    showDatePickerOnVal={'Date Range'}
+                    requireRangePicker placement="bottom"
+                    value={filter.filterType?.toLowerCase()?.replace("_", ' ')}
+                    setValue={(e: any) => handleTimeFrameValue(e)}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Nature of Work"
+                    placeholder="Select"
+                    value={filter.locationType}
+                    onChange={(event: any) => {
+                      setFilter({ ...filter, locationType: event })
+                    }}
+                    options={natureOfWorkArr}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Type of Work"
+                    placeholder="Select"
+                    value={filter.workType}
+                    onChange={(event: any) => {
+                      setFilter({ ...filter, workType: event })
+                    }}
+                    options={typeOfWorkArr}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Stage"
+                    placeholder="Select"
+                    value={filter.stage}
+                    onChange={(event: any) => {
+                      setFilter({ ...filter, stage: event })
+                    }}
+                    options={stageArr}
+                  />
+                </div>
+                <div className="flex flex-row gap-3 justify-end">
+                  <ButtonThemeSecondary onClick={handleResetFilter}>
+                    Reset
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary onClick={handleApplyFilter}>
+                    Apply
+                  </ButtonThemePrimary>
                 </div>
               </div>
-            </Drawer>
-            <Drawer
-              closable
-              open={showStageStepper}
-              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
-              onClose={() => { setShowStageStepper(false) }}
-            >
-              <StageStepper data={applicationDetailsState} />
-            </Drawer>
-          </Col>
+            </div>
+          </Drawer>
+          <Drawer
+            closable
+            open={showStageStepper}
+            width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
+            onClose={() => {
+              setShowStageStepper(false)
+            }}>
+            <StageStepper data={applicationDetailsState} />
+          </Drawer>
           <Col xs={24}>
             {<BoxWrapper>
               <GlobalTable

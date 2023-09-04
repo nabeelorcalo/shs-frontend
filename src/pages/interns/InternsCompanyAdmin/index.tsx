@@ -9,7 +9,7 @@ import {
   CardViewIcon, More, TableViewIcon
 } from "../../../assets/images";
 import {
-  Dropdown, Avatar, Button, MenuProps, Row, Col, Form, TablePaginationConfig
+  Dropdown, Avatar, MenuProps, Row, Col, Form, TablePaginationConfig
 } from "antd";
 import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";
@@ -350,21 +350,17 @@ const InternsCompanyAdmin = () => {
   );
   filteredDeaprtmentsData?.unshift({ key: "all", value: "ALL", label: "All" });
 
-  const seenUniversityIds = new Set();
-  const filteredUniversitiesData = [{ key: "all", value: "ALL", label: "All" }];
 
-  getAllUniversities?.forEach((item: any, index: any) => {
-    const universityId = item?.university?.id;
-
-    if (!seenUniversityIds.has(universityId)) {
-      seenUniversityIds.add(universityId);
-      filteredUniversitiesData.push({
-        key: index,
-        value: universityId,
-        label: item?.university?.name,
-      });
-    }
+  const filteredUniversitiesData = [...new Set(getAllUniversities?.map((item: any) => item?.university?.id))].map((id, index) => {
+    const correspondingItem = getAllUniversities?.find((item: any) => item?.university?.id === id);
+    return {
+      key: index,
+      value: id,
+      label: correspondingItem?.university?.name,
+    };
   });
+  filteredUniversitiesData.unshift({ key: 1, value: "ALL", label: "All" })
+
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some((item) => item === val);
@@ -689,20 +685,20 @@ const InternsCompanyAdmin = () => {
           footer={
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  size="middle"
-                  className="button-default-tertiary max-sm:w-full rounded-lg"
+                <ButtonThemeSecondary
+                  // type="default"
+                  // size="middle"
+                  // className="button-default-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setPreviewModal(false);
                   }}
                 >
                   Back
-                </Button>
-                <Button
-                  type="primary"
-                  size="middle"
-                  className="button-tertiary max-sm:w-full rounded-lg"
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
+                  // type="primary"
+                  // size="middle"
+                  // className="button-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setSignatureModal(false);
                     setPreviewModal(false);
@@ -717,7 +713,7 @@ const InternsCompanyAdmin = () => {
                   }}
                 >
                   Issue
-                </Button>
+                </ButtonThemePrimary>
               </div>
             ) : (
               ""

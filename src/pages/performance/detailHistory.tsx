@@ -257,7 +257,7 @@ console.log('performanceSummary:: ', performanceSummary)
                   profession={getUserRoleLable(
                     performanceDetail?.evaluatedUserRole
                   )}
-                  className="bg-visible-btn evaluate-btn font-medium"
+                  className="evaluate-btn"
                   icon={<ColorLessMedalIcon />}
                   btnTxt={role !== constants.UNIVERSITY && "Evaluate"}
                   size={64}

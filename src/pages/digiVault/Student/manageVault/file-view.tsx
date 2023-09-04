@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Modal, Row, Space } from "antd";
+import { Col, Divider, Dropdown, MenuProps, Modal, Row, Space } from "antd";
 import { SearchBar, Alert, PdfPreviewModal, ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
-import { FileIcon, Upload } from "../../../../assets/images";
+import { FileIcon, More, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
-import CustomDropDown from "../dropDownCustom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
@@ -26,7 +25,7 @@ const ManageViewVault = () => {
   });
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
-    extension: "",
+    extension: "", 
     url: "",
   });
   const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
@@ -39,47 +38,55 @@ const ManageViewVault = () => {
   }, [isState.search]);
 
   const handleDropped = (event: any) => {
-    event.preventDefault();
+    event.preventDefault(); 
     setState((prevState: any) => ({
       ...prevState,
       files: Array.from(event.dataTransfer.files),
-    }));
+    }));  
   };
 
-  const menu2 = (item: any) => {
+  const PopOver = (props: any) => {
+    const { item } = props 
+    let items: MenuProps['items'] = [
+      {
+        key: "1",
+        label: <a onClick={() => {
+          setOpenPreview(true);
+          setPreViewModal({
+            extension: item?.mimeType.split("/").pop(),
+            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType
+              .split("/")
+              .pop()}`,
+          });
+        }} >View</a>
+      },
+      {
+        key: '2',
+        label: <a onClick={() => {
+          setState((prevState: any) => ({
+            ...prevState,
+            isOpenDelModal: true,
+            DelModalId: item.id,
+          }));
+        }}>Delete</a>
+      }
+    ];
+
     return (
-      <Menu>
-        <Menu.Item
-          key="1"
-          onClick={() => {
-            setOpenPreview(true);
-            setPreViewModal({
-              extension: item?.mimeType.split("/").pop(),
-              url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType.split("/").pop()}`,
-            });
-          }}
-        >
-          View
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          onClick={() => {
-            setState((prevState: any) => ({
-              ...prevState,
-              isOpenDelModal: true,
-              DelModalId: item.id,
-            }));
-          }}
-        >
-          Delete
-        </Menu.Item>
-      </Menu>
-    );
-  };
-  const newTableData = folderContent?.map((item: any, index: number) => {
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
+      </Dropdown>
+    )
+  }
+  const newTableData = folderContent?.map((item: any) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return {
-      key: index,
+      key: item.id,
       Title: (
         <p>
           <span>
@@ -89,9 +96,7 @@ const ManageViewVault = () => {
         </p>),
       datemodified: modifiedDate,
       size: item.size ? byteToHumanSize(parseFloat(item.size)) : "N/A",
-      action: <Space size="middle">
-        <CustomDropDown menu1={menu2(item)} />
-      </Space>
+      action: <PopOver item={item} />
     };
   });
   const columns = [
@@ -237,7 +242,7 @@ const ManageViewVault = () => {
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
-      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
+      {openPreview && <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />}
     </div>
   );
 };

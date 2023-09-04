@@ -4,7 +4,7 @@ import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { attendesListState, calendarListState, currentUserState } from "../../store";
+import { attendesListState, calendarListState, calendarLocationState, currentUserState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import dayjs from "dayjs";
 import { Notifications } from "../../components";
@@ -21,6 +21,7 @@ const useCustomHook = () => {
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [attendees, setAttendees] = useRecoilState(attendesListState);
+  const [locations, setLocations] = useRecoilState(calendarLocationState);
   const currentUser = useRecoilValue(currentUserState);
 
   const {
@@ -33,6 +34,7 @@ const useCustomHook = () => {
     UPDATE_REMINDER,
     DELETE_REMINDER,
     NOTIFY_ATTENDEES,
+    LOCATION,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -57,7 +59,7 @@ const useCustomHook = () => {
               category: task.eventType?.toLowerCase() || "reminder",
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-              status: renderStatus(task.organizer, task?.meetingUser, task?.reminder),
+              status: renderStatus(task.organizer, task?.meetingUser, task?.reminder, task?.candidateId, task?.candidateStatus),
               start:
                 task?.eventType === "INTERVIEW"
                   ? dayjs.utc(task?.start).utcOffset(utcOffsetInMinutes).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
@@ -156,12 +158,16 @@ const useCustomHook = () => {
       return result;
     });
   };
+  const fetchLocations = async (q: any = null) => {
+    const params = { page: 1, limit: 100, q: q };
+    const { data } = await api.get(LOCATION, params);
+    setLocations(data);
+  };
 
-  const renderStatus = (organizerId: string, list: any[], reminder?: any) => {
+  const renderStatus = (organizerId: string, list: any[], reminder?: any, candidateId?: any, candidateStatus?: any) => {
     if (reminder) return "pending";
-    console.log(currentUser.id === organizerId);
-
     if (currentUser.id === organizerId) return "pending";
+    if (currentUser.id === candidateId) return candidateStatus ?? "accept";
     else {
       const userStatus = list.find((user: any) => user?.userId === currentUser.id);
       return userStatus?.status ?? "accept";
@@ -191,6 +197,7 @@ const useCustomHook = () => {
     updateReminder,
     deleteReminder,
     notifyAttendees,
+    fetchLocations,
   };
 };
 

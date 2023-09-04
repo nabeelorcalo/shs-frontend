@@ -22,7 +22,6 @@ const verif: any = {
 }
 
 const ListingRequest = forwardRef((props: any, ref) => {
-
   const navigate = useNavigate();
   const action = useCustomHook();
   const [value, setValue] = useState("");

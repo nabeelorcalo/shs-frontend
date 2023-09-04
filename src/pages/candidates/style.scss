@@ -81,7 +81,6 @@
   background-color: $dashboard-primary-bg-color;
   color: $white-bg-color;
 }
-// .candidate-table-wrapper {
 .internship-filter {
   .ant-select-selector {
     background-color: $text-input-bg-color !important;
@@ -157,10 +156,8 @@
     }
   }
 }
-// }
 
 .drop-down-wrapper {
-  // border: 1px solid $text-error-line-color;
   border-radius: 8px;
   padding: 8px, 16px, 8px, 16px;
   background-color: $text-input-bg-color;
@@ -176,7 +173,6 @@
     font-size: 16px;
     margin-top: 30px;
     margin-bottom: 10px;
-    // border: 1px solid black;
   }
 }
 
@@ -688,5 +684,14 @@ textarea {
   &::-webkit-scrollbar-thumb {
     background-color: $text-primary-disabled-color;
     border-radius: 20px;
+  }
+}
+.CustomTimePicker {
+  &.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+    color: $white-bg-color !important;
+
+    &:hover {
+      background-color: $primary-light-bg-color !important;
+    }
   }
 }

@@ -5,7 +5,7 @@ import {
   RadioChangeEvent, Button, Space, Input, Switch, DatePicker, Avatar
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, BoxWrapper } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, ButtonThemePrimary } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -47,7 +47,7 @@ const PayrollAddCategory = () => {
     });
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
 
 
@@ -120,8 +120,7 @@ const PayrollAddCategory = () => {
                 name="payrollName"
                 label="Payroll Name"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
-              >
+                rules={[{ required: true }, { type: "string" }]}>
                 <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
@@ -130,7 +129,7 @@ const PayrollAddCategory = () => {
                     label='From'
                     name="from"
                     required={false}
-                  >
+                    rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
@@ -141,9 +140,9 @@ const PayrollAddCategory = () => {
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <Form.Item
                     name="timeTo"
-                    required={false}
                     label='To'
-                  >
+                    required={false}
+                    rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
@@ -204,12 +203,13 @@ const PayrollAddCategory = () => {
               onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`) }}>
               Cancel
             </Button>
-            <Button
+            <ButtonThemePrimary
               htmlType="submit"
-              size="middle"
-              className="teriary-bg-color white-color add-button">
+              // size="middle"
+              // className="teriary-bg-color white-color add-button"
+              >
               {state !== null ? 'Update' : 'Add'}
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>

@@ -12,17 +12,18 @@ import PropertyOverview from "./PropertyOverview";
 import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
 import usePropertyHook from "./actionHandler";
-import { IconWebLocation, IconArrowDown } from '../../../assets/images';
+import { IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
-const { useBreakpoint } = Grid;
 import {modalPaymentReceiptState} from "../../../store";
 import {useRecoilValue} from "recoil";
+
 
 
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { useBreakpoint } = Grid;
   const modalPaymentReceiptOpen = useRecoilValue(modalPaymentReceiptState);
   const { 
     getProperty,
@@ -128,11 +129,6 @@ const AccPropertyDetail = () => {
                   <Typography.Title level={3}>
                     {propertyData?.addressOne}
                   </Typography.Title>
-
-                  {/* <div className="property-heading-location">
-                    <IconWebLocation />
-                    Location On Map
-                  </div> */}
                 </div>
 
                 <div className="property-detail-description">

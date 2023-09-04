@@ -28,7 +28,7 @@ const NewTemplateCertiticationOfCompletion = () => {
   const MAX_LENGTH = 350; // Change this value to set the maximum length
   const quillRef: any = useRef(null);
   const { state: templateData }: any = useLocation();
-  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'COMPLETION_CERTIFICATE_TEMPLATE_ONE');
+  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'COMPLETION_CERTIFICATE_TEMPLATE_TWO');
   const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'COMPLETION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
@@ -59,13 +59,13 @@ const NewTemplateCertiticationOfCompletion = () => {
   const templateArray = [
     {
       id: 1,
-      value: "COMPLETION_CERTIFICATE_TEMPLATE_ONE",
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_TWO",
       template: TemplateCertificateSmall,
       name: 'Template 1'
     },
     {
       id: 2,
-      value: "COMPLETION_CERTIFICATE_TEMPLATE_TWO",
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_THREE",
       template: TemplateCertificateSmall,
       name: 'Template 2'
     }
@@ -96,6 +96,7 @@ const NewTemplateCertiticationOfCompletion = () => {
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
+      templateDesign: values.templateDesign ?? 'COMPLETION_CERTIFICATE_TEMPLATE_TWO',
       textEditorValue: description,
       templateType: templateData?.templateType ?? templateData?.type,
     }

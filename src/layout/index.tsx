@@ -12,7 +12,7 @@ import { socket } from "../socket";
 import { currentUserState } from "../store";
 import { useRecoilValue } from "recoil";
 
-import useDashboardHook from "../pages/dashboard/actionHandler";
+import useDashboardHook from "../pages/dashboard/intern/actionHandler";
 import dayjs from "dayjs";
 
 const { Content } = Layout;
@@ -97,7 +97,7 @@ function AppLayout() {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("cognitoId");
     localStorage.removeItem("recoil-persist");
-    window.location.replace(`${constants.WEBSITE_URL}/Routes/Auth?logout=true`);
+    window.location.replace(`${constants.WEBSITE_URL}/Auth?logout=true`);
     // navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 

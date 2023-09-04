@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Divider, Row, Typography,Avatar } from "antd";
 import {
   IconEmail,
   IconLocation,
   IconPhone,
-  Person,
-  UniLogo,
 } from "../../../assets/images";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
@@ -24,7 +22,10 @@ const DetailPage = () => {
   const recentUniversity = universitySubAdmin[0].filter((item: any) => item.id == params.id)
   
   useEffect(() => {
-    action.getSubAdminUniversity({ search: searchItem })
+    action.getSubAdminUniversity({ search: searchItem },
+      '',
+      ''
+    )
   }, [searchItem])
 
   const searchValue = (e: any) => {

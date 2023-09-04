@@ -19,9 +19,12 @@ const notVerifiedList = [
   "UserNotConfirmedException",
 ];
 
+let refNo: unknown = "";
+
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
   const signup = searchParams.get("signup");
+  const referenceNo = searchParams.get("referenceNo");
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -42,6 +45,9 @@ const SigninForm = (props: any) => {
   });
 
   useEffect(() => {
+    if (!refNo) {
+      refNo = referenceNo;
+    }
     if (signup) showModal();
   }, []);
 
@@ -90,7 +96,6 @@ const SigninForm = (props: any) => {
         }
 
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
-          console.log(response);
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
           );
@@ -104,14 +109,10 @@ const SigninForm = (props: any) => {
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-
         if (data.accessToken) {
           window.location.replace(
-            `${constants.WEBSITE_URL}/Routes/Auth?accessToken=${
-              data.accessToken
-            }&refreshToken=${data.refreshToken}&cognitoId=${
-              data?.user?.cognitoId
+            `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
+            }&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId
             }&redirect=${window.location.origin + "/dashboard"}`
           );
         }
@@ -125,7 +126,6 @@ const SigninForm = (props: any) => {
           key: "token",
         });
         setBtnLoading(false);
-        // setVerificationStatus
       });
   };
 
@@ -216,7 +216,6 @@ const SigninForm = (props: any) => {
                 danger
                 block
                 loading={btnLoading}
-                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification
@@ -237,7 +236,7 @@ const SigninForm = (props: any) => {
               className="text-center primary-color text-base"
               onClick={showModal}
             >
-              Don’t have an account?{" "}
+              Don’t have an account?
               <span className="a-tag-signup cursor-pointer font-semibold">
                 Sign up
               </span>
@@ -249,6 +248,7 @@ const SigninForm = (props: any) => {
         showModal={showModal}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        referenceNo={refNo}
       />
     </div>
   );

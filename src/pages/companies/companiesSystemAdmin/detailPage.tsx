@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { companySystemAdminState } from '../../../store/companySystemAdmin';
-import { Typography, Divider, Row, Col,Avatar } from 'antd';
-import { CompanyLogo, IconEmail, IconLocation, IconPhone, Person } from '../../../assets/images';
+import {
+  companySystemAdminState,
+  systemCompanyPaginationState
+} from '../../../store/companySystemAdmin';
+import {
+  Typography,
+  Divider,
+  Row,
+  Col,
+  Avatar
+} from 'antd';
+import {
+  IconEmail,
+  IconLocation,
+  IconPhone
+} from '../../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants';
 
@@ -12,16 +25,17 @@ const CompanyDetailPage = () => {
   const action = useCustomHook()
   let params = useParams();
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const [tableParams, setTableParams]: any = useRecoilState(systemCompanyPaginationState);
   const recentCompany = companySubAdmin[0].filter((item: any) => item.id == params.id)
   const [searchItem, setSearchItem] = useState('');
-  
+
   useEffect(() => {
-    action.getSubAdminCompany({ search: searchItem })
+    action.getSubAdminCompany(
+      { search: searchItem },
+      tableParams, setTableParams
+    )
   }, [searchItem])
 
-  const searchValue = (e: any) => {
-    setSearchItem(e);
-  };
   return (
     <div className="detail-page">
       <Row>
@@ -31,7 +45,7 @@ const CompanyDetailPage = () => {
           </span>
           <Divider type="vertical" />
           <span
-             onClick={() => {
+            onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.COMPANIES}`)
             }}
             className="font-semibold text-base text-secondary-color cursor-pointer">
@@ -44,7 +58,7 @@ const CompanyDetailPage = () => {
         <Col xxl={5} xl={7} lg={24} md={24} sm={24} xs={24}>
           <div className="pt-10">
             <center>
-            <Avatar
+              <Avatar
                 size={90}
                 src={`${constants.MEDIA_URL}/${recentCompany[0]?.logo?.mediaId}.${recentCompany[0]?.logo?.metaData?.extension}`}
               >
@@ -67,7 +81,7 @@ const CompanyDetailPage = () => {
                 size={32}
                 src={`${constants.MEDIA_URL}/${recentCompany[0]?.admin?.profileImage?.mediaId}.${recentCompany[0]?.admin?.profileImage?.metaData?.extension}`}
               >
-                {recentCompany[0]?.businessName.charAt(0) }
+                {recentCompany[0]?.businessName.charAt(0)}
                 {recentCompany[0]?.businessName.charAt(0)}
               </Avatar>
               <span className="font-noraml text-secondary-color text-base ">
@@ -110,7 +124,7 @@ const CompanyDetailPage = () => {
             </div>
           </div>
         </Col>
-        <hr className="border-solid border-[#D9DBE9]"/>
+        <hr className="border-solid border-[#D9DBE9]" />
         <Col xxl={12} xl={16} lg={24} md={24} sm={24} xs={24}>
           <div>
             <div className="p-2">

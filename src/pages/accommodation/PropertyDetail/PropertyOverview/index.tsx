@@ -1,7 +1,5 @@
 import React, { FC } from "react";
 import './style.scss'
-import { Typography, Avatar } from 'antd';
-import avatar from '../../../../assets/images/header/avatar.svg'
 interface OverviewProps {
   data: any
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
-import { PageHeader, Breadcrumb, Notifications } from "../../../components";
+import { PageHeader, Breadcrumb, Notifications, ButtonThemeSecondary, ButtonThemePrimary } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
 import useRecipesHook from '../actionHandler';
@@ -285,23 +285,23 @@ const AddRecipe = () => {
             </div>
           </Form>
           <div className="add-recipe-form-footer">
-            {/* <Space size={20}> */}
-              <Button
-                className="button-tertiary"
-                type="link"
-                loading={loading}
-                onClick={() => submitAsDraft()}
-              >
-                Save Draft
-              </Button>
-              <Button className="button-tertiary" ghost onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPES}`)}>Cancel</Button>
-              <Button ref={publishedRef} className="button-tertiary" loading={loading}
-                onClick={() => submitAsPublished()}
-              >
-                Publish
-              </Button>
-              {/* </Space> */}
-            </div>
+            <Button
+              className="button-tertiary"
+              type="link"
+              loading={loading}
+              onClick={() => submitAsDraft()}
+            >
+              Save Draft
+            </Button>
+            <ButtonThemeSecondary onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPES}`)}>Cancel</ButtonThemeSecondary>
+            <ButtonThemePrimary 
+              ref={publishedRef}
+              loading={loading}
+              onClick={() => submitAsPublished()}
+            >
+              Publish
+            </ButtonThemePrimary>
+          </div>
         </div>
         
       </div>

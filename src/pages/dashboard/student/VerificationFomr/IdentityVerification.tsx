@@ -74,7 +74,7 @@ const IdentityVerification = (props: any) => {
                 shortlist candidates
               </Typography>
             </div>
-            <div className="sign-up-form-wrapper">
+            <div className="sign-up-form-wrapper mt-2">
               <Form
                 layout="vertical"
                 name="normal_login"
@@ -84,7 +84,6 @@ const IdentityVerification = (props: any) => {
                 onFinish={onFinish}
               >
                 <Row gutter={[20, 20]} className="sign-up-form-wrapper">
-
                   <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Form.Item
                       label="First Name"
@@ -160,7 +159,9 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
               </Form>
-              <Typography className="font-normal text-base primary-color">Why i need to verify myself ?</Typography>
+              <Typography className="font-normal text-base primary-color">
+                Why i need to verify myself ?
+              </Typography>
             </div>
           </div>
         </Col>

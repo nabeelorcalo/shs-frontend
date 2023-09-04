@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import {
   announcementDataState,
@@ -27,6 +27,7 @@ import "../style.scss";
 import PiplineTable from "./PiplineTable";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import constants from "../../../config/constants";
@@ -48,27 +49,30 @@ const CompanyAdmin = () => {
     // dashboard leaves count
     dashboardLeavesCount,
     getDashboardLeavesCount,
-    // manager and companies university list
-    getManagerCompanyUniversitiesList,
-    managerCompanyUniversitiesList: universityList = [],
-    // internships
-    getInternShipList,
-    internshipsList,
-    internshipsSummeryGraph,
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
-    getCompanyWidgets,
-    companyWidgets,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList: universityList = [],
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
-    companyAdminLoaders,
-    getInternShipSummeryGraph,
     commonLoaders, isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
-  const { isPiplineLoading, isSummeryLoading } = companyAdminLoaders;
-  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+
+  const {
+    getInternShipSummeryGraph,
+    // internships
+    getInternShipList,
+    internshipsList,
+    getCompanyWidgets,
+    companyWidgets,
+    internshipsSummeryGraph,
+    companyAdminLoaders,
+  } = useCustomHook()
+  const { isPiplineLoading, isSummeryLoading, isWidgetsLoading } = companyAdminLoaders;
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
@@ -226,7 +230,6 @@ const CompanyAdmin = () => {
           </Col>
         </Row>
       </Col>
-
       <Col xs={24}>
         <Row gutter={gutter} align="middle">
           <Col xs={24} lg={24} xl={24} xxl={19}>
@@ -234,8 +237,8 @@ const CompanyAdmin = () => {
               {isUniversitiesLoading ? <div className="h-[145px]"><Loader /></div> : universityList?.length > 0 ? (
                 universityList
                   ?.slice(0, 3)
-                  ?.map(({ logo, title, internList }: any) => (
-                    <Col flex={1}>
+                  ?.map(({ logo, title, internList }: any, index: number) => (
+                    <Col flex={1} key={index}>
                       <UniversityCard
                         logo={logo}
                         title={title}

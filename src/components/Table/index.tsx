@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import { Loader, NoDataFound } from "../../components";
+import { Loader } from "../../components";
 import "./style.scss";
 interface TableProps {
   columns?: any[];
@@ -26,16 +26,12 @@ export const GlobalTable = (props: TableProps) => {
     height, id, className, loading = false, pagesObj, handleTableChange,
     ...rest
   } = props;
-  // const tableLocale = {
-  //   emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
-  // };
 
   return (
     <div className={`shs-table ${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table
         id={id}
         columns={columns}
-        // locale={tableLocale}
         dataSource={tableData}
         pagination={pagination}
         className={className ?? ""}
@@ -48,13 +44,12 @@ export const GlobalTable = (props: TableProps) => {
         }}
         {...rest}
       />
+
       {
-        pagination && !hideTotal && pagesObj?.totalResult > 0 ?
-          <span className="Counter">
-            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult}
-          </span>
-          :
-          <></>
+        pagination && !hideTotal &&
+        <span className="Counter">
+          Total: {pagination?.total < 10 ? `0${pagination?.total}` : pagination?.total}
+        </span>
       }
     </div>
   );

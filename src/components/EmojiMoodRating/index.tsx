@@ -12,16 +12,16 @@ interface EmojiProps {
 }
 
 const EmojiMoodRating = (props: EmojiProps) => {
-  const { title, data, size = 3, feelingTodayMood, onClick, id, isLoading } = props;
+  const { title, data, feelingTodayMood, onClick, id, isLoading } = props;
 
   return (
     <BoxWrapper>
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
-        <p className="font-medium text-base">{title}</p>
-        <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
+        <p className="font-medium text-[20px] leading-7">{title}</p>
+        <div className="flex flex-row justify-around mt-[10.85px] mb-1 pb-[20px] pt-[9.16px] emoji-wrapper">
           {isLoading ? <Loader /> : data.map((item: any, idx: any) => {
             return (
-              <div className="emoji-container text-[#363565]">
+              <div key={idx} className="emoji-container text-[#363565]">
                 <div
                   key={`${id}_${idx}`}
                   className={`flex flex-col items-center ${id}_${idx}`}

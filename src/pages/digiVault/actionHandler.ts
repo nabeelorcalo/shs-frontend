@@ -29,7 +29,7 @@ const useCustomHook = () => {
         postDigivaultPassword({ isLock: true })
       }
       else {
-        setState({ ...state, isLock: !state.isLock })
+        setState({ ...state, isLock: !state?.isLock })
         postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
       }
     }

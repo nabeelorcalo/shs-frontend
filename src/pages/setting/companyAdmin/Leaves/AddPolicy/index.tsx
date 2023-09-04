@@ -17,7 +17,6 @@ import { useRecoilState } from "recoil";
 import UserSelector from "../../../../../components/UserSelector";
 
 const LeavesAddPolicy: React.FC = () => {
-  const currentUser = useRecoilState(currentUserState);
   const { postSettingLeaves, editSettingLeaves, getAllInterns, internsData } = useLeaveCustomHook()
 
   const filteredInternsData = internsData?.map((item: any) => {
@@ -49,7 +48,7 @@ const LeavesAddPolicy: React.FC = () => {
   const deselectArray: any = [];
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
 
   const breadcrumbArray = [
@@ -187,7 +186,7 @@ const LeavesAddPolicy: React.FC = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Policy Accrual
               </span>
-              <Paragraph>Define the occrual period of your policy</Paragraph>
+              <Paragraph>Define the accrual period of your policy</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item

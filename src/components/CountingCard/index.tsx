@@ -170,10 +170,10 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     <Row className={`${isSeprate ? `xs:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]` : `max-w-[510px]`} counting-card`}>
       {cardsList?.map(({ icon, iconBg, title, count }: any, index) => (
         <Col
-          key={title}
+          key={index}
           className={`${isSeprate
-              ? "bg-white p-5 rounded-2xl wrapper-shadow  xs:min-w-[260px] lg:min-w-[320px] xl:min-w-[260px]"
-              : `basis-1/2 col-${index + 1} min-h-[150px]`
+            ? "bg-white p-5 rounded-2xl wrapper-shadow  xs:min-w-[260px] lg:min-w-[320px] xl:min-w-[260px]"
+            : `basis-1/2 col-${index + 1} min-h-[150px]`
             } flex-1 `}
         >
           <Card icon={icon} title={title} count={count} iconBg={iconBg} isLoading={isLoading} />

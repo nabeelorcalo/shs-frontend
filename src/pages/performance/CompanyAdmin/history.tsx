@@ -28,6 +28,8 @@ import {
   Drawer,
   PopUpModal,
   Loader,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../../components";
 import {
   DownlaodFileIcon,
@@ -81,6 +83,7 @@ const PerformanceHistory = () => {
     page: 1,
     limit: 8,
   };
+  const pageSize = 8;
   const [reqBody, setReqBody] = useState(initReqBody);
   const [filterParams, setFilterParams] = useState({});
   const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
@@ -275,6 +278,8 @@ const PerformanceHistory = () => {
   const resetFilterForm = () => {
     filterForm.resetFields();
     setReqBody(initReqBody);
+    setTimeFrameValue('Time Frame');
+    setFilterParams({});
     closeDrawer();
   };
 
@@ -349,12 +354,10 @@ const PerformanceHistory = () => {
     {
       title: "No.",
       key: "no",
-      render: (_: any, data: any, index: any) =>
-        role !== constants.COMPANY_ADMIN ? (
-          <div className="bread-crumb">{index + 1}</div>
-        ) : (
-          index + 1
-        ),
+      render: (_:any, row:any, index:any) => {
+        const rowNumber = (pageNo - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
+      }
     },
     {
       title: "Avatar",
@@ -633,19 +636,12 @@ const PerformanceHistory = () => {
 
                   <Form.Item className="flex justify-end">
                     <Space align="end" size={20}>
-                      <Button
-                        className="button-tertiary"
-                        ghost
-                        onClick={() => resetFilterForm()}
-                      >
+                      <ButtonThemeSecondary onClick={() => resetFilterForm()}>
                         Reset
-                      </Button>
-                      <Button
-                        className="button-tertiary"
-                        onClick={handleApplyFilter}
-                      >
+                      </ButtonThemeSecondary>
+                      <ButtonThemePrimary onClick={handleApplyFilter}>
                         Apply
-                      </Button>
+                      </ButtonThemePrimary>
                     </Space>
                   </Form.Item>
                 </Form>
@@ -667,7 +663,7 @@ const PerformanceHistory = () => {
                   handlePagination(page, pageSize)
                 }
                 pagination={{
-                  pageSize: 8,
+                  pageSize: pageSize,
                   current: pageNo,
                   total: totalRequests,
                   showSizeChanger: false,

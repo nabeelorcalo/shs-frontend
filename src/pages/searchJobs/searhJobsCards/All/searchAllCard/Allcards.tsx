@@ -32,8 +32,6 @@ const AllCardsTab = (props: any) => {
     para
   } = props;
 
-  console.log(coverPhoto);
-
   return (
     <>
       <BoxWrapper className="h-full">

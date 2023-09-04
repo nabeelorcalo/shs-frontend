@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
+import orgLogo from '../assets/images/header/organisation.svg'
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
   MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
   WEBSITE_URL: import.meta.env.VITE_WEBSITE_URL,
+  WEATHER_API_URL: import.meta.env.VITE_APP_WEATHER_API_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -228,3 +230,4 @@ export const STATUS_CONSTANTS: any = {
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
 export const formatDate = (value: any, format: string) =>
   dayjs(value).format(format);
+export const ORG_LOGO = orgLogo;

@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import useMainCustomHook from "../../dashboard/actionHandler";
-import {LoadingOutlined} from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
   MonthChanger,
   BoxWrapper,
-  TopPerformers
+  TopPerformers,
+  ButtonThemeSecondary
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
@@ -20,12 +21,13 @@ import "../style.scss";
 const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
-  const { 
+  const navigate = useNavigate();
+  const {
     getAllPerformance,
     allPerformance,
     getPerformanceSummary,
     performanceSummary,
+    getTopPerformerList, topPerformerList, isLoading
   } = usePerformanceHook();
   const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
@@ -66,9 +68,9 @@ const CompanyAdminPerformance = () => {
     let learning = 0;
     let discipline = 0;
     let personal = 0;
-    
-    if(allPerformance != null) {
-      for(let i = 0; i < allPerformance?.length; i++  ) {
+
+    if (allPerformance != null) {
+      for (let i = 0; i < allPerformance?.length; i++) {
         overall += Math.round(allPerformance[i]['sumOverallRating'] / allPerformance.length)
         learning += Math.round(allPerformance[i]['learningObjectiveRating'] / allPerformance.length)
         discipline += Math.round(allPerformance[i]['disciplineRating'] / allPerformance.length)
@@ -104,12 +106,12 @@ const CompanyAdminPerformance = () => {
   return (
     <>
       <PageHeader actions title="Performance">
-        <Link
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
+        <ButtonThemeSecondary
+          onClick={() => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`)}
           className="performance-history-btn font-semibold"
         >
           View History
-        </Link>
+        </ButtonThemeSecondary>
       </PageHeader>
       <Row gutter={[25, 25]} className="company-admin-performance-container">
         <Col xs={24} md={24} xl={17}>
@@ -133,7 +135,7 @@ const CompanyAdminPerformance = () => {
                     XField="month"
                     YField="value"
                     color={["#9BD5E8", "#F08D97", "#78DAAC"]}
-                    columnStyle={{radius: [20, 20, 0, 0],}}
+                    columnStyle={{ radius: [20, 20, 0, 0], }}
                     columnWidthRatio={0.4}
                     data={performanceSummary}
                     fontSize="20px"
@@ -151,7 +153,11 @@ const CompanyAdminPerformance = () => {
         </Col>
         <Col xs={24} md={24} xl={7}>
           <div className="topPerformers-cont">
-            <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
+            <TopPerformers 
+              topPerformersList={topPerformerList} 
+              loading={isLoading}
+              onMonthChange={getTopPerformerList}
+            />
           </div>
         </Col>
       </Row>

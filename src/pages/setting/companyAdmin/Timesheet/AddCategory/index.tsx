@@ -1,10 +1,10 @@
-import { PopUpModal } from '../../../../../components'
-import { Button, Form, Input } from 'antd'
+import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from '../../../../../components'
+import { Form, Input } from 'antd'
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import useTimesheetCustomHook from '../actionHandler';
 
 const AddCategory = (props: any) => {
-  const { state, setState, editData, setEditData } = props
+  const { state, setState, setEditData } = props
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
@@ -21,13 +21,13 @@ const AddCategory = (props: any) => {
     } else {
       postTimeSheetData(values);
     }
-    setState({ ...state,editField:{},action:"", isEditModal: false });
+    setState({ ...state, editField: { name: "", description: "" }, action: "", isEditModal: false });
     setEditData({});
     form.resetFields();
 
   }
   const handleClose = () => {
-    setState({ ...state, isEditModal: false });
+    setState({ ...state, editField: { name: "", description: "" }, isEditModal: false });
     setEditData({})
     form.resetFields();
   };
@@ -64,12 +64,12 @@ const AddCategory = (props: any) => {
           </Form.Item>
         </div>
         <div className="timesheet-department-footer flex max-sm:flex-col gap-4 justify-end">
-          <Button onClick={handleClose} className="footer-cancel-btn">
+          <ButtonThemeSecondary onClick={handleClose} >
             Cancel
-          </Button>
-          <Button htmlType="submit" className="footer-submit-btn">
-            Add
-          </Button>
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit">
+            {state.action === "edit" ? "Update" : "Add"}
+          </ButtonThemePrimary>
         </div>
       </Form>
     </PopUpModal>

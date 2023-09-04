@@ -4,7 +4,7 @@ import type { PaginationProps } from 'antd';
 import {useRecoilValue} from "recoil";
 import {useNavigate, useLocation} from "react-router-dom";
 import {LoadingOutlined} from "@ant-design/icons";
-import {PageHeader, RecipeCard, ExtendedButton, SearchBar} from "../../components";
+import {PageHeader, RecipeCard, ExtendedButton, SearchBar, ButtonThemePrimary} from "../../components";
 import {IconAddRecipe} from '../../assets/images';
 import constants, {ROUTES_CONSTANTS} from '../../config/constants';
 import {currentUserState} from "../../store";
@@ -87,9 +87,9 @@ const Recipes = () => {
           />
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end">
-          <ExtendedButton onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_ADD}`)} customType="tertiary" icon={<IconAddRecipe />}>
+          <ButtonThemePrimary onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_ADD}`)} icon={<IconAddRecipe />}>
             Add New Recipe
-          </ExtendedButton>
+          </ButtonThemePrimary>
         </Col>
         <Col xs={24}>
           <Spin spinning={loadingRecipes} indicator={<LoadingOutlined />}>

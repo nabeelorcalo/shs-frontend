@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {MutableRefObject, useEffect, useState} from "react";
 import { Button as AntButton } from 'antd'
 import type { ButtonProps } from 'antd';
 import './style.scss'
@@ -7,9 +7,11 @@ import { useRecoilValue } from 'recoil';
 
 interface IButtonProps {
   children?: React.ReactNode
+  ref?: MutableRefObject<null>;
 }
 
 export const ButtonThemePrimary = ({
+  ref,
   className = '',
   children,
   ...rest
@@ -17,8 +19,24 @@ export const ButtonThemePrimary = ({
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const combinedClasses = `button-theme-primary ${className}`;
-  const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState)
+  const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
+
   document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
+
+  function lightenColor(color:any, percent:any) {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+  
+    const adjustedR = Math.min(255, r + (255 - r) * (percent / 100));
+    const adjustedG = Math.min(255, g + (255 - g) * (percent / 100));
+    const adjustedB = Math.min(255, b + (255 - b) * (percent / 100));
+  
+    return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
+  }
+
+  const lightenedColor = lightenColor(buttonPrimaryColor, 75);
+  document.documentElement.style.setProperty('--theme-button-primary-hover', lightenedColor);
   
 
   /* RENDER APP

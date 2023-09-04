@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Carousel, Col, Row, Space } from 'antd';
+import { Carousel } from 'antd';
 import { Typography, Button } from "antd";
 import { RightCircleFilled, LeftCircleFilled } from "@ant-design/icons";
 import { CarouselRef } from "antd/lib/carousel";
@@ -106,7 +106,6 @@ const JobSlider = () => {
               })
             }
         </Carousel>
-
     </div >
   );
 };

@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import type { PaginationProps } from 'antd';
-import { Table, Typography } from 'antd';
+import { Table } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { IconReceipt } from '../../../assets/images';
-import { PopUpModal, ExtendedButton } from "../../../components";
+import { PopUpModal, ButtonThemePrimary } from "../../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import usePaymentsHook from './actionHandler';
 import {paymentsFilterState} from '../../../store'
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { useReactToPrint } from 'react-to-print';
-interface DataType {
-  key: React.Key;
-  agent: string;
-  address: string;
-  durationBooking: string;
-  rentAmount: string;
-  createdAt: string;
-  status: string;
-  receipt: boolean
-}
+
 
 
 const Payments = () => {
@@ -34,6 +25,7 @@ const Payments = () => {
   const [paymentDetail, setPaymentDetail]:any = useState({});
   const printRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
 
 
   /* EVENT LISTENERS
@@ -82,9 +74,8 @@ const Payments = () => {
       dataIndex: 'no.',
       align: 'center',
       render: (_, row, index) => {
-        return (
-          <>{index < 9 ? 0 : null}{index + 1}</>
-        );
+        const rowNumber = (currentPage - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
       },
     },
     {
@@ -173,8 +164,8 @@ const Payments = () => {
             columns={tableColumns}
             dataSource={paymentList}
             onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
-            pagination={totalRequests > 7 ? {
-              pageSize: 7,
+            pagination={totalRequests > pageSize ? {
+              pageSize: pageSize,
               current: currentPage,
               total: totalRequests,
               showTotal: (total) => <>Total: {total}</>
@@ -185,58 +176,58 @@ const Payments = () => {
     </div>
 
     {/* STARTS: MODAL PAYMENT RECEIPT 
-      *************************************************************************/}
-      <PopUpModal
-        title="Payment Receipt"
-        open={modalPaymentReceiptOpen}
-        close={closeModalPaymentReceipt}
-        width={700}
-        footer={null}
-        wrapClassName="modal-payment-receipt"
-      >
-        <div className="payment-receipt-wrapper" ref={printRef}>
-          <div className="paid-information">
-            <div className="payment-date">
-              {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC]')} {dayjs(paymentDetail?.updatedAt).format('Z').split(':')[0]}
-            </div>
-            <div className="paid-amount">
-              <div className="paid-amount-amount">£{paymentDetail?.booking?.discountedRent}</div>
-              <div className="paid-amount-paid">Paid</div>
-            </div>
+    *************************************************************************/}
+    <PopUpModal
+      title="Payment Receipt"
+      open={modalPaymentReceiptOpen}
+      close={closeModalPaymentReceipt}
+      width={700}
+      footer={null}
+      wrapClassName="modal-payment-receipt"
+    >
+      <div className="payment-receipt-wrapper" ref={printRef}>
+        <div className="paid-information">
+          <div className="payment-date">
+            {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC]')} {dayjs(paymentDetail?.updatedAt).format('Z').split(':')[0]}
           </div>
+          <div className="paid-amount">
+            <div className="paid-amount-amount">£{paymentDetail?.booking?.discountedRent}</div>
+            <div className="paid-amount-paid">Paid</div>
+          </div>
+        </div>
 
-          <div className="payment-details">
-            <div className="payment-details-title">Payment Details</div>
-            <ul className="payment-details-list">
-              <li>
-                <div className="payment-detail-label">Property Name</div>
-                <div className="payment-detail-value">{paymentDetail?.booking?.property?.addressOne}</div>
-              </li>
-              <li>
-                <div className="payment-detail-label">Paid to</div>
-                <div className="payment-detail-value">{paymentDetail?.paidTo}</div>
-              </li>
-              <li>
-                <div className="payment-detail-label">Paid by</div>
-                <div className="payment-detail-value">{paymentDetail?.paidBy}</div>
-              </li>
-              <li>
-                <div className="payment-detail-label">Receipt Number</div>
-                <div className="payment-detail-value">{paymentDetail?.receiptNumber}</div>
-              </li>
-              <li>
-                <div className="payment-detail-label">Transaction Type</div>
-                <div className="payment-detail-value">{paymentDetail?.transactionType}</div>
-              </li>
-            </ul>
-          </div>
+        <div className="payment-details">
+          <div className="payment-details-title">Payment Details</div>
+          <ul className="payment-details-list">
+            <li>
+              <div className="payment-detail-label">Property Name</div>
+              <div className="payment-detail-value">{paymentDetail?.booking?.property?.addressOne}</div>
+            </li>
+            <li>
+              <div className="payment-detail-label">Paid to</div>
+              <div className="payment-detail-value">{paymentDetail?.paidTo}</div>
+            </li>
+            <li>
+              <div className="payment-detail-label">Paid by</div>
+              <div className="payment-detail-value">{paymentDetail?.paidBy}</div>
+            </li>
+            <li>
+              <div className="payment-detail-label">Receipt Number</div>
+              <div className="payment-detail-value">{paymentDetail?.receiptNumber}</div>
+            </li>
+            <li>
+              <div className="payment-detail-label">Transaction Type</div>
+              <div className="payment-detail-value">{paymentDetail?.transactionType}</div>
+            </li>
+          </ul>
         </div>
-        <div className="print-receipt-button">
-          <ExtendedButton block customType="tertiary" onClick={handlePrint}>Print Receipt</ExtendedButton>
-        </div>
-      </PopUpModal>
-      {/* ENDS: MODAL PAYMENT RECEIPT
-      *************************************************************************/}
+      </div>
+      <div className="print-receipt-button">
+        <ButtonThemePrimary block onClick={handlePrint}>Print Receipt</ButtonThemePrimary>
+      </div>
+    </PopUpModal>
+    {/* ENDS: MODAL PAYMENT RECEIPT
+    *************************************************************************/}
   </>
   )
 }

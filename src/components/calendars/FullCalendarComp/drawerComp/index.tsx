@@ -23,6 +23,7 @@ const Index = (props: any) => {
     deleteReminder,
     getData,
     notifyAttendees,
+    startFrom,
   } = props;
 
   const renderTitle: any = {
@@ -32,7 +33,12 @@ const Index = (props: any) => {
         {!toggle && status === "pending" && <EditIcon className="cursor-pointer" onClick={() => setToggle(!toggle)} />}
       </div>
     ),
-    interview: <p>Interview Detail</p>,
+    interview: (
+      <div className="flex items-center gap-3">
+        <p>Interview Detail</p>
+        {!toggle && status === "pending" && <EditIcon className="cursor-pointer" onClick={() => setToggle(!toggle)} />}
+      </div>
+    ),
     reminder: (
       <div className="flex items-center gap-3">
         <p>Event Detail</p>
@@ -66,6 +72,7 @@ const Index = (props: any) => {
               getData={getData}
               updateEvent={updateEvent}
               notifyAttendees={notifyAttendees}
+              startFrom={startFrom}
             />
           ) : (
             <EditEvent

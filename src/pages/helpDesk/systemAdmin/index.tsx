@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig, Dropdown, MenuProps } from "antd";
+import { Button, Col, Divider, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig, Dropdown, MenuProps } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, BoxWrapper, NoDataFound } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import AllData from "./allData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import useCustomHook from '../actionHandler';
-import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import { Flag, More } from "../../../assets/images";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { getRoleBaseUsersData, helpDeskFilters, helpDeskPaginationState } from "../../../store";
+import useDashboardCustomHook from "../../dashboard/systemAdmin/actionHandler"
+import LogIssueModal from "./LogIssueModal/index";
 import "./style.scss";
 
 const filterData = [
   {
     title: "UserRole",
     userRole: [
-      "Company Admin",
-      "System Admin",
-      "Intern",
-      "Student",
-      "Manager",
-      "Agent"
+      { label: "Company Admin", value: "COMPANY_ADMIN" },
+      { label: "System Admin", value: "SYS_ADMIN Admin" },
+      { label: "Intern", value: "INTERN" },
+      { label: "Student", value: "STUDENT" },
+      { label: "Manager", value: "COMPANY_MANAGER" },
+      { label: "University Representative", value: "UNIVERSITY" },
     ],
   },
 ];
@@ -63,6 +64,8 @@ const issueTypeOptions = [
 const HelpDesk = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState()
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
@@ -86,6 +89,10 @@ const HelpDesk = () => {
     EditHelpDeskDetails,
   }: any = useCustomHook();
 
+  const {
+    getHepDeskDetail,
+    getHelpDeskComment,
+  } = useDashboardCustomHook();
   const helpDeskList = helpDeskData?.data;
   const adminUsersList = useRecoilValue(getRoleBaseUsersData)
   const [selectArrayData, setSelectArrayData] = useState<any>(adminUsersList);
@@ -128,21 +135,27 @@ const HelpDesk = () => {
     let items: MenuProps['items'] = [
       {
         key: "1",
-        label: <span onClick={() => setState({ ...state, openModal: true, details: item })}>View Details</span>
+        label: <a onClick={() => {
+          setOpen(true), setId(item.id),
+            getHepDeskDetail(item?.id, () => {
+              setOpen(true);
+              getHelpDeskComment(item?.id);
+            });
+        }}>View Details</a>
       },
       {
         key: '2',
-        label: <span onClick={() => item.isFlaged ? handleUnFlag(item)
+        label: <a onClick={() => item.isFlaged ? handleUnFlag(item)
           :
-          handleAddFlag(item)}>{item.isFlaged ? 'Un' : 'Add'} Flag</span>
+          handleAddFlag(item)}>{item.isFlaged ? 'Un' : 'Add'} Flag</a>
       },
       {
         key: "3",
-        label: <span onClick={() => handleUnAssign(item)}>Unassign</span>,
+        label: <a onClick={() => handleUnAssign(item)}>Unassign</a>,
       },
       {
         key: "4",
-        label: <span onClick={() => handleHistoryModal(item.id)}>History</span>
+        label: <a onClick={() => handleHistoryModal(item.id)}>History</a>
       },
     ];
 
@@ -150,7 +163,6 @@ const HelpDesk = () => {
 
     if (item.assignedUsers?.length === 0) {
       items = items?.slice(0, 2)?.concat(items.slice(3))
-      console.log("items are", items?.slice(0, 2));
     }
 
     return (
@@ -176,7 +188,7 @@ const HelpDesk = () => {
     let args = removeEmptyValues(filter)
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, [''])
   }
-  
+
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -323,6 +335,7 @@ const HelpDesk = () => {
 
   const handleRemoveUser = (id: string) => {
     setAssignUser(assignUser.filter((user: any) => user.value !== id));
+    setFilter({ ...filter, assignedUsers: filter.assignedUsers?.filter((user: any) => user !== id) })
   };
 
   const handleAddUser = (user: any) => {
@@ -447,14 +460,14 @@ const HelpDesk = () => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setFilter({ ...filter, roles: items.toUpperCase() })}
+                        onClick={() => setFilter({ ...filter, roles: items.value?.toUpperCase() })}
                         className={`
-                        bg-red rounded-xl text-sm
+                        rounded-xl text-sm text-input-bg-color text-secondary-color
                         font-normal p-1 pr-3 pl-3
                         mr-2 mb-2 cursor-pointer
-                        ${items.toUpperCase() === filter.roles && 'text-input-bg-color'}`}
+                        ${items.value?.toUpperCase() === filter.roles && 'activeRole'}`}
                       >
-                        {items}
+                        {items.label}
                       </div>
                     );
                   })}
@@ -556,6 +569,7 @@ const HelpDesk = () => {
           </Row>
         </Col>
       </Row>
+      <LogIssueModal open={open} setOpen={setOpen} id={id} args={removeEmptyValues(filter)} setLoading={setLoading} />
     </div>
   );
 };

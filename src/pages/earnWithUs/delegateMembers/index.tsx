@@ -36,6 +36,7 @@ const DelegateMembers = () => {
     limit: 5,
   }
   const [filterParams, setFilterParams] = useState(initParams);
+  const pageSize = 5;
 
 
   /* EVENT LISTENERS
@@ -83,9 +84,8 @@ const DelegateMembers = () => {
       dataIndex: 'no.',
       align: 'center',
       render: (_, row, index) => {
-        return (
-          <>{index < 9 ? 0 : null}{index + 1}</>
-        );
+        const rowNumber = (pageNo - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
       },
     },
     {
@@ -198,7 +198,7 @@ const DelegateMembers = () => {
                   dataSource={delegateMembers}
                   onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                   pagination={totalMembers > 5 ? {
-                    pageSize: 5,
+                    pageSize: pageSize,
                     current: pageNo,
                     total: totalMembers,
                     showTotal: (total) => <>Total: {total}</>
@@ -213,4 +213,4 @@ const DelegateMembers = () => {
   )
 }
 
-export default DelegateMembers
+export default DelegateMembers;

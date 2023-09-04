@@ -1,9 +1,11 @@
-import { Button, Col, Modal, Row } from "antd";
+import { Col, Modal, Row } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
 import ReactQuill from "react-quill";
 import { textEditorData } from "../Setting/Common/TextEditsdata";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../store";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
+import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
 import "quill/dist/quill.snow.css";
 
 export const OfferLetterTemplateModal = (props: any) => {
@@ -111,29 +113,27 @@ export const OfferLetterTemplateModal = (props: any) => {
                         defaultValue={templateValues?.content}
                         value={templateValues?.content}
                         onChange={onChangeHandler}
-                        modules={textEditorData} 
-                      /> 
+                        modules={textEditorData}
+                      />
                     </div>
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[24, 30]}>
-                      <Col xxl={24} xl={24} lg={ 24} md={24} sm={24} xs={24}> 
-                        <Button
-                          className=" w-[100%] green-graph-tooltip-bg rounded-[8px] white-color sign-send-btn" 
+                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                        <ButtonThemePrimary
                           onClick={handleOfferLetterTemplate}
-                        > 
+                        >
                           Sign & Send
-                        </Button>
-                      </Col> 
+                        </ButtonThemePrimary>
+                      </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button
-                          className=" border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+                        <ButtonThemeSecondary
                           onClick={onCancel}
                         >
                           Cancel
-                        </Button>
+                        </ButtonThemeSecondary>
                       </Col>
                     </Row>
                   </Col>

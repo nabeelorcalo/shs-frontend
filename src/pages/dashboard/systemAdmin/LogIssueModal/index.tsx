@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Input, Row, Form, Tree } from "antd";
+import { Button, Col, Input, Row, Form, Tree, UploadFile } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
@@ -66,6 +66,7 @@ const LogIssueModal = (props: any) => {
   const [isArchive, setIsArchive] = useState(helpDeskDetail?.isFlaged);
   const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
   const [comment, setComment] = useState('');
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [open, setOpen] = useState(false);
   const [initialState, setInitialState] = useState<any>({
     type: null,
@@ -110,14 +111,16 @@ const LogIssueModal = (props: any) => {
   };
 
   const handleCommentAdd = () => {
-    const payload = {
+    const payload: any = {
       entityId: id,
       entityType: "HELPDESK_MESSAGES",
-      comment
+      comment,
     };
+    fileList?.length > 0 && (payload.media = fileList)
     return addHelpDeskComment(payload, () => {
       getHelpDeskComment(id);
       setComment("");
+      setFileList([])
     });
   };
 
@@ -149,6 +152,7 @@ const LogIssueModal = (props: any) => {
         image={getUserAvatar({ profileImage: item?.commentedBy?.profileImage })
         }
         content={item?.comment}
+        attachments={item?.attachments}
         time={dayjs(item?.createdAt).fromNow()}
         likes={item?.totalLikes}
         youLike={item?.youLike}
@@ -172,6 +176,7 @@ const LogIssueModal = (props: any) => {
         name={obj?.commentedBy?.firstName + " " + obj?.commentedBy?.lastName}
         image={getUserAvatar({ profileImage: obj?.commentedBy?.profileImage })}
         content={obj?.comment}
+        attachments={obj?.attachments}
         time={dayjs(obj?.createdAt).fromNow()}
         likes={obj?.totalLikes}
         youLike={obj?.youLike}
@@ -393,8 +398,8 @@ const LogIssueModal = (props: any) => {
                   <Col xs={24}>
                     <label>Attachment (Optional)</label>
                     <Row gutter={[20, 20]} className="pt-3">
-                      {helpDeskDetail?.attachments?.map((img: any) => (
-                        <Col xs={24} xxl={12} xl={12} lg={12} md={12}>
+                      {helpDeskDetail?.attachments?.map((img: any, index: number) => (
+                        <Col key={index} xs={24} xxl={12} xl={12} lg={12} md={12}>
                           <img
                             className="w-full"
                             src={`${constants.MEDIA_URL}/${img?.mediaId}.${img?.metaData?.extension}`}
@@ -446,7 +451,10 @@ const LogIssueModal = (props: any) => {
                 <CreateComment
                   handleCommentAdd={handleCommentAdd}
                   comment={comment}
-                  setComment={setComment} />
+                  setComment={setComment}
+                  fileList={fileList}
+                  setFileList={setFileList}
+                />
               </div>
             </Col>
           </Row>

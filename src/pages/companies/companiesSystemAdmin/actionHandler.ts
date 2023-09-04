@@ -1,21 +1,19 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
+import React, { useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import constants from "../../../config/constants";
 import apiEndPoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { companySystemAdminState } from "../../../store";
 import { Notifications } from "../../../components";
 
-// Chat operation and save into store
 const useCustomHook = () => {
   const [subAdminCompany, setSubAdminCompany] = useRecoilState(
     companySystemAdminState
   );
-
+  const [companyPaginationObject, setCompanyPaginationObject] = useState<any>(null);
   const {
     COMPANY_SUB_ADMIN_SYSTEM_ADMIN,
     FORGOTPASSWORD,
@@ -23,9 +21,25 @@ const useCustomHook = () => {
     UNBLOCK_PROPERTY_ACCESS
   } = apiEndPoints;
 
-  const getSubAdminCompany = async (param: any) => {
-    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN, param);
+  const getSubAdminCompany = async (param: any, tableParams: any, setTableParams: any) => {
+    const newParam:any={}
+    Object?.assign(newParam, param)
+    const keys = Object?.keys(newParam)
+    for (let key of keys) {
+      if (!newParam[key])
+        delete newParam[key]
+    }
+    const { data, pagination } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN, newParam);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+        page: pagination?.page,
+      },
+    });
     setSubAdminCompany(data);
+    setCompanyPaginationObject(pagination)
   };
   
   const adminAccess = async ( values: any, onSuccess?: () => void) => {
@@ -102,7 +116,8 @@ const useCustomHook = () => {
     getSubAdminCompany,
     downloadPdfOrCsv,
     forgotpassword,
-    adminAccess
+    adminAccess,
+    companyPaginationObject
   };
 };
 

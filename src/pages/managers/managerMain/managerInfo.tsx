@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Button, Col, Row, Typography, Avatar } from "antd";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -10,15 +10,14 @@ import { Success } from "../../../assets/images";
 import { currentUserState } from "../../../store";
 
 const ManagerInfo = (props: any) => {
-  const { searchItem } = props;
+  const { searchItem, filter, tableParams, setTableParams } = props;
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
-  const { avatar } = useRecoilValue(currentUserState);
 
   useEffect(() => {
-    action.getManagerCompanyAdmin({ page: 1, search: searchItem });
-  }, [searchItem]);
+    action.getManagerCompanyAdmin(filter,tableParams,setTableParams);
+  }, [searchItem,filter]);
 
   return (
     <div className="manager-info">
