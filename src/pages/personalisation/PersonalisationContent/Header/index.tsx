@@ -51,12 +51,14 @@ const AppHeader = () => {
               </div>
             </div>
             {/* Collapseable Ends */}
-            <div className="ikd-header-organisation">
-              <div className="organisation-title-preview">Your Organisation</div>
-              <div className="organisation-logo-preview">
-                <img src={previewLogo ?? ORG_LOGO} />
+            {previewLogo &&
+              <div className="ikd-header-organisation">
+                <div className="organisation-title-preview">Your Organisation</div>
+                <div className="organisation-logo-preview">
+                  <img src={previewLogo} />
+                </div>
               </div>
-            </div>
+            }
           </div>
           <div className="ikd-header-right">
             <div className="ikd-header-message-notif">
