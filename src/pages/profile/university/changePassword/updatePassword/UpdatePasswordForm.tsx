@@ -7,9 +7,6 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import useCustomHook from "../../../actionHandler";
 import { CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
 const CreatePasswordForm = ({setShowSideViewType}:any) => {
   const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
@@ -20,7 +17,6 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form:", values);
     const { currentPassword, newPassword } = values;
     if (password === confirmPassword) {
       action

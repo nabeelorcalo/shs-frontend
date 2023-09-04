@@ -103,7 +103,6 @@ const DetailHistory = () => {
     getInternPerformance(setLoadingInternPerformance, evalId);
     getPerformanceSummary(setLoadingSummary)
   }, []);
-console.log('performanceSummary:: ', performanceSummary)
   
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/

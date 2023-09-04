@@ -19,7 +19,6 @@ const NewOfferModal = (props: any) => {
   useEffect(() => {
     getListings({}, setLoading)
   }, [])
-  console.log(state, deleteModal);
 
   const onFinish = (values: any) => {
     if (state?.data?.id) {

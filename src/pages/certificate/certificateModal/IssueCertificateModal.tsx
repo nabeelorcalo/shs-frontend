@@ -82,7 +82,6 @@ const IssueCertificate = (props: Props) => {
   const handleDescription = (e: any) => {
 
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
-    // console.log(templatesData, desc);
     setCertificateDetails({
       ...certificateDetails, templateId: desc[0]?.id, desc: desc[0]?.description,
       certificateDesign: desc[0]?.attachment?.filename
