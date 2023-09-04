@@ -89,7 +89,7 @@ const endpoints = {
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
-  HOLIDAY_LIST: "/Leaves/upcoming-holidays",
+  HOLIDAY_LIST: "/Leaves/v2/upcoming-holidays",
   IP_API: "https://api.country.is",
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
