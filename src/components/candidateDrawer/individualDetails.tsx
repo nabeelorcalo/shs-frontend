@@ -165,7 +165,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
               <info.img width={24} className="min-w-[24px]" />
             </div>
             <div className="flex-1">
-              <p className="m-0 break-all">{info.title}</p>
+              <p className="m-0 break-all text-sm">{info.title}</p>
             </div>
           </div>
         ))}
@@ -182,13 +182,13 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                 </p>
               ))}
               {skills?.length > 6 && (
-                <p className="plus rounded-[14px] py-[2px] px-[12px]">
+                <p className="plus rounded-[14px] py-[2px] px-[12px] text-sm">
                   +{skills?.length - skills?.slice(0, 6)?.length}
                 </p>
               )}
             </>
           ) : (
-            <p className="m-0">N/A</p>
+            <p className="m-0 text-sm">N/A</p>
           )}
         </div>
       </div>
