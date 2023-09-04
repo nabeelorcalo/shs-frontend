@@ -593,6 +593,7 @@ export { ReactComponent as IconRentBilling } from "./listings/icon-rent-billing.
 export { ReactComponent as IconRulesRef } from "./listings/icon-rules-ref.svg";
 export { ReactComponent as IconRentalConditon } from "./listings/icon-rental-condition.svg";
 export { ReactComponent as IconRemoveAttachment } from "./listings/icon-remove-attachment.svg";
+export { ReactComponent as CheckSuccess} from "./listings/icon-check-success.svg";
 
 // Attendance Icons
 export { ReactComponent as Absent } from "./Attendance/Absent.svg";

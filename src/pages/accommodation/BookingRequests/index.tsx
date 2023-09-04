@@ -39,6 +39,7 @@ const BookingRequests = () => {
   const [bookingRequestId, setBookingRequestId] = useState(null);
   const [loadingCancel, setLoadingCancel] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
   const [propertyContractId, setPropertyContractId] = useState(null);
   const [loadingContract, setLoadingContract] = useState(false);
   const role = useRecoilValue(currentUserRoleState);
@@ -113,10 +114,9 @@ const BookingRequests = () => {
       title: 'No',
       dataIndex: 'no.',
       align: 'center',
-      render: (_, row:any, index) => {
-        return (
-          <>{index + 1}</>
-        );
+      render: (_, row, index) => {
+        const rowNumber = (currentPage - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
       },
     },
     {

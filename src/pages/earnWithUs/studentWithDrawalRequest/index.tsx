@@ -37,6 +37,7 @@ const WithDrawalRequest = () => {
     userId: id
   }
   const [filterParams, setFilterParams] = useState(initParams);
+  const pageSize = 5;
 
 
   /* EVENT LISTENERS
@@ -87,10 +88,9 @@ const WithDrawalRequest = () => {
       dataIndex: 'no.',
       align: 'center',
       render: (_, row, index) => {
-        return (
-          <>{index < 9 ? 0 : null}{index + 1}</>
-        );
-      },
+        const rowNumber = (currentPage - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
+      }
     },
     {
       dataIndex: "bankName",
@@ -187,7 +187,7 @@ const WithDrawalRequest = () => {
                 dataSource={withdrawalRequests}
                 onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                 pagination={totalRequests > 5 ? {
-                  pageSize: 5,
+                  pageSize: pageSize,
                   current: currentPage,
                   total: totalRequests,
                   showTotal: (total) => <>Total: {total}</>

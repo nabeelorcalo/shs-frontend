@@ -142,8 +142,7 @@ const Dashboard = () => {
       render: (_, row, index) => {
         return (
           <>
-            {index < 9 ? 0 : null}
-            {index + 1}
+            {index < 9 ? `0${index + 1}` : index + 1}
           </>
         );
       },

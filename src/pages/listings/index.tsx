@@ -13,8 +13,10 @@ import {
   IconLink,
   IconAddUpload,
   IconRemoveAttachment,
-  IconCloseModal
-} from '../../assets/images'
+  IconCloseModal,
+  CheckSuccess,
+  IconCheckSuccess
+} from '../../assets/images';
 import {
   Button,
   Table,
@@ -61,6 +63,7 @@ const Listings = () => {
   const [loadingAddListing, setLoadingAddListing] = useState(false);
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [modalSuccessListingOpen, setModalSuccessListingOpen] = useState(false)
   const [stepCurrent, setStepCurrent] = useState(0);
   const [entireProperty, setEntireProperty] = useState(false);
   const [uploadURL, setUploadURL] = useState(false);
@@ -186,6 +189,14 @@ const Listings = () => {
   function closeModalDeleteListing() {
     setModalDeleteOpen(false)
     setPropertyID('')
+  }
+  
+  function openModalSuccessListing() {
+    setModalSuccessListingOpen(true)
+  }
+
+  function closeModalSuccessListing() {
+    setModalSuccessListingOpen(false);
   }
 
   const normFile = (e: any) => {
@@ -1186,8 +1197,8 @@ const Listings = () => {
     }
     if(!response.error) {
       setLoadingAddListing(false);
-      Notifications({ title: 'Success', description: response.message, type: 'success' })
       closeModalAddListing();
+      openModalSuccessListing();
       getListings({}, setLoadingAllProperties);
     }
   }
@@ -1294,8 +1305,33 @@ const Listings = () => {
           </div>
         </Form>
       </Modal>
-
       {/* ENDS MODAL: ADD LISTING 
+      ***********************************************************************************/}
+
+      {/* MODAL: SUCCESS CREATED LISTING 
+      ***********************************************************************************/}
+      <Modal
+        wrapClassName="modal-success-create-listing"
+        open={modalSuccessListingOpen}
+        onCancel={closeModalSuccessListing}
+        closeIcon={<IconCloseModal />}
+        footer={null}
+        width={570}
+      >
+        <div className="listing-success-content pt-[45px] pb-[20px]">
+          <div className="success-title flex items-center justify-center">
+            <CheckSuccess />
+            <span className="ml-[10px]">Success</span>
+          </div>
+          <div className="success-text mt-[30px]">
+            Congratulations!
+          </div>
+          <div className="success-text max-w-[413px] mx-auto">
+            Your listing has been sent for verification, it will take 4 to 5 working days before its published!
+          </div>
+        </div>
+      </Modal>
+      {/* ENDS MODAL: SUCCESS CREATED LISTING 
       ***********************************************************************************/}
 
       <Alert
