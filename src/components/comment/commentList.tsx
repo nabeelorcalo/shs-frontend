@@ -26,7 +26,7 @@ export const CommentList = (props: any) => {
               <div className="flex gap-3">
                 <p className="font-medium">{`${commentedByUser?.firstName} ${commentedByUser?.lastName}`}</p>
                 <p className="mt-1 txt-p">
-                  {dayjs(createdAt).format(`HH.mm`)} <Dot /> {dayjs(createdAt).format(`DD MMM YYYY`)}
+                  {dayjs(createdAt).format(`HH:mm`)} <Dot className="mx-1" /> {dayjs(createdAt).format(`DD MMM YYYY`)}
                 </p>
               </div>
               <p>{comment}</p>

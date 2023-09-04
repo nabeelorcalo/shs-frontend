@@ -23,11 +23,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     selectedCandidate: {
       id,
       userId,
-      internship: { title: internshipTitle, internType },
+      internship: { title: internshipTitle, interType },
       stage,
       createdAt,
     },
   } = props;
+
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   // logged in user data
@@ -123,7 +124,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const detailsData = [
     { title: "Source", value: "Career Website" },
     { title: "Owner", value: `${userData?.firstName} ${userData?.lastName}`, image: userData?.avatar ?? "avatar" },
-    { title: "Internship Type", value: internType ? internType?.replace("_", " ")?.toLowerCase() : "" },
+    { title: "Internship Type", value: interType ? interType?.replace("_", " ")?.toLowerCase() : "" },
     { title: "Applied Date", value: dayjs(createdAt).format("DD/MM/YYYY") },
     {
       title: "Assignee",
@@ -158,8 +159,9 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         assignee={assignee}
         userData={userData}
       />
+
       <div className="cmnt-wrapper mt-8">
-        <p className="heading">Comments</p>
+        <p className="font-semibold text-lg text-primary-title-color">Comments</p>
       </div>
       <CreateComment
         userData={userData}

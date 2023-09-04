@@ -6,18 +6,18 @@ import { getUserAvatar } from "../../helpers";
 import { useId } from "react";
 
 export const CandidateDetails = (props: any) => {
-  const { detailsData, getCompanyManagerList, companyManagerList, handleSelectAssignee, assignee, userData } = props;
+  const { detailsData, getCompanyManagerList, companyManagerList, handleSelectAssignee, assignee, userData } = props;  
   return (
     <div className="details mt-7 ">
       <div className="heading">
-        <p>Details</p>
+        <p className="font-semibold text-lg text-primary-title-color">Details</p>
       </div>
       <div className="mt-3">
         <Row gutter={[30, 35]}>
           {detailsData?.map((item: any) => (
             <Col key={useId()} xl={8} lg={8} md={8} sm={12} xs={24}>
               <div className="asignee-wrap">
-                <h2 className="m-0 font-medium text-base title">{item.title}</h2>
+                <h2 className="m-0 font-medium text-base title text-primary-title-color">{item.title}</h2>
                 {item.title === "Assignee" ? (
                   <DropDownNew
                     placement={"bottomRight"}
