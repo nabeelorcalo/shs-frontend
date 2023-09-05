@@ -158,7 +158,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         userData={userData}
       />
       <div className="cmnt-wrapper mt-8">
-        <p className="heading">Comments</p>
+        <p className="font-semibold text-lg text-primary-title-color">Comments</p>
       </div>
       <CreateComment
         userData={userData}

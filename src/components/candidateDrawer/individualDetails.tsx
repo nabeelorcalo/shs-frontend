@@ -62,7 +62,6 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="user-info">
           <Avatar
             className="h-[80px] w-[80px] rounded-full object-cover relative"
-            // src={userDetail?.avatar}
             src={`${constants.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`}
             alt={userDetail?.firstName}
             icon={
@@ -70,8 +69,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                 {userDetail?.firstName[0]}
                 {userDetail?.lastName[0]}
               </span>
-            }
-          />
+            }/>
           <p className="user-name capitalize">{`${userDetail?.firstName} ${userDetail?.lastName}`}</p>
         </div>
 
@@ -91,8 +89,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                   ),
                   key: "",
                 },
-              ]}
-            >
+              ]}>
               <div className="flex justify-center gap-2 items-center dropdown-inpp cursor-pointer">
                 <StarFilledIcon />
                 <p>{rating}.0</p>
@@ -137,7 +134,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
       </div>
 
       <div className="apllied-for">
-        <p className="heading">Apllied For</p>
+        <p className="heading">Applied for</p>
         <div className="details">
           <p className="p">{internshipTitle}</p>
           <p className="p1 capitalize">

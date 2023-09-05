@@ -10,7 +10,7 @@ export const HiringProcessFlow = (props: any) => {
   return (
     <div className="hiring flex flex-wrap justify-between items-center mt-5">
       <div className="flex items-center gap-5">
-        <p className="heading capitalize">{internshipTitle}</p>
+        <p className="capitalize text-lg font-semibold">{internshipTitle}</p>
         {offerContractStatus && (
           <p
             className={`text-sm text-white capitalize 
@@ -24,7 +24,7 @@ export const HiringProcessFlow = (props: any) => {
       </div>
       {!["rejected", "hired"].some(ele => hiringProcessList?.includes(ele)) && (
         <div className="gap-2 flex">
-          <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
+          <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer text-base">
             Reject
           </button>
           {!hiringProcessList?.includes("hired") &&

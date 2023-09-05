@@ -57,21 +57,27 @@ const useCustomHook = () => {
       // set timer running false if user don't clockout 
       data?.user?.role === constants?.INTERN && localStorage.setItem("timer:running", "false");
       setCurrentUser(data.user);
-
+      
       // set theme state on login
       const companyLogo = data?.user?.company?.logo
+        ? {
+            uid: data?.user?.company?.logo?.id,
+            name: data?.user?.company?.logo?.filename,
+            url: `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`,
+          }
+        : null;
+        const previewLogo = data?.user?.company?.logo
         ? `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
         : null;
-      if (data?.user?.role === constants.INTERN || data?.user?.role === constants.MANAGER || data?.user?.role === constants.COMPANY_ADMIN) {
+
         setOrgLogo(companyLogo ?? null);
-        setPreviewLogo(companyLogo ?? null);
+        setPreviewLogo(previewLogo ?? null);
         setSBColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
         setSbPreviewColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
         setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor ?? personalizeColorTheme.defaultPrimIconColor);
         setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor ?? personalizeColorTheme.defaultSecIconColor);
         setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor ?? personalizeColorTheme.defaultBtnPrimColor);
         setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor ?? personalizeColorTheme.defaultBtnSecColor);
-      }
 
       return res.data;
     } catch (error: any) {

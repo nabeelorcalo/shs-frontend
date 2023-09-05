@@ -14,13 +14,13 @@ export const DocumentList = (props: any) => {
               {data?.image}
               <div className="">
                 <p className="cv-heading">{data?.title}</p>
-                <p>{data?.descr}</p>
+                <p className="text-sm">{data?.descr}</p>
               </div>
             </div>
             <div className="flex items-center gap-5">
               <div>
-                <p>{data?.date}</p>
-                <p className="ml-8">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
+                <p className="text-sm text-success-placeholder-color">{data?.date}</p>
+                <p className="text-sm text-success-placeholder-color text-right">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center"
