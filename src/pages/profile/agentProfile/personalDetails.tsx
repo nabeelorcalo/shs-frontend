@@ -22,7 +22,6 @@ const PersonalDetails = () => {
     address,
     phoneCode,
   } = useRecoilValue(currentUserState);
-  console.log(currentUser, 'currentUser');
 
   const [flagCode, setFlagCode] = useState<any>(phoneCode || "+44");
 

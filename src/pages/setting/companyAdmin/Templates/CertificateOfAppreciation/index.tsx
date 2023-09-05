@@ -39,7 +39,6 @@ const TemplatesCertificateOfAppreciation = () => {
 
   const filterData = templatesData?.filter((item: any) => item?.type === templateType);
 
-  console.log(filterData)
   // handle search templates 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
