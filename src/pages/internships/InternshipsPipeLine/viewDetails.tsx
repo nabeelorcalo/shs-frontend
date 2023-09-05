@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { Drawer, Row, Col } from "antd";
 import DrawerTabs from "./drawerTabs";
-import { DrawerWidth,IndividualDetails } from "../../../components";
+import { DrawerWidth, IndividualDetails } from "../../../components";
 import actionHandler from "../actionHandler";
 
 interface Props {
@@ -60,7 +60,7 @@ const DetailDrawer = (props: Props) => {
             rating={rating}
             stage={stage}
             internshipTitle={title}
-            internType={internType}
+            internType={selectedCandidate?.internship?.interType}
             AplliedDate={createdAt}
             skills={studentDetails?.personal?.skills}
             handleRating={handleRating}
