@@ -218,7 +218,7 @@ const ListingDetails = (props: any) => {
                     Are two people allowed to live in this room
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.twoPeopleAllowed || 'N/A'}
+                    {props.recentList[0]?.twoPeopleAllowed  ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -273,7 +273,7 @@ const ListingDetails = (props: any) => {
                     Bills
                   </Typography>
                   <Typography className="listing-description">
-                    Included
+                  {props.recentList[0]?.allBillsIncluded ? 'Included' :" Not Included" || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -283,7 +283,7 @@ const ListingDetails = (props: any) => {
                     Minimum Stay
                   </Typography>
                   <Typography className="listing-description">
-                    2 Months
+                  {props.recentList[0]?.minimumStay || 'N/A'} months
                   </Typography>
                 </div>
               </Col>
@@ -338,7 +338,7 @@ const ListingDetails = (props: any) => {
                     Preferable
                   </Typography>
                   <Typography className="listing-description">
-                    Students
+                  {props.recentList[0]?.tenantTypePreference || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -358,7 +358,7 @@ const ListingDetails = (props: any) => {
                     Allow to Registered
                   </Typography>
                   <Typography className="listing-description">
-                    Yes
+                  {props.recentList[0]?.tenantsCanRegisterAddress ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -378,7 +378,7 @@ const ListingDetails = (props: any) => {
                     Pets
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.petsAllowed || 'N/A'}
+                    {props.recentList[0]?.petsAllowed ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -388,7 +388,7 @@ const ListingDetails = (props: any) => {
                     Musical Instruments
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.musicalInstrumentsAllowed || 'N/A'}
+                    {props.recentList[0]?.musicalInstrumentsAllowed ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -398,14 +398,35 @@ const ListingDetails = (props: any) => {
                 </Typography>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <div className="mb-3">
+                {props.recentList[0]?.incomeProofRequired === true && <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Proof of Income
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.incomeProofRequired || 'N/A'}
+                      Salary slip or bank statements from the tenant or their sponsor
                   </Typography>
-                </div>
+                </div>}
+                {props.recentList[0]?.identityProofRequired === true &&
+                  <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    Proof of Identity
+                  </Typography>
+                  <Typography className="listing-description">
+                  Government issued ID, passport, drivers license.
+                  </Typography>
+                  </div>
+                }
+                {props.recentList[0]?.occupationProofRequired === true &&
+                  <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    Proof of occupation or enrollment
+                  </Typography>
+                  <Typography className="listing-description">
+                    
+                  University enrolment certificate, Internship or employee contract.
+                  </Typography>
+                  </div>
+                }   
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Typography className="listing-styles-main mb-3">

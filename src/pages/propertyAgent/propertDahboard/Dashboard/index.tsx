@@ -29,18 +29,6 @@ const items: MenuProps['items'] = [
     label: 'Year',
     key: '1',
   },
-  {
-    label: 'Month',
-    key: '2',
-  },
-  {
-    label: 'Weekly',
-    key: '3',
-  },
-  {
-    label: 'Daily',
-    key: '4',
-  },
 ];
 const menuProps = {
   items
@@ -202,6 +190,7 @@ const MainDashboard = (props: any) => {
               height="50vh"
             >
               <Dropdown
+                disabled
                 menu={menuProps}
                 className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
                 <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
