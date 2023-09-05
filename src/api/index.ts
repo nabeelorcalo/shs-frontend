@@ -77,19 +77,13 @@ const handleError = async (error: any) => {
   });
 
   if (error.response?.status === 401 || error.response?.data?.message?.includes('Token')) {
-    const isRemembered: any = JSON.parse(JSON.stringify(localStorage.getItem('remeberMe')));
+    const isRemembered: any = localStorage.getItem('remeberMe');
 
-    try {
-      if (isRemembered) {
-        await handleNewAuthToken();
-      }
-    } catch (refreshError) {
-      setTimeout(() => {
-        if (accessToken) {
-          localStorage.removeItem("accessToken");
-        }
-        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
-      }, 2000);
+    if (isRemembered === "true") {
+      await handleNewAuthToken();
+    }else if(accessToken){
+      localStorage.removeItem("accessToken");
+      window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
     }
   }
 };
