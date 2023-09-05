@@ -79,12 +79,12 @@ const handleError = async (error: any) => {
   if (error.response?.status === 401 || error.response?.data?.message?.includes('Token')) {
     const isRemembered: any = localStorage.getItem('remeberMe');
 
-    if (isRemembered === "true") {
-      await handleNewAuthToken();
-    }else if(accessToken){
+    // if (isRemembered === "true") {
+      // await handleNewAuthToken();
+    // }else if(accessToken){
       localStorage.removeItem("accessToken");
       window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
-    }
+    // }
   }
 };
 
