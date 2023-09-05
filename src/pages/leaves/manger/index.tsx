@@ -8,8 +8,7 @@ import usecustomHook from "../actionHandler";
 import { currentUserRoleState } from "../../../store";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { LeaveCard, PageHeader, UpcomingHolidayComp, Button, BoxWrapper, MonthChanger, Loader, ButtonThemeSecondary } from "../../../components";
-import { HeartIcon, LeaveProfileImg, LeavesIcon, MedicalHeart, WorkFromHom } from "../../../assets/images";
-import { LeaveTypeData } from "./managerMockData";
+import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from "../../../assets/images";
 import ManagerCalendar from "./ManagerCalendar";
 import "./style.scss";
 
@@ -23,6 +22,7 @@ const index = (props: any) => {
   const [leaveStatsLoading, setLeaveStatsLoading] = useState(true);
   const [pendingLeavesLoading, setPendingLeavesLoading] = useState(true);
   const currentMonthYear = dayjs().locale("en").format("MMMM YYYY");
+  const LeaveTypeData = ['Sick', 'Casual', 'Work From Home', 'Medical'];
 
   const {
     leaveStats,
@@ -260,7 +260,6 @@ const index = (props: any) => {
                                       : "rgba(233, 111, 124, 1)",
                             }}
                           ></p>
-
                           <p className="font-medium">{data}</p>
                         </div>
                       );

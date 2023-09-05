@@ -5,7 +5,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import ResourcePlugin from "@fullcalendar/resource";
 import dayjs from "dayjs";
-import { leaveCalendarResorceData, leaveCalendarEventsData } from "../managerMockData";
 import "./style.scss";
 import ManagerCalanderDrawerData from "./managerCalanderDrawerData";
 import useCustomHook from "../../actionHandler";
@@ -15,7 +14,7 @@ const ManagerCalendar = (props: any) => {
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState<boolean>(false);
   const [eventData, seteventData] = useState({});
   const [selectedId, setSelectedId] = useState<any>("");
-  const { managerEvents, managerResource, getLeaveDetailById, leaveDetail, approveDeclineLeaveRequest } = useCustomHook();
+  const { managerEvents, managerResource, getLeaveDetailById, approveDeclineLeaveRequest } = useCustomHook();
 
   const handleEventContent = (eventInfo: any) => {
     const title = eventInfo?.event?._def?.title;
@@ -103,7 +102,6 @@ const ManagerCalendar = (props: any) => {
                   return (
                     <div className="mb-[20px]">
                       <p className="pb-2 text-[#14142A] text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
-                      {/* <p className="text-[#4E4B66] text-base font-semibold">{dayjs(args.date).format('D')}</p> */}
                     </div>
                   );
                 },
@@ -141,7 +139,6 @@ const ManagerCalendar = (props: any) => {
         </div>
       </div>
       <ManagerCalanderDrawerData
-        // title={"hello"}
         setIsOpenCalendarDrawer={setIsOpenCalendarDrawer}
         eventData={eventData}
         isOpenCalendarDrawer={isOpenCalendarDrawer}

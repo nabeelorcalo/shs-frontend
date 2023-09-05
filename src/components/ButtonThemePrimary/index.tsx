@@ -24,9 +24,9 @@ export const ButtonThemePrimary = ({
   document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
 
   function lightenColor(color:any, percent:any) {
-    const r = parseInt(color.slice(1, 3), 16);
-    const g = parseInt(color.slice(3, 5), 16);
-    const b = parseInt(color.slice(5, 7), 16);
+    const r = parseInt(color?.slice(1, 3), 16);
+    const g = parseInt(color?.slice(3, 5), 16);
+    const b = parseInt(color?.slice(5, 7), 16);
   
     const adjustedR = Math.min(255, r + (255 - r) * (percent / 100));
     const adjustedG = Math.min(255, g + (255 - g) * (percent / 100));

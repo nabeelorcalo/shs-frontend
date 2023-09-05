@@ -63,7 +63,7 @@ const UniversityRepReportTable = (props: any) => {
     },
 
     {
-      title: "Action",
+      title: "Actions",
       dataIndex: "",
       render: (_: any, data: any) => (
         <DropDownNew

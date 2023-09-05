@@ -7,6 +7,7 @@ import {
   RegisterMemberAndFeddbackGraph,
   PopUpModal,
   Loader,
+  ButtonThemePrimary,
 } from "../../../components";
 import {
   delegateDashboardState,
@@ -142,8 +143,7 @@ const Dashboard = () => {
       render: (_, row, index) => {
         return (
           <>
-            {index < 9 ? 0 : null}
-            {index + 1}
+            {index < 9 ? `0${index + 1}` : index + 1}
           </>
         );
       },
@@ -384,14 +384,13 @@ const Dashboard = () => {
             </div>
             <div className="invite-email-submit">
               <Form.Item>
-                <Button
+                <ButtonThemePrimary
                   loading={loadingInvite}
                   htmlType="submit"
-                  className="button-tertiary"
                   block
                 >
                   Invite
-                </Button>
+                </ButtonThemePrimary>
               </Form.Item>
             </div>
           </div>
