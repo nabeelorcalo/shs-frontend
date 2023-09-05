@@ -15,7 +15,6 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import { useNavigate, useSearchParams } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
-import "react-phone-input-2/lib/style.css";
 import PasswordCritera from "./PasswordCritera";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import UserSelector from "../../../../components/UserSelector";
@@ -27,6 +26,18 @@ import { newCountryListState } from "../../../../store/CountryList";
 import { newPasswordUser } from "../../../../store";
 import { CalendarIcon } from "../../../../assets/images";
 import dayjs from "dayjs";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
+import { PhoneNumberUtil } from 'google-libphonenumber';
+
+const phoneUtil = PhoneNumberUtil.getInstance();
+const isPhoneValid = (phone: string) => {
+  try {
+    return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+  } catch (error) {
+    return false;
+  }
+};
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -41,6 +52,10 @@ const SignupForm = ({ signupRole }: any) => {
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [code, setCode] = useState("+44");
+
+  const [phone, setPhone] = useState('');
+  const isValid = isPhoneValid(phone);
+
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const tempUser: any = useRecoilValue(newPasswordUser);
@@ -196,7 +211,7 @@ const SignupForm = ({ signupRole }: any) => {
           <Input
             readOnly={
               signupRole == constants.MANAGER ||
-              signupRole == constants.SUB_ADMIN
+                signupRole == constants.SUB_ADMIN
                 ? true
                 : false
             }
@@ -267,31 +282,49 @@ const SignupForm = ({ signupRole }: any) => {
           </Row>
         )}
         <Row gutter={20}>
-          <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
+          {/* <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
             <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
               <CountryCodeSelect defaultVal={code} key={code} />
             </Form.Item>
           </Col>
-          <Col xxl={17} xl={16} lg={16} md={16} xs={24}>
+          */}
+
+          <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
             <Form.Item
               name="phoneNumber"
               label=" Phone Number"
+              className={ phone ? 'phone-input' : 'phone-input-error'}
               rules={[
-                { required: true },
                 {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
+                  validator: (_, value) => {
+                    if (phone && !isValid) {
+                      return Promise.reject('Invalid Phone Number');
+                    }
+
+                    if(value === ''){
+                      return Promise.reject('Required Field');
+                    }
+                    
+                    return Promise.resolve();
+                  }
+                }
               ]}
             >
-              <Input placeholder="Enter Phone Number" className="input-style" />
+              {/* <Input placeholder="Enter Phone Number" className="input-style" /> */}
+
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry="gb"
+                placeholder="+92 312-9966188"
+                // disableDialCodePrefill
+                onChange={(phone, country) => {setPhone(phone)}}
+              />
+
+              
             </Form.Item>
           </Col>
+
         </Row>
         <Row gutter={20}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
