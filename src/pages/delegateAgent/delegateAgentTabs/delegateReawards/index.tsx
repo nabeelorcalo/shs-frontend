@@ -93,13 +93,22 @@ const Rewards = () => {
     } else if (role === constants.DELEGATE_AGENT) {
       rewards.push({ role: constants.DELEGATE_AGENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
     }
-    action.addRewards({ rewards });
+    action.addRewards({ rewards },
+      () => action.getAllRewards(1))
     setOpen({
       isOpen: false,
       id: ""
-    }),
-    () => action.getAllRewards(1);
+    })  
   };
+
+  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+    if (value < 0) {
+      callback('Negative values are not allowed');
+    } else {
+      callback();
+    }
+  };
+
 
   useEffect(() => {
     action.getAllRewards(1);
@@ -160,9 +169,11 @@ const Rewards = () => {
               <Form.Item
                 label='Reward Amount'
                 name='rewardAmount'
+                rules={[{ validator: validatePositiveNumber }]}
                 className="text-base font-semibold text-teriary-color"
               >
                 <Input
+                  type="number"
                   placeholder='PlaceHolder'
                   size="large"
                   className="text-input-bg-color rounded-[8px]"
@@ -173,10 +184,12 @@ const Rewards = () => {
               <Form.Item
                 name="maxWithdrawal"
                 label="Max Withdrawal Transaction"
+                rules={[{ validator: validatePositiveNumber }]}
                 className="text-base font-semibold text-teriary-color "
               >
                 <Input
                   placeholder='PlaceHolder'
+                  type="number"
                   size="large"
                   className="text-input-bg-color rounded-[8px]"
                 />
