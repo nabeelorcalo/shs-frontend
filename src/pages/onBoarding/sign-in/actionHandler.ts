@@ -13,7 +13,7 @@ import {
   PreviewLogoState
 } from "../../../store";
 import api from "../../../api";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS, personalizeColorTheme } from "../../../config/constants";
 import apiEndpints from "../../../config/apiEndpoints";
 import { Notifications } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -63,14 +63,14 @@ const useCustomHook = () => {
         ? `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
         : null;
       if (data?.user?.role === constants.INTERN || data?.user?.role === constants.MANAGER || data?.user?.role === constants.COMPANY_ADMIN) {
-        setOrgLogo(companyLogo);
-        setPreviewLogo(companyLogo);
-        setSBColor(data?.user?.company?.sideMenuColor);
-        setSbPreviewColor(data?.user?.company?.sideMenuColor);
-        setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
-        setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
-        setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
-        setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
+        setOrgLogo(companyLogo ?? null);
+        setPreviewLogo(companyLogo ?? null);
+        setSBColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
+        setSbPreviewColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
+        setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor ?? personalizeColorTheme.defaultPrimIconColor);
+        setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor ?? personalizeColorTheme.defaultSecIconColor);
+        setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor ?? personalizeColorTheme.defaultBtnPrimColor);
+        setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor ?? personalizeColorTheme.defaultBtnSecColor);
       }
 
       return res.data;

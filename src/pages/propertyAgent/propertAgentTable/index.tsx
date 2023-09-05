@@ -99,9 +99,9 @@ const PropertyAgentTable = forwardRef((props: any, ref) => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
+      render: (_: any, item: any,index :any) => (
         <div>
-          {item?.id || 'N/A'}
+          {index + 1 || 'N/A'}
         </div>
       ),
       key: "no",

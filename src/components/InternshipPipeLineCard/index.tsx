@@ -19,8 +19,8 @@ export const InternshipPipeLineCard = (props: any) => {
         {avatar}
         <div className='flex flex-col gap-2 justify-end' >
           <p className='text-base'>{shortenedName}</p>
-          {status === "OfferLetter" ? <p><span className='px-2 text-sm text-warning-bg-color text-white rounded-lg'>Pending</span></p> : null}
-          {status === "Contract" ? <p><span className='px-2 text-sm active-bg text-white rounded-lg'>Signed</span></p> : null}
+          {status === "offerLetter" ? <p><span className='px-2 text-sm text-warning-bg-color text-white rounded-lg'>Pending</span></p> : null}
+          {status === "contract" ? <p><span className='px-2 text-sm active-bg text-white rounded-lg'>Signed</span></p> : null}
         </div>
       </div>
       <Divider className='divider-color my-3' />

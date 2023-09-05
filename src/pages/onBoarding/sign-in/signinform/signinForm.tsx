@@ -70,7 +70,8 @@ const SigninForm = (props: any) => {
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
-    const { Email, password } = values;
+    const { Email, password, remember } = values;
+    setRememberMe(remember)
     action
       .login({
         email: Email,
@@ -94,7 +95,7 @@ const SigninForm = (props: any) => {
           }
           return;
         }
-
+        localStorage.setItem("remeberMe", remember)
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
@@ -188,7 +189,7 @@ const SigninForm = (props: any) => {
               >
                 <Checkbox
                   checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  // onChange={(e) => setRememberMe(e.target.checked)}
                 >
                   <span className="text-teriary-color text-base font-normal">
                     Remember me

@@ -57,6 +57,8 @@ function LogoUploader() {
         name: currentUser?.company?.logo?.filename,
         url: `${constants.MEDIA_URL}/${currentUser?.company?.logo?.mediaId}.${currentUser?.company?.logo?.metaData.extension}`,
       }])
+    } else {
+      setFileList([]);
     }
     setModalUploadLogoOpen(true);
   };
@@ -108,7 +110,7 @@ function LogoUploader() {
     if(!response.error) {
       setFileList([]);
       setPreviewLogo(null);
-      setDataLogo('');
+      setDataLogo(null);
       // setCurrentUser({
       //   ...currentUser,
       //   company: {
