@@ -62,7 +62,6 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="user-info">
           <Avatar
             className="h-[80px] w-[80px] rounded-full object-cover relative"
-            // src={userDetail?.avatar}
             src={`${constants.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`}
             alt={userDetail?.firstName}
             icon={
@@ -70,8 +69,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                 {userDetail?.firstName[0]}
                 {userDetail?.lastName[0]}
               </span>
-            }
-          />
+            }/>
           <p className="user-name capitalize">{`${userDetail?.firstName} ${userDetail?.lastName}`}</p>
         </div>
 
@@ -91,8 +89,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                   ),
                   key: "",
                 },
-              ]}
-            >
+              ]}>
               <div className="flex justify-center gap-2 items-center dropdown-inpp cursor-pointer">
                 <StarFilledIcon />
                 <p>{rating}.0</p>
@@ -137,7 +134,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
       </div>
 
       <div className="apllied-for">
-        <p className="heading">Apllied For</p>
+        <p className="heading">Applied for</p>
         <div className="details">
           <p className="p">{internshipTitle}</p>
           <p className="p1 capitalize">
@@ -165,7 +162,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
               <info.img width={24} className="min-w-[24px]" />
             </div>
             <div className="flex-1">
-              <p className="m-0 break-all">{info.title}</p>
+              <p className="m-0 break-all text-sm">{info.title}</p>
             </div>
           </div>
         ))}
@@ -182,13 +179,13 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
                 </p>
               ))}
               {skills?.length > 6 && (
-                <p className="plus rounded-[14px] py-[2px] px-[12px]">
+                <p className="plus rounded-[14px] py-[2px] px-[12px] text-sm">
                   +{skills?.length - skills?.slice(0, 6)?.length}
                 </p>
               )}
             </>
           ) : (
-            <p className="m-0">N/A</p>
+            <p className="m-0 text-sm">N/A</p>
           )}
         </div>
       </div>

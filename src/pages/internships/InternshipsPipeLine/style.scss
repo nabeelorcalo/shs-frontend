@@ -549,6 +549,8 @@
   }
 }
 .reject-modal-description {
+  border: 1px solid $text-error-line-color;
+  border-radius: 8px;
   .text-editor {
     @include text-editor();
     min-height: 200px;

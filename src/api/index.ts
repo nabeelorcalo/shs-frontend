@@ -1,18 +1,15 @@
 import axios from "axios";
 import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import { Notifications } from "../components";
-import endpoint from '../config/apiEndpoints'
-import { currentUserState, rememberMeState } from "../store";
-import { useRecoilValue } from "recoil";
-
-const { REFRESH_TOKEN } = endpoint;
+import endpoint from '../config/apiEndpoints';
 
 const baseURL = constants.APP_URL;
+const { REFRESH_TOKEN } = endpoint;
 const accessToken = localStorage.getItem("accessToken");
 
 const defaultHeaders = {
   "Content-Type": "application/json",
-  Authorization: "Bearer " + accessToken,
+  "Authorization": "Bearer " + accessToken,
 };
 
 const axiosInstance = axios.create({
@@ -22,8 +19,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
-    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers.Authorization = "Bearer " + accessToken;
     }
@@ -32,54 +27,48 @@ axiosInstance.interceptors.request.use(
 
   function (error) {
     if (error.response?.status === 401) {
-      const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         localStorage.removeItem("accessToken");
-        Notifications({
-          title: "Error",
-          description: "Session expired",
-          type: "error",
-          key: "token",
-        });
-        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
+        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
       }
     }
     return Promise.reject(error);
   }
 );
 
-const handleResponse = async (response: any) => await response.data;
-
 const handleNewAuthToken = async () => {
   try {
     const refreshToken = localStorage.getItem("refreshToken");
-    const {cognitoId} = useRecoilValue(currentUserState)
+    const cognitoId = localStorage.getItem('cognitoId');
     if (!refreshToken) {
       throw new Error("Refresh token not found");
       return;
     }
-    const response = await axios.post( REFRESH_TOKEN , { refreshToken, cognitoId});
-    const newAuthToken = response.data.access_token;
+    const response = await axios.post(baseURL + REFRESH_TOKEN, { refreshToken, username: cognitoId });
+    const newAuthToken = response?.data?.data?.accessToken;
     localStorage.setItem("accessToken", newAuthToken);
-    return newAuthToken;
+
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
   } catch (error) {
     throw new Error("Failed to refresh token");
   }
 };
 
+const handleResponse = async (response: any) => await response.data;
+
 const handleError = async (error: any) => {
   let errorMessage;
+
   if (error?.response) {
-    // Handle the error as before
     errorMessage = error.response.data?.message;
-    // ...
-  } else if (error?.request) {
-    // ...
   } else if (error.code === 'ERR_BAD_REQUEST') {
     errorMessage = error;
   } else {
     errorMessage = error?.message;
   }
+
   Notifications({
     title: "Error",
     description: errorMessage,
@@ -87,19 +76,14 @@ const handleError = async (error: any) => {
     key: "token",
   });
 
-  if (error.response?.status === 401) {
-    try {
-      if (rememberMeState) {
-        await handleNewAuthToken();
-      }
-    } catch (refreshError) {
-      setTimeout(() => {
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-          localStorage.removeItem("accessToken");
-        }
-        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
-      }, 2000);
+  if (error.response?.status === 401 || error.response?.data?.message?.includes('Token')) {
+    const isRemembered: any = localStorage.getItem('remeberMe');
+
+    if (isRemembered === "true") {
+      await handleNewAuthToken();
+    }else if(accessToken){
+      localStorage.removeItem("accessToken");
+      window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
     }
   }
 };
