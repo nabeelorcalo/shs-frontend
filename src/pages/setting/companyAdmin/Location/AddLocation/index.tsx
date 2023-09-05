@@ -19,8 +19,6 @@ const { Paragraph } = Typography;
 const AddLocation: React.FC = () => {
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const countries = useRecoilValue(newCountryListState);
-  console.log("internsData", internsData);
-
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {

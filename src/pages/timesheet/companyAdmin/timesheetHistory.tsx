@@ -15,8 +15,6 @@ const TimeSheetHistory = () => {
   const action = useCustomHook();
   const { taskDateRange, companyManagerList, fetchDateRangeTimesheet, taskInDate, rangeFilter, fetchTasksInDate } = AdminTimeSheetCustomHook();
   const { id } = useParams();
-  console.log("state", useLocation().state);
-
   const { user: userData } = useLocation()?.state;
   const [managerSearch, setManagerSearch] = useRecoilState(managerSearchState);
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);

@@ -5,7 +5,6 @@ const SalarySlipTable = (props: any) => {
   const { tableData } = props;
 
   const newTableData = tableData
-  console.log(newTableData);
   const columns = [
     {
       dataIndex: "month",
