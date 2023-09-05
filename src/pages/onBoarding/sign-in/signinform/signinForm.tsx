@@ -69,14 +69,11 @@ const SigninForm = (props: any) => {
   };
 
   const onFinish = (values: any) => {
-    setBtnLoading(true);
     const { Email, password, remember } = values;
+    setBtnLoading(true);
+
     setRememberMe(remember)
-    action
-      .login({
-        email: Email,
-        password: password,
-      })
+    action.login({email: Email, password: password})
       .then((response: any) => {
         setBtnLoading(false);
         const { data } = response;
@@ -108,8 +105,10 @@ const SigninForm = (props: any) => {
             data.user.role == constants.INTERN)
         )
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
+
         if (data.accessToken) {
           window.location.replace(
             `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
@@ -119,7 +118,6 @@ const SigninForm = (props: any) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         Notifications({
           title: "Error",
           description: err.message,
