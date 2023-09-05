@@ -2,9 +2,9 @@ import React, { MutableRefObject } from "react";
 import { Button as AntButton } from 'antd'
 import type { ButtonProps } from 'antd';
 import './style.scss'
-import {ButtonSecondaryColorState} from '../../store';
+import constants from "../../config/constants";
+import {ButtonSecondaryColorState, currentUserRoleState} from '../../store';
 import { useRecoilValue } from 'recoil';
-
 interface IButtonProps {
   children?: React.ReactNode
   ref?: MutableRefObject<null>;
@@ -18,9 +18,10 @@ export const ButtonThemeSecondary = ({
 }: IButtonProps & ButtonProps): JSX.Element => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const role = useRecoilValue(currentUserRoleState);
   const combinedClasses = `button-theme-secondary ${className}`;
   const buttonSecondaryColor = useRecoilValue(ButtonSecondaryColorState);
-  document.documentElement.style.setProperty('--theme-button-secondary', buttonSecondaryColor);
+  
 
   function lightenColor(color:any, percent:any) {
     const r = parseInt(color?.slice(1, 3), 16);
@@ -34,8 +35,11 @@ export const ButtonThemeSecondary = ({
     return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
   }
 
-  const lightenedColor = lightenColor(buttonSecondaryColor, 75);
-  document.documentElement.style.setProperty('--theme-button-secondary-hover', lightenedColor);
+  if (role === constants.INTERN || role === constants.COMPANY_ADMIN || role === constants.MANAGER) {
+    document.documentElement.style.setProperty('--theme-button-secondary', buttonSecondaryColor);
+    const lightenedColor = lightenColor(buttonSecondaryColor, 75);
+    document.documentElement.style.setProperty('--theme-button-secondary-hover', lightenedColor);
+  }
   
 
   /* RENDER APP
