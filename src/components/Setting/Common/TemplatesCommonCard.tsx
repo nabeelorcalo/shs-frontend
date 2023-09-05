@@ -21,7 +21,7 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
   const { overview, setEditData, link, state, setState } = props;
 
   const limitText = (text: string, maxLength: number) => {
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       return text.substring(0, maxLength) + "...";
     }
     return text;
@@ -40,10 +40,14 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
                         {item?.name}
                       </Text>
-                      {item?.type === "offerLetter" ? <p className="my-2">{item?.subject}</p> : <p dangerouslySetInnerHTML={{
-                        __html: limitText(item?.description, 100), // Limit the text to 100 characters
+                      {item?.type === "offerLetter" ? 
+                      <p className="my-2 w-[200px] sm:w-[250px] xl:w-[250px] text-ellipsis overflow-hidden whitespace-nowrap">{item?.subject}</p> : 
+                      <p dangerouslySetInnerHTML={{
+                        __html: limitText(item?.description, 100), 
                       }}
-                        className="text-sm font-normal text-secondary-color max-lines" />}
+                        className="text-sm font-normal text-secondary-color max-lines
+                        w-[200px] sm:w-[250px] xl:w-[250px] text-ellipsis overflow-hidden whitespace-nowrap
+                        " />}
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
