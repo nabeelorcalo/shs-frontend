@@ -284,7 +284,7 @@ const MainDashboard = (props: any) => {
                           </div>
                         </Col>
                         <Col xxl={4} xl={4} lg={4} md={3} sm={3} xs={24}>
-                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg">
+                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg cursor-pointer">
                             View
                           </div>
                         </Col>

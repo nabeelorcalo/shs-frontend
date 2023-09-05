@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, BoxWrapper, ButtonThemePrimary, ButtonThemeSecondary, DragAndDropUpload } from "../../../../components";
+import { Alert, ButtonThemePrimary, ButtonThemeSecondary, DragAndDropUpload } from "../../../../components";
 import "../style.scss";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentUserState, studentProfileState } from '../../../../store';
 import constants from '../../../../config/constants';
-import { Avatar, Button, Divider, Form, Modal, Space, Typography } from 'antd';
+import { Avatar, Button, Divider, Form, Modal, Space, Typography, Popover } from 'antd';
 import { CloseCircleFilled, EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
 import useCustomHook from '../../actionHandler';
 import { IconEmail, IconLocation, IconPhone } from '../../../../assets/images';
@@ -43,39 +43,51 @@ const CompanySideBar = (props: any) => {
     setOpenImage(false);
   };
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setActionBox(newOpen);
+  };
+
   return (
     <div className="company-side-bar">
       <div className="main-student-side-bar">
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
-            <EllipsisOutlined
-              className="pt-5 pr-3 cursor-pointer text-3xl"
-              onClick={() => {
-                setActionBox(true);
-              }}
-            />
-            {actionBox && (
-              <div className="upload-box">
-                <p
-                  className="pt-2 pb-1 cursor-pointer text-secondary-color upload-text"
-                  onClick={() => {
-                    setActionBox(false);
-                    setOpenImage(true);
-                  }}
-                >
-                  Upload Image
-                </p>
-                <p
-                  className="pb-1 cursor-pointer text-secondary-color upload-text"
-                  onClick={() => {
-                    setOpenDelete(true);
-                    setActionBox(false);
-                  }}
-                >
-                  Delete Image
-                </p>
-              </div>
-            )}
+            <Popover
+              content=
+              {
+                <>
+                  <p
+                    className="pt-1 pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setActionBox(false);
+                      setOpenImage(true);
+                    }}
+                  >
+                    Upload Image
+                  </p>
+                  <p
+                    className="pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setOpenDelete(true);
+                      setActionBox(false);
+                    }}
+                  >
+                    Delete Image
+                  </p>
+                </>
+              }
+              placement="bottomRight"
+              trigger="click"
+              open={actionBox}
+              onOpenChange={handleOpenChange}
+            >
+              <EllipsisOutlined
+                className="pt-5 pr-3 cursor-pointer text-3xl"
+                onClick={() => {
+                  setActionBox(true);
+                }}
+              />
+            </Popover>
           </div>
           <center>
             <Avatar size={90}
@@ -89,7 +101,7 @@ const CompanySideBar = (props: any) => {
                 {firstName ? firstName : 'N/A'} {lastName ? lastName : 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
-              {getUserRoleLable(role)}
+                {getUserRoleLable(role)}
               </Typography>
               <Typography className="emp-role">
                 {company?.businessName === "undefined" ? "N/A" : company?.businessName} {company?.businessType ? company?.businessType : "N/A"}
