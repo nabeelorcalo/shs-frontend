@@ -315,7 +315,6 @@ const index = (props: any) => {
     }
     const convo: any = conversationList[0];
     if (convo) {
-      console.log("HERE");
       handleChatSelect({
         convoId: convo.id,
         user: convo.creator.id == user.id ? convo.recipient : convo.creator,
