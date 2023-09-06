@@ -61,7 +61,7 @@ const RecentFiles = (props: any) => {
       {
         key: '2',
         label: <a onClick={() => {
-              setState({
+          setState({
             ...myStates,
             isToggle: true,
             delId: item.id,
@@ -121,11 +121,11 @@ const RecentFiles = (props: any) => {
         children={<p>Are you sure you want to delete this?</p>}
         okBtnFunc={() => deleteFolderFile(myStates.delId)}
       />
-      <PdfPreviewModal
+      {openPreview && <PdfPreviewModal
         setOpen={setOpenPreview}
         open={openPreview}
         preViewModal={preViewModal}
-      />
+      />}
     </div>
   );
 };

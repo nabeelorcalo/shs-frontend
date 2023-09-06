@@ -13,22 +13,22 @@ import constants from "../../../../config/constants";
 import { byteToHumanSize } from "../../../../helpers";
 
 const ManageViewVault = () => {
-  const [isState, setState] = useState<any>({
-    isOpenModal: false,
-    isVisible: false,
-    uploadFile: false,
-    isOpenDelModal: false,
-    DelModalId: null,
-    files: [],
-    fileName: "",
-    search: null,
-  });
+  // const [isState, setState] = useState<any>({
+  //   isOpenModal: false,
+  //   isVisible: false,
+  //   uploadFile: false,
+  //   isOpenDelModal: false,
+  //   DelModalId: null,
+  //   files: [],
+  //   fileName: "",
+  //   search: null,
+  // });
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
-    extension: "", 
+    extension: "",
     url: "",
   });
-  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
+  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile, loading, isState, setState }: any = useCustomHook();
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
@@ -38,15 +38,15 @@ const ManageViewVault = () => {
   }, [isState.search]);
 
   const handleDropped = (event: any) => {
-    event.preventDefault(); 
+    event.preventDefault();
     setState((prevState: any) => ({
       ...prevState,
       files: Array.from(event.dataTransfer.files),
-    }));  
+    }));
   };
 
   const PopOver = (props: any) => {
-    const { item } = props 
+    const { item } = props
     let items: MenuProps['items'] = [
       {
         key: "1",
@@ -152,12 +152,7 @@ const ManageViewVault = () => {
     Object.keys(payload).map((a: any) => {
       digivautUploadFile.append(a, payload[a]);
     });
-    postCreateFolderFile(digivautUploadFile, state);
-    setState((prevState: any) => ({
-      ...prevState,
-      uploadFile: false,
-      files: [],
-    }));
+    postCreateFolderFile(digivautUploadFile, state)
   };
 
   return (
@@ -235,8 +230,8 @@ const ManageViewVault = () => {
           <ButtonThemeSecondary onClick={modalHandler} key="Cancel">
             Cancel
           </ButtonThemeSecondary>,
-          <ButtonThemePrimary onClick={upLoadModalHandler} key="submit">
-            Upload
+          <ButtonThemePrimary loading={loading} onClick={upLoadModalHandler} key="submit">
+            {loading ? 'Uploading' : 'Upload'}
           </ButtonThemePrimary>,
         ]}
       >
