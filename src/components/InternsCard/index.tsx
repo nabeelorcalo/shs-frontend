@@ -46,7 +46,7 @@ export const InternsCard = (props: any) => {
   return (
     <div className="interns-card-main">
       <BoxWrapper className="interns-card">
-        <div className={`flex flex-row ${status ? "justify-between" : "justify-end"} cursor-pointer`}>
+        <div className={`flex flex-row ${status ? "justify-between" : "justify-end"} `}>
           {status ? status : ""}
           {pupover ? pupover : null}
         </div>
