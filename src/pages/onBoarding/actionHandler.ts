@@ -4,6 +4,7 @@ import { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
+import {extractCountryCode, extractPhoneNumber} from '../../helpers/phoneNumber';
 
 interface IVerification {
   first_name?: string;
@@ -28,7 +29,12 @@ const useCustomHook = () => {
     MANAGER_USER_PROFILE,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
-  const signup = async (body: any): Promise<any> => {
+  const signup = async (params: any): Promise<any> => {
+    const phoneCode = extractCountryCode(params.phoneNumber);
+    const phoneNumber = extractPhoneNumber(params.phoneNumber);
+
+    const body = {...params, phoneCode, phoneNumber};
+
     const { data } = await api.post(SIGNUP, body);
     const res = await initVerifcation({
       first_name: data.firstName,
