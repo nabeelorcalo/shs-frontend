@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Typography, Row, Col } from "antd";
 import {
   CasualLeave,
@@ -72,10 +72,10 @@ const SettingLeave = () => {
       </div>
       {settingLeaveData?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingLeaveData?.map((data: any, index: any) => {
+        {settingLeaveData?.map((data: any) => {
           return (
-            <>
-              {loading ? <Loader /> : <Col key={data.id} className="gutter-row" xs={24} lg={12} xl={8}>
+            <Fragment key={data.id}>
+              {loading ? <Loader /> : <Col className="gutter-row" xs={24} lg={12} xl={8}>
                 <div className="setting-leaves-box-wrapper w-full flex flex-col">
                   <div className="float-right place-items-end cursor-pointer flex justify-end">
                     <DropDownForSetting
@@ -93,7 +93,7 @@ const SettingLeave = () => {
                   </div>
                 </div>
               </Col>}
-            </>
+            </Fragment>
           );
         })}
       </Row>

@@ -166,10 +166,10 @@ const SettingPerformance: React.FC = () => {
           <Panel className="text-base font-semibold"
             header={<span className="text-primary-title-color">Discipline</span>} key="2">
             <Row gutter={[0, 15]}>
-              {settingPerformancedata?.discipline?.map((item: any, index: number) => {
+              {settingPerformancedata?.discipline?.map((item: any) => {
                 return (
                   <Col
-                    key={index}
+                    key={item.id}
                     className="gutter-row"
                     xs={24}
                     xxl={12}
@@ -263,10 +263,10 @@ const SettingPerformance: React.FC = () => {
           <Panel className="text-base font-semibold"
             header={<span className="text-primary-title-color">Personal</span>} key="3">
             <Row gutter={[0, 15]}>
-              {settingPerformancedata?.personal?.map((item: any, index: number) => {
+              {settingPerformancedata?.personal?.map((item: any) => {
                 return (
                   <Col
-                    key={index}
+                    key={item.id}
                     className="gutter-row"
                     xs={24}
                     xxl={12}
