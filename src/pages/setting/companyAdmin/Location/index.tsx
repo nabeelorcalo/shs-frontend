@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Col, Row, Typography, Space, Button } from "antd";
 import { Settinglocation, LocationPeople, } from "../../../../assets/images";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Alert, BoxWrapper, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -10,6 +10,7 @@ import useCustomHook from "./actionHandler";
 const { Text } = Typography;
 
 const SettingLocation: React.FC = () => {
+  const navigate = useNavigate()
   const [state, setState] = useState<any>(
     {
       isDeleteModal: false,
@@ -32,13 +33,11 @@ const SettingLocation: React.FC = () => {
           placeholder="Search by location"
           className="max-sm:w-full w-[375px]"
           size="middle"
-          handleChange={handleChange}
+          handleChange={handleChange} 
         />
-        <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
-          <ButtonThemePrimary >
-            <Settinglocation /> Add Location
-          </ButtonThemePrimary>
-        </NavLink>
+        <ButtonThemePrimary onClick={() => navigate(`${ROUTES_CONSTANTS.ADD_LOCATION}`)} >
+          <Settinglocation /> Add Location
+        </ButtonThemePrimary>
       </div>
       {settingLocation?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">

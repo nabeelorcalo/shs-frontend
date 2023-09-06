@@ -3,6 +3,7 @@ import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
+import { useState } from "react";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -14,8 +15,18 @@ const useCustomHook = () => {
     GET_FOLDER_CONTENT,
     RESET_dIGIVAULT_PASSWORD
   } = endpoints;
+  const [isState, setState] = useState<any>({
+    isOpenModal: false,
+    isVisible: false,
+    uploadFolder: false,
+    uploadFile: false,
+    isOpenDelModal: false,
+    DelModalId: null,
+    files: [],
+  });
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
+  const [loading, setLoading] = useState(false)
   const studentVaultData = useRecoilValue(newDigiList)
 
   //get digivault password
@@ -58,7 +69,6 @@ const useCustomHook = () => {
       password: password,
       autoLockAfter: lockTime
     }
-
     const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData) || { data: [] };
     getDigiVaultDashboard();
     (data && lockTime && isLock) && Notifications({
@@ -70,16 +80,20 @@ const useCustomHook = () => {
 
   // post create folder  / file
   const postCreateFolderFile = async (values: any, state: any) => {
-    const data = await api.post(POST_CREATE_FOLDER_FILE, values, {
+    setLoading(true)
+    await api.post(POST_CREATE_FOLDER_FILE, values, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    });
-    data && Notifications({
-      title: 'Success',
-      description: 'File / Folder added successfully',
-      type: 'success'
-    })
+    }).then((res) => {
+      setLoading(false)
+      setState({ ...isState, uploadFile: false, files: [], isModalOpen: false })
+      res && Notifications({
+        title: 'Success',
+        description: 'File / Folder added successfully',
+        type: 'success'
+      })
+    }).catch(() => setLoading(false))
     getFolderContent(null, state)
     getDigiVaultDashboard();
   }
@@ -103,11 +117,12 @@ const useCustomHook = () => {
   return {
     studentVault,
     folderContent,
+    loading,
     getDigiVaultDashboard,
     getFolderContent,
     postDigivaultPassword,
     postCreateFolderFile,
-    deleteFolderFile,
+    deleteFolderFile, isState, setState,
     resetDigiVault
   };
 };

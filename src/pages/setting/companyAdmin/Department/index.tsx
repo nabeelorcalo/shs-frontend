@@ -28,7 +28,7 @@ const SettingDepartment: React.FC = () => {
     <div className="setting-department">
       <div className="flex justify-between location-header">
 
-        <SearchBar
+        <SearchBar 
           placeholder="Search by department"
           className="max-sm:w-full w-[375px]"
           size="middle"
@@ -68,7 +68,7 @@ const SettingDepartment: React.FC = () => {
           </Fragment>
         ))
         }
-      </Row>
+      </Row> 
       {state.isEditModal &&
         <AddNewDepaertmentModal state={state} setState={setState} />
       }
