@@ -113,7 +113,7 @@ const PropertyDetail = () => {
                     <div className="grid mx-auto justify-items-center">
                       <Avatar
                         size={80}
-                        // src={`${constants.MEDIA_URL}/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`}
+                        src={`${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData.extension}`}
                       >
                         {item?.user?.firstName?.charAt(0)}
                         {item?.user?.lastName?.charAt(0)}
