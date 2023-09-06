@@ -108,7 +108,7 @@ const ListingDetails = (props: any) => {
             </Typography>
           </div>
           <div>
-            <Row gutter={[15, 15]}>
+            <Row gutter={[40, 15]}>
               <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary mb-2">
@@ -227,7 +227,7 @@ const ListingDetails = (props: any) => {
                   Rent and Billing
                 </Typography>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Monthly Rent
@@ -237,7 +237,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Payment
@@ -247,8 +247,8 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div className=" text-end mb-3">
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
+                <div className="text-start mb-3">
                   <Typography className="listing-styles-secondary">
                     Is there any deposit?
                   </Typography>
@@ -257,8 +257,8 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div className="text-end mb-3">
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
+                <div className="text-start mb-3">
                   <Typography className="listing-styles-secondary">
                     Kind of Deposit
                   </Typography>
@@ -267,7 +267,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={7} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={4} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Bills
@@ -277,7 +277,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={7} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Minimum Stay
@@ -287,7 +287,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={9} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charge for electricity bill
@@ -297,13 +297,23 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={9} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charge for gas bill
                   </Typography>
                   <Typography className="listing-description">
                     {props.recentList[0]?.gasBillPayment || 'N/A'}
+                  </Typography>
+                </div>
+              </Col>
+              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    How do you charge for water bill
+                  </Typography>
+                  <Typography className="listing-description">
+                    {props.recentList[0]?.waterBillPayment || 'N/A'}
                   </Typography>
                 </div>
               </Col>
