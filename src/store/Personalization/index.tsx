@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
-import { ORG_LOGO, personalizeColorTheme } from '../../config/constants';
+import { personalizeColorTheme } from '../../config/constants';
 
 // Sidebar Color State
 export const sbColorState = atom({
@@ -45,7 +45,7 @@ export const ButtonSecondaryColorState = atom({
 // Organization Logo State
 export const OrgLogoState = atom({
   key: "OrgLogoState",
-  default: ORG_LOGO,
+  default: null,
   effects_UNSTABLE: [persistAtom],
 });
 

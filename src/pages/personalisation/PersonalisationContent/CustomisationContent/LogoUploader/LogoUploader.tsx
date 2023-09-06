@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload } from "antd";
+import { Upload, message } from "antd";
 import "./LogoUploader.scss";
 import {
   OrgUpload,
@@ -16,7 +16,7 @@ import {
   Notifications,
   PopUpModal
 } from "../../../../../components";
-import { PreviewLogoState, dataLogoState, currentUserState } from '../../../../../store'
+import { PreviewLogoState, dataLogoState, currentUserState, OrgLogoState } from '../../../../../store'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import constants from "../../../../../config/constants";
@@ -44,19 +44,26 @@ function LogoUploader() {
   const [alertDelete , setAlertDelete] = useState(false);
   const {deleteAttachment} = useCustomHook();
   const [loadingDelete, setLoadingDelete] = useState(false);
-  const [deleting, setDeleting] = useState(false);
-  
+  const [orgLogo, setOrgLogo] = useRecoilState(OrgLogoState);
+  const allowedImageTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+
 
   
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  const checkFileType = (file:any) => {
+    const isImage = allowedImageTypes.includes(file.type);
+    if (!isImage) {
+      message.error('You can only upload JPEG, PNG, or SVG files');
+    }
+    return isImage;
+  };
+  
   const openModalUploadLogo = () => {
-    if(currentUser?.company?.logo) {
-      setFileList([{
-        uid: currentUser?.company?.logo?.id,
-        name: currentUser?.company?.logo?.filename,
-        url: `${constants.MEDIA_URL}/${currentUser?.company?.logo?.mediaId}.${currentUser?.company?.logo?.metaData.extension}`,
-      }])
+    if(orgLogo) {
+      setFileList([orgLogo])
+    } else {
+      setFileList([]);
     }
     setModalUploadLogoOpen(true);
   };
@@ -85,15 +92,14 @@ function LogoUploader() {
       return <UploadedImageIcon />;
     },
     onRemove: file => {
-      if(!deleting) {
-        const index = fileList.indexOf(file);
-        const newFileList = fileList.slice();
-        newFileList.splice(index, 1);
-        setFileList(newFileList);
-      }
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
     },
     beforeUpload: file => {
-      if(!deleting) {
+      const isImage = checkFileType(file);
+      if (isImage) {
         setFileList([file]);
       }
       return false;
@@ -102,24 +108,22 @@ function LogoUploader() {
   };
 
   const handleDeleteLogo = async () => {
-    setLoadingDelete(true)
-    setDeleting(true);
+    setLoadingDelete(true);
     const response = await deleteAttachment(currentUser?.company?.logo?.id);
     if(!response.error) {
       setFileList([]);
       setPreviewLogo(null);
-      setDataLogo('');
-      // setCurrentUser({
-      //   ...currentUser,
-      //   company: {
-      //     ...currentUser.company,
-      //     logo: null
-      //   }
-      // });
-      setDeleting(false);
+      setDataLogo(null);
+      setOrgLogo(null);
+      setCurrentUser({
+        ...currentUser,
+        company: {
+          ...currentUser.company,
+          logo: null
+        }
+      });
       setLoadingDelete(false);
     } else {
-      setDeleting(false);
       setLoadingDelete(false)
       Notifications({title: "Error", description: response.message, type: 'error'});
     }

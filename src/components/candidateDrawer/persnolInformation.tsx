@@ -58,7 +58,7 @@ export const PersnolInformation = (props: any) => {
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
             <div className="personal-information-wrap">
               <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
-              <p className="m-0 break-all">{item?.value}</p>
+              <p className="m-0 break-all text-sm">{item?.value}</p>
             </div>
           </Col>
         ))}
@@ -67,7 +67,7 @@ export const PersnolInformation = (props: any) => {
       <Divider type="horizontal" />
       <div className="personal-heading">
         <p className="persnol-para mb-4">About Me</p>
-        <p className="persnol-para-text mt-2">{personal?.aboutMe ?? "N/A"}</p>
+        <p className="persnol-para-text mt-2 text-sm">{personal?.aboutMe ?? "N/A"}</p>
       </div>
       <Divider type="horizontal" />
 
@@ -79,7 +79,7 @@ export const PersnolInformation = (props: any) => {
             <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
               <div className="personal-information-wrap ">
                 <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
-                <p className="m-0">{item?.value}</p>
+                <p className="m-0 text-sm">{item?.value}</p>
               </div>
             </Col>
           ))}
@@ -94,7 +94,7 @@ export const PersnolInformation = (props: any) => {
             <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
               <div className="personal-information-wrap ">
                 <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
-                <p className="m-0">{item?.value}</p>
+                <p className="m-0 text-sm">{item?.value}</p>
               </div>
             </Col>
           ))}
@@ -110,13 +110,13 @@ export const PersnolInformation = (props: any) => {
           {personal?.hobbies?.length > 0 ? (
             personal?.hobbies?.map((item: string, index: number) => (
               <div key={index} className="other-item flex items-center gap-5 cursor-pointer">
-                <p className="m-0 capitalize" key={item}>
+                <p className="m-0 capitalize text-sm" key={item}>
                   {item}
                 </p>
               </div>
             ))
           ) : (
-            <span>No</span>
+            <span className="text-sm">No</span>
           )}
         </div>
       </div>
@@ -125,22 +125,22 @@ export const PersnolInformation = (props: any) => {
         {personal?.allergies?.length > 0 ? (
           personal?.allergies?.map((item: string, index: number) => (
             <div key={index} className="other-item flex items-center gap-5 cursor-pointer">
-              <p className="m-0 capitalize" key={item}>
+              <p className="m-0 capitalize text-sm" key={item}>
                 {item}
               </p>
             </div>
           ))
         ) : (
-          <span>No</span>
+          <span className="text-sm">No</span>
         )}
       </div>
       <div className="medical my-4">
         <p className="persnol-para pt-2">Medical Conditions</p>
-        <p className="pt-2">{personal?.medicalCondition ?? "No"}</p>
+        <p className="pt-2 text-sm">{personal?.medicalCondition ?? "No"}</p>
       </div>
       <div className="dependants ">
-        <p className="persnol-para ">Dependants</p>
-        <p className="pt-2">{personal?.haveDependents ? "Yes" : "No"}</p>
+        <p className="persnol-para">Dependants</p>
+        <p className="pt-2 text-sm">{personal?.haveDependents ? "Yes" : "No"}</p>
       </div>
     </div>
   );

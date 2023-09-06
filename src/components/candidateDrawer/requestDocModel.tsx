@@ -41,16 +41,15 @@ export const RequestDocModel = (props: any) => {
         open={open}
         onCancel={onCancel}
         footer={""}
-      >
-        <Form form={form} onFinish={onFinish} autoComplete="off"
-        >
+        width={700}>
+        <Form form={form} onFinish={onFinish} autoComplete="off">
           <div className="title">
             <p className="required">Document Type</p>
           </div>
           <Form.Item name={"documentType"} rules={[{ required: true, message: DEFAULT_VALIDATIONS_MESSAGES.required }]}>
             <Select
               placeholder="Select"
-              className="internship-filter w-full "
+              className="w-full "
               options={documentTypeList}
             />
           </Form.Item>

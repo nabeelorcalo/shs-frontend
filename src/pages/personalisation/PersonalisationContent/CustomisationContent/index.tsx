@@ -96,7 +96,7 @@ const InnerData = () => {
           ...newTheme
         }
       });
-      setOrgLogo(previewLogo)
+      setOrgLogo({url:previewLogo});
       if(isReset) {
         setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
         setIconsSColor(personalizeColorTheme.defaultSecIconColor);

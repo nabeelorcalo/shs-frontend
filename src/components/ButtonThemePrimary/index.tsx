@@ -1,8 +1,9 @@
-import React, {MutableRefObject, useEffect, useState} from "react";
+import React, { MutableRefObject } from "react";
 import { Button as AntButton } from 'antd'
 import type { ButtonProps } from 'antd';
+import constants from "../../config/constants";
 import './style.scss'
-import {ButtonPrimaryColorState} from '../../store';
+import {ButtonPrimaryColorState, currentUserRoleState} from '../../store';
 import { useRecoilValue } from 'recoil';
 
 interface IButtonProps {
@@ -18,15 +19,13 @@ export const ButtonThemePrimary = ({
 }: IButtonProps & ButtonProps): JSX.Element => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const role = useRecoilValue(currentUserRoleState);
   const combinedClasses = `button-theme-primary ${className}`;
   const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
-
-  document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
-
   function lightenColor(color:any, percent:any) {
-    const r = parseInt(color.slice(1, 3), 16);
-    const g = parseInt(color.slice(3, 5), 16);
-    const b = parseInt(color.slice(5, 7), 16);
+    const r = parseInt(color?.slice(1, 3), 16);
+    const g = parseInt(color?.slice(3, 5), 16);
+    const b = parseInt(color?.slice(5, 7), 16);
   
     const adjustedR = Math.min(255, r + (255 - r) * (percent / 100));
     const adjustedG = Math.min(255, g + (255 - g) * (percent / 100));
@@ -35,8 +34,11 @@ export const ButtonThemePrimary = ({
     return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
   }
 
-  const lightenedColor = lightenColor(buttonPrimaryColor, 75);
-  document.documentElement.style.setProperty('--theme-button-primary-hover', lightenedColor);
+  if (role === constants.INTERN || role === constants.COMPANY_ADMIN || role === constants.MANAGER) {
+    document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
+    const lightenedColor = lightenColor(buttonPrimaryColor, 75);
+    document.documentElement.style.setProperty('--theme-button-primary-hover', lightenedColor);
+  }
   
 
   /* RENDER APP

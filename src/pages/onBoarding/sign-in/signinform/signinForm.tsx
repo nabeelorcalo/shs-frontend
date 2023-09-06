@@ -69,13 +69,11 @@ const SigninForm = (props: any) => {
   };
 
   const onFinish = (values: any) => {
+    const { Email, password, remember } = values;
     setBtnLoading(true);
-    const { Email, password } = values;
-    action
-      .login({
-        email: Email,
-        password: password,
-      })
+
+    setRememberMe(remember)
+    action.login({email: Email, password: password})
       .then((response: any) => {
         setBtnLoading(false);
         const { data } = response;
@@ -94,7 +92,7 @@ const SigninForm = (props: any) => {
           }
           return;
         }
-
+        localStorage.setItem("remeberMe", remember)
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
@@ -107,8 +105,10 @@ const SigninForm = (props: any) => {
             data.user.role == constants.INTERN)
         )
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
+
         if (data.accessToken) {
           window.location.replace(
             `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
@@ -118,7 +118,6 @@ const SigninForm = (props: any) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         Notifications({
           title: "Error",
           description: err.message,
@@ -188,7 +187,7 @@ const SigninForm = (props: any) => {
               >
                 <Checkbox
                   checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  // onChange={(e) => setRememberMe(e.target.checked)}
                 >
                   <span className="text-teriary-color text-base font-normal">
                     Remember me

@@ -1,8 +1,18 @@
 import { useState } from "react";
-import { CvIcon, DocumentIconD } from "../../../assets/images";
 import dayjs from "dayjs";
+import { CvIcon, DocumentIconD, CSVCard, DocCard, DocxCard, JpegCard, JpgIcon, PngCard } from "../../../assets/images";
 import { ButtonThemePrimary, DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../../components";
 import actionHandler from "../actionHandler";
+
+export const documentIcons: any = {
+  jpeg: <JpegCard />,
+  jpg: <JpgIcon />,
+  pdf: <CvIcon />,
+  png: <PngCard />,
+  doc: <DocCard />,
+  docx: <DocxCard />,
+  csv: <CSVCard />,
+}
 
 export const DrawerDocuments = ({ documents, email, stage }: any) => {
 
@@ -14,17 +24,16 @@ export const DrawerDocuments = ({ documents, email, stage }: any) => {
   });
 
   const reqDocData = documents
-    ? documents?.map((docItem: any) => ({
-      image: <CvIcon />,
-      title: docItem?.file?.filename,
-      descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
-      date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
-      size: docItem?.file?.mediaSize,
-      fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
-      extension: docItem?.file?.metaData?.extension,
-    }))
-    : [];
-
+  ? documents?.map(({ name, file: { filename, metaData: { extension }, createdAt, mediaSize, mediaId } }: any) => ({
+    image: documentIcons[extension],
+    title: name || "N/A",
+    descr: `${filename}.${extension}`,
+    date: dayjs(createdAt).format("DD/MMM/YYYY"),
+    size: mediaSize,
+    fileUrl: `${mediaId}.${extension}`,
+    extension: extension,
+  }
+  )) : [];
   const { handleRequestDocument } = actionHandler();
 
   const openModal = () => {
@@ -42,15 +51,10 @@ export const DrawerDocuments = ({ documents, email, stage }: any) => {
       <div className="justify-end flex mt-4">
         <ButtonThemePrimary
           className="rounded-lg w-[211px]"
-          // size="small"
           icon={<DocumentIconD />}
           onClick={openModal}>
           Request Document
         </ButtonThemePrimary>
-        {/* <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
-          <DocumentIconD />
-          <p className="btn-text">Request Document</p>
-        </button> */}
         <RequestDocModel
           setOpen={setOpen}
           open={open}
