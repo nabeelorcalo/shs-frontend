@@ -51,6 +51,7 @@
     "react-grid-carousel": "^1.0.1",
     "react-image-gallery": "^1.2.11",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-international-phone": "^3.1.2",
     "react-organizational-chart": "^2.2.0",
     "react-phone-input-2": "^2.15.1",
     "react-phone-number-input": "^3.2.23",
