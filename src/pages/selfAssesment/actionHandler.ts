@@ -164,7 +164,7 @@ const useCustomHook = () => {
       });
     }
     const notification = {
-      receiverId: userLogin?.intern?.assignedManager,
+      receiverId: userLogin?.intern?.manager?.managerId,
       type: 'ASSESSMENT_REMINDER',
       description: `Reminder to check for case study with title: ${assessment.title}`,
     };

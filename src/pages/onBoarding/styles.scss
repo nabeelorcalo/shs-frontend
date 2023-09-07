@@ -33,7 +33,7 @@
     background-color: $white-bg-color;
   }
 
-  .ant-input-affix-wrapper > input.ant-input {
+  .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
   }
 
@@ -53,6 +53,32 @@
 
   .login-form-forgot {
     color: $primary-bg-color;
+  }
+
+  .phone-input, .phone-input-error {
+    .ant-form-item-control-input-content {
+      background: $text-input-bg-color;
+      border-radius: 8px;
+      height: 48px;
+      padding: 8px 16px 8px 16px !important;
+
+      .react-international-phone-country-selector-button {
+        border: none;
+        background: transparent;
+      }
+
+      .react-international-phone-input {
+        font-size: 16px;
+        border: transparent;
+        background-color: $text-input-bg-color;
+      }
+    }
+  }
+
+  .phone-input-error{
+    .ant-form-item-control-input-content {
+      border: 1px solid $text-error-color;
+    }
   }
 }
 
@@ -271,12 +297,10 @@
       border: 2px dashed black;
       border-radius: 4px;
     }
-    
   }
-  
 }
 
-.ant-tooltip-inner{
+.ant-tooltip-inner {
   font-size: 12px !important;
   font-weight: 400 !important;
 }

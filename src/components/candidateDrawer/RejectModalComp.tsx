@@ -1,7 +1,6 @@
 import { Form, Input, Modal, Select } from "antd";
 import ReactQuill from "react-quill";
 import { CloseCircleIcon } from "../../assets/images";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import { useRef, useState } from "react";
 import { textEditorData } from "../Setting/Common/TextEditsdata";
 
@@ -49,7 +48,13 @@ export const RejectModalComp = (props: any) => {
   };
 
   return (
-    <Modal closeIcon={<img src={CloseCircleIcon} />} title="Reject" open={open} onCancel={onCancel} footer={""}>
+    <Modal
+      closeIcon={<img src={CloseCircleIcon} />}
+      title="Reject"
+      open={open}
+      onCancel={onCancel}
+      footer={""}
+      width={700}>
       <Form
         onFinish={handleSubmit}>
         <div className="title">
@@ -58,14 +63,13 @@ export const RejectModalComp = (props: any) => {
         <Select
           value={value}
           placeholder="Select"
-          className="internship-filter w-full "
+          className="w-full "
           onChange={handleSelectTemplate}
           options={templateList?.map((item: any) => ({ value: item?.id, label: item?.name }))}
         />
         <div className="title">
           <p className="required">Subject</p>
         </div>
-        {/* <Form.Item name={"subject"}> */}
         <Input
           name="subject"
           placeholder="Enter subject"
@@ -75,12 +79,11 @@ export const RejectModalComp = (props: any) => {
         {!isSubject.current && isSubjectTouched.current && (
           <p className="text-sm text-error-color absolute">Required Field</p>
         )}
-        {/* </Form.Item> */}
         <div className="title">
           <p className="required">Reason</p>
         </div>
         <Form.Item className="reject-modal-description" name={"description"}>
-          <div className="text-input-bg-color rounded-lg text-editor">
+          <div className="rounded-lg text-editor">
             <ReactQuill
               theme="snow"
               value={formValues?.description}

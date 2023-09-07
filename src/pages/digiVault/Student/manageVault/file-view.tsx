@@ -1,35 +1,34 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Dropdown, Menu, MenuProps, Modal, Row, Space } from "antd";
+import { Col, Divider, Dropdown, MenuProps, Modal, Row, Space } from "antd";
 import { SearchBar, Alert, PdfPreviewModal, ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
 import { FileIcon, More, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
-import CustomDropDown from "../dropDownCustom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
-import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants from "../../../../config/constants";
 import { byteToHumanSize } from "../../../../helpers";
 
 const ManageViewVault = () => {
-  const [isState, setState] = useState<any>({
-    isOpenModal: false,
-    isVisible: false,
-    uploadFile: false,
-    isOpenDelModal: false,
-    DelModalId: null,
-    files: [],
-    fileName: "",
-    search: null,
-  });
+  // const [isState, setState] = useState<any>({
+  //   isOpenModal: false,
+  //   isVisible: false,
+  //   uploadFile: false,
+  //   isOpenDelModal: false,
+  //   DelModalId: null,
+  //   files: [],
+  //   fileName: "",
+  //   search: null,
+  // });
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
     url: "",
   });
-  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
+  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile, loading, isState, setState }: any = useCustomHook();
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
@@ -84,37 +83,6 @@ const ManageViewVault = () => {
       </Dropdown>
     )
   }
-
-  // const menu2 = (item: any) => {
-  //   return (
-  //     <Menu>
-  //       <Menu.Item
-  //         key="1"
-  //         onClick={() => {
-  //           setOpenPreview(true);
-  //           setPreViewModal({
-  //             extension: item?.mimeType.split("/").pop(),
-  //             url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType.split("/").pop()}`,
-  //           });
-  //         }}
-  //       >
-  //         View
-  //       </Menu.Item>
-  //       <Menu.Item
-  //         key="2"
-  //         onClick={() => {
-  //           setState((prevState: any) => ({
-  //             ...prevState,
-  //             isOpenDelModal: true,
-  //             DelModalId: item.id,
-  //           }));
-  //         }}
-  //       >
-  //         Delete
-  //       </Menu.Item>
-  //     </Menu>
-  //   );
-  // };
   const newTableData = folderContent?.map((item: any) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return {
@@ -184,12 +152,7 @@ const ManageViewVault = () => {
     Object.keys(payload).map((a: any) => {
       digivautUploadFile.append(a, payload[a]);
     });
-    postCreateFolderFile(digivautUploadFile, state);
-    setState((prevState: any) => ({
-      ...prevState,
-      uploadFile: false,
-      files: [],
-    }));
+    postCreateFolderFile(digivautUploadFile, state)
   };
 
   return (
@@ -267,8 +230,8 @@ const ManageViewVault = () => {
           <ButtonThemeSecondary onClick={modalHandler} key="Cancel">
             Cancel
           </ButtonThemeSecondary>,
-          <ButtonThemePrimary onClick={upLoadModalHandler} key="submit">
-            Upload
+          <ButtonThemePrimary loading={loading} onClick={upLoadModalHandler} key="submit">
+            {loading ? 'Uploading' : 'Upload'}
           </ButtonThemePrimary>,
         ]}
       >

@@ -11,7 +11,6 @@ const DigiVaultModals = (props: any) => {
   const [state, setState] = useState(
     {
       isModalOpen: false,
-      // isEnable: false,
       isToggle: false,
       lockTime: autoLock,
       hasReset: false,
@@ -21,14 +20,9 @@ const DigiVaultModals = (props: any) => {
   const onChange = (checked: boolean) => {
     setState((prevState: any) => ({
       ...prevState,
-      //   // isLock: (checked || studentVault !== undefined) && !state.isLock,
       isModalOpen: checked
     }));
     setIsLockUnLockPassword(true)
-    // const params = {
-    //   isLock: !state.isLock
-    // };
-    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
   }
 
   return (
@@ -57,7 +51,6 @@ const DigiVaultModals = (props: any) => {
             defaultChecked={state.isModalOpen}
           />
           <NewPasswordModal
-            // isModal={state.isModalOpen}
             setIsModal={setState}
             settingModal={state}
             setIsLockModal={setIsLockUnLockPassword}

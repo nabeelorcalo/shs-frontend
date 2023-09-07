@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Col, Divider, Row, Typography, Button, Space, Modal, Form, Input, TimePicker } from "antd";
+import {
+  Col,
+  Divider,
+  Row,
+  Typography,
+  Button, Space, Modal, Form, Input, TimePicker
+} from "antd";
 import '../../../style.scss';
 import { CloseCircleFilled } from "@ant-design/icons";
 import { ButtonThemePrimary, CommonDatePicker } from "../../../../../components";
@@ -10,7 +16,7 @@ import dayjs from 'dayjs';
 const { TextArea } = Input;
 
 const ListingDetails = (props: any) => {
-  let {id: propertyId} :any = useParams();
+  let { id: propertyId }: any = useParams();
   const router = useNavigate();
   const action = useCustomHook();
   const [openModal, setOpenModal] = useState(false);
@@ -31,15 +37,15 @@ const ListingDetails = (props: any) => {
     } = values;
     action.submitInspectionReport({
       propertyId: parseInt(propertyId),
-      inspectorName:inspectorName,
-      inspectionDate:inspectionDate,
-      inspectionTime:dayjs(inspectionTime).format('HH:mm'),
-      comments:comments
-     })
+      inspectorName: inspectorName,
+      inspectionDate: inspectionDate,
+      inspectionTime: dayjs(inspectionTime).format('HH:mm'),
+      comments: comments
+    })
     action.updateStatus(props.recentList[0]?.id, rejectData,
       () => {
-    action.getAllListingData({})
-    })
+        action.getAllListingData({})
+      })
     setOpenModal(false);
   }
   return (
@@ -51,7 +57,7 @@ const ListingDetails = (props: any) => {
           </div>
           <div className="mt-3 mb-3">
             <Typography className="listing-styles-secondary">
-              Address  
+              Address
             </Typography>
             <Typography className="listing-description">
               {props.recentList[0]?.addressOne || 'N/A'}
@@ -102,7 +108,7 @@ const ListingDetails = (props: any) => {
             </Typography>
           </div>
           <div>
-            <Row gutter={[15,15]}>
+            <Row gutter={[40, 15]}>
               <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary mb-2">
@@ -133,7 +139,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8}  xl={12} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary mb-3">
                     Air Conditioning
@@ -153,7 +159,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8}  xl={12} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary ">
                     Water heating system
@@ -212,7 +218,7 @@ const ListingDetails = (props: any) => {
                     Are two people allowed to live in this room
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.twoPeopleAllowed || 'N/A'}
+                    {props.recentList[0]?.twoPeopleAllowed  ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -221,7 +227,7 @@ const ListingDetails = (props: any) => {
                   Rent and Billing
                 </Typography>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Monthly Rent
@@ -231,7 +237,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Payment
@@ -241,8 +247,8 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div className=" text-end mb-3">
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
+                <div className="text-start mb-3">
                   <Typography className="listing-styles-secondary">
                     Is there any deposit?
                   </Typography>
@@ -251,8 +257,8 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div className="text-end mb-3">
+              <Col xxl={3.5} xl={5} lg={12} md={24} sm={24} xs={24}>
+                <div className="text-start mb-3">
                   <Typography className="listing-styles-secondary">
                     Kind of Deposit
                   </Typography>
@@ -261,27 +267,27 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={7} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={3.5} xl={4} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Bills
                   </Typography>
                   <Typography className="listing-description">
-                    Included
+                  {props.recentList[0]?.allBillsIncluded ? 'Included' :" Not Included" || 'N/A'}
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={7} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Minimum Stay
                   </Typography>
                   <Typography className="listing-description">
-                    2 Months
+                  {props.recentList[0]?.minimumStay || 'N/A'} months
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={9} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charge for electricity bill
@@ -291,7 +297,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={9} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charge for gas bill
@@ -301,9 +307,19 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
+              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    How do you charge for water bill
+                  </Typography>
+                  <Typography className="listing-description">
+                    {props.recentList[0]?.waterBillPayment || 'N/A'}
+                  </Typography>
+                </div>
+              </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Typography className="listing-styles-main mb-3">
-                  Rules and Refrence
+                  Rules and refrences
                 </Typography>
               </Col>
               <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
@@ -312,7 +328,7 @@ const ListingDetails = (props: any) => {
                     Gender
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.user?.gender || 'N/A'}
+                    {props.recentList[0]?.genderPreference || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -332,7 +348,7 @@ const ListingDetails = (props: any) => {
                     Preferable
                   </Typography>
                   <Typography className="listing-description">
-                    Students
+                  {props.recentList[0]?.tenantTypePreference || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -346,13 +362,13 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Allow to Registered
                   </Typography>
                   <Typography className="listing-description">
-                    Yes
+                  {props.recentList[0]?.tenantsCanRegisterAddress ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -372,7 +388,7 @@ const ListingDetails = (props: any) => {
                     Pets
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.petsAllowed || 'N/A'}
+                    {props.recentList[0]?.petsAllowed ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
@@ -382,24 +398,45 @@ const ListingDetails = (props: any) => {
                     Musical Instruments
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.musicalInstrumentsAllowed || 'N/A'}
+                    {props.recentList[0]?.musicalInstrumentsAllowed ? 'Yes' : 'No' || 'N/A'}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Typography className="listing-styles-main mb-3">
-                  Documents for Tenants
+                  Documents for tenants
                 </Typography>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <div className="mb-3">
+                {props.recentList[0]?.incomeProofRequired === true && <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Proof of Income
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0]?.incomeProofRequired || 'N/A'}
+                      Salary slip or bank statements from the tenant or their sponsor
                   </Typography>
-                </div>
+                </div>}
+                {props.recentList[0]?.identityProofRequired === true &&
+                  <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    Proof of Identity
+                  </Typography>
+                  <Typography className="listing-description">
+                  Government issued ID, passport, drivers license.
+                  </Typography>
+                  </div>
+                }
+                {props.recentList[0]?.occupationProofRequired === true &&
+                  <div className="mb-3">
+                  <Typography className="listing-styles-secondary">
+                    Proof of occupation or enrollment
+                  </Typography>
+                  <Typography className="listing-description">
+                    
+                  University enrolment certificate, Internship or employee contract.
+                  </Typography>
+                  </div>
+                }   
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Typography className="listing-styles-main mb-3">
@@ -417,9 +454,17 @@ const ListingDetails = (props: any) => {
                         {props.recentList[0]?.contractType || 'N/A'}
                       </Typography>
                       <Typography className="listing-description">
-                        In case a tenant moves in or moves out in the middle of
-                        the month they will charge for each day during they live
-                        in hostel
+                        {
+                          props.recentList[0]?.contractType === 'Monthly' ?
+                            ('The tenant will always pay the entire months rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.') :
+                            props.recentList[0]?.contractType === 'Daily' ?
+                              ('In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.')
+                              :
+                              props.recentList[0]?.contractType === 'Weekly' ?
+                                ('The tenant will pay half of the months rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.')
+                                :
+                                'N/A'
+                        }
                       </Typography>
                     </div>
                   </Col>
@@ -433,12 +478,16 @@ const ListingDetails = (props: any) => {
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
-                    Standard Cancellation
+                    {props.recentList[0]?.cancellationPolicy || 'N/A'}
                   </Typography>
                   <Typography className="listing-description mt-2 mb-1">
-                    In case a tenant moves in or moves out in the middle of
-                    the month they will charge for each day during they live
-                    in hostel
+                    {props.recentList[0]?.cancellationPolicy === 'Standard Cancellation' ?
+                      ('if tenant cancels a booking:- Within 24 hours of confirmation - Full refund of the first months rent- After 24 hours of confirmation - No refund')
+                      : props.recentList[0]?.cancellationPolicy === 'Flexible Cancellation' ?
+                        ('If tenant cancels a booking within 24 hours of confirmation- Full refund of the first months rent. If the tenant cancels a booking when move-in date is: - More than 30 days away - Fill refund of first months rent - 30 to 7 days away - 50% refund of first months rent')
+                        :
+                        'N/A'
+                    }
                   </Typography>
                 </div>
               </Col>
@@ -452,7 +501,7 @@ const ListingDetails = (props: any) => {
             <Space className="flex justify-center md:justify-end">
               <Button className="text-error-bg-color white-color rounded-md"
                 onClick={() => {
-                 setRejectData('rejected')
+                  setRejectData('rejected')
                   setOpenModal(true);
                 }}
               >

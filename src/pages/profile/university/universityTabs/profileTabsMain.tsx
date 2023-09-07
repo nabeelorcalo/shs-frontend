@@ -10,9 +10,6 @@ import { useRecoilValue } from 'recoil'
 const ProfileTabsMain = () => {
   const { state } = useLocation();
   const role = useRecoilValue(currentUserRoleState);
-  console.log(state,'action');
-  
-
   const breadcrumbArray = [
     { name: ` ${state?.firstName} ${state?.lastName}` },
     {
@@ -23,6 +20,7 @@ const ProfileTabsMain = () => {
       `/${ROUTES_CONSTANTS.INTERNS}`
     },
   ];
+
   return (
     <>
       <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true} />

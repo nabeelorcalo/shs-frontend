@@ -21,14 +21,6 @@ const CertificateModal = (props: any) => {
   }, [certificateModal])
 
   const completionData = template?.filter((item: any) => item?.type === 'certificateOfCompletion');
-  // const filteredCompletionData = completionData?.map((item: any) => {
-  //   return (
-  //     {
-  //       key: item.id,
-  //       value: item.id,
-  //       label: item.name,
-  //     })
-  // });
 
   const onChange = (e: any) => {
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
@@ -60,9 +52,12 @@ const CertificateModal = (props: any) => {
           description: ""
         }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-        onFinish={(values) => {
+        onFinish={() => {
           handleCertificateSubmition('continue',
             `${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`);
+          form.resetFields();
+          setCertificateModal(false)
+          setSignatureModal(true);
         }}>
 
         <div className='my-2'>
@@ -75,21 +70,15 @@ const CertificateModal = (props: any) => {
           />
         </div>
 
-        <Form.Item label="Template">
+        <Form.Item label="Template" name="template" rules={[{ required: true }]}>
           <Select
             placeholder="Select template"
             options={completionData}
             onChange={onChange}
             className='w-full'
           />
-          {/* <UserSelector
-            className='w-full'
-            placeholder="Select template"
-            // onChange={onChange}
-            options={completionData}
-            hasSearch={false}
-          /> */}
         </Form.Item>
+
         <div
           className={`print-on-certificate mb-[30px] `}>
           <label className='label block mb-[10px]'>Print on Certificate</label>
@@ -110,10 +99,6 @@ const CertificateModal = (props: any) => {
 
         <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
           <ButtonThemeSecondary
-            // htmlType="submit"
-            // type="default"
-            // size="middle"
-            // className="white-bg-color teriary-color font-medium max-sm:w-full rounded-lg"
             onClick={() => {
               setPreviewModal(true); handleCertificateSubmition('preview',
                 `${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`);
@@ -121,24 +106,11 @@ const CertificateModal = (props: any) => {
             Preview
           </ButtonThemeSecondary>
           <ButtonThemeSecondary
-            // type="default"
-            // size="middle"
-            // className="button-default-tertiary max-sm:w-full rounded-lg"
-            onClick={() => {
-              form.resetFields();
-              setCertificateModal(false);
-              setInternCertificate({})
-            }}>
+            onClick={handleCancel}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary
-            htmlType="submit"
-            // size="middle"
-            // className="button-tertiary max-sm:w-full rounded-lg"
-            onClick={() => {
-              setSignatureModal(true)
-            }}
-          >
+            htmlType="submit">
             Continue
           </ButtonThemePrimary>
         </div >

@@ -21,7 +21,7 @@ const EmojiMoodRating = (props: EmojiProps) => {
         <div className="flex flex-row justify-around mt-[10.85px] mb-1 pb-[20px] pt-[9.16px] emoji-wrapper">
           {isLoading ? <Loader /> : data.map((item: any, idx: any) => {
             return (
-              <div className="emoji-container text-[#363565]">
+              <div key={idx} className="emoji-container text-[#363565]">
                 <div
                   key={`${id}_${idx}`}
                   className={`flex flex-col items-center ${id}_${idx}`}

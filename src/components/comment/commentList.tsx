@@ -9,8 +9,8 @@ export const CommentList = (props: any) => {
   return (
     <div className="comments-list">
       {commentsList?.length > 0 ? (
-        commentsList?.map(({ commentedByUser, createdAt, comment }: any) => (
-          <div className="avatar flex items-center gap-3 mt-6">
+        commentsList?.map(({ commentedByUser, createdAt, comment }: any, index: number) => (
+          <div key={index} className="avatar flex items-center gap-3 mt-6">
             <Avatar
               className="h-[48px] w-[48px] rounded-full object-cover relative"
               src={getUserAvatar({ profileImage: commentedByUser?.profileImage })}
@@ -26,7 +26,7 @@ export const CommentList = (props: any) => {
               <div className="flex gap-3">
                 <p className="font-medium">{`${commentedByUser?.firstName} ${commentedByUser?.lastName}`}</p>
                 <p className="mt-1 txt-p">
-                  {dayjs(createdAt).format(`HH.mm`)} <Dot /> {dayjs(createdAt).format(`DD MMM YYYY`)}
+                  {dayjs(createdAt).format(`HH:mm`)} <Dot className="mx-1" /> {dayjs(createdAt).format(`DD MMM YYYY`)}
                 </p>
               </div>
               <p>{comment}</p>

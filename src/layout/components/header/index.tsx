@@ -239,12 +239,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             </div>
           </div>
           {/* Collapseable Ends */}
-          {role === constants.INTERN && (
+          {(role === constants.INTERN ||
+            role === constants.MANAGER ||
+            role === constants.COMPANY_ADMIN ) && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               {orgLogo ? (
                 <div className="organisation-logo">
-                  <img src={orgLogo} />
+                  <img src={orgLogo?.url} />
                 </div>
               ) : (
                 <div className="organisation-name">{currentUser?.company?.businessName}</div>

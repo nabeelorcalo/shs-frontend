@@ -57,7 +57,7 @@ const CustomAutoComplete = ({ fetchData, selectUser }: any) => {
       <AutoComplete
         value={searchText}
         options={options}
-        style={{ width: 200 }}
+        style={{ width: '100%' }}
         onSelect={onSelect}
         onSearch={(text) => handleDebounceSearch(text)}
         onChange={onChange}

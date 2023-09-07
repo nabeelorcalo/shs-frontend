@@ -2,10 +2,9 @@ import React from "react";
 import { GlobalTable } from "../../components";
 
 const SalarySlipTable = (props: any) => {
-  const { tableData } = props
-  
+  const { tableData } = props;
+
   const newTableData = tableData
-  console.log(newTableData);
   const columns = [
     {
       dataIndex: "month",
@@ -31,7 +30,7 @@ const SalarySlipTable = (props: any) => {
       dataIndex: "totalPayment",
       key: "totalPayment",
       title: "Total Payment",
-      align:'center'
+      align: 'center'
     },
   ]
 
@@ -40,7 +39,7 @@ const SalarySlipTable = (props: any) => {
     payrollCycle: newTableData?.payrollCycle,
     hoursWorked: `${newTableData?.totalHours}.00`,
     basePay: newTableData?.baseSalary ? `£${newTableData?.baseSalary}` : 'N/A',
-    totalPayment: newTableData?.totalPayment ? `£${newTableData?.totalPayment}` : 'N/A',
+    totalPayment: newTableData.totalPayments ?? 'N/A',
   }]
 
   return (

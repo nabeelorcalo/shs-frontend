@@ -1,12 +1,10 @@
 import React from "react";
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { currentUserState } from "../../../store";
 import api from "../../api";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
-import { authVerificationState, currentUserState } from "../../store";
+import {extractCountryCode, extractPhoneNumber} from '../../helpers/phoneNumber';
 
 interface IVerification {
   first_name?: string;
@@ -15,13 +13,8 @@ interface IVerification {
   unique_identifier?: string;
 }
 
-// Auth operation and save into store
 const useCustomHook = () => {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const [verfifInitial, setVerfifInitial] = useRecoilState(
-    authVerificationState
-  );
 
   const {
     SIGNUP,
@@ -36,7 +29,12 @@ const useCustomHook = () => {
     MANAGER_USER_PROFILE,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
-  const signup = async (body: any): Promise<any> => {
+  const signup = async (params: any): Promise<any> => {
+    const phoneCode = extractCountryCode(params.phoneNumber);
+    const phoneNumber = extractPhoneNumber(params.phoneNumber);
+
+    const body = {...params, phoneCode, phoneNumber};
+
     const { data } = await api.post(SIGNUP, body);
     const res = await initVerifcation({
       first_name: data.firstName,
@@ -63,17 +61,11 @@ const useCustomHook = () => {
 
   const newPasswordSetup = async (body: any): Promise<any> => {
     const { data } = await api.post(NEW_PASSWORD, body);
-    // if (!data.error) {
     Notifications({
       title: "Success",
       description: "New Password Successfully Created!",
       type: "success",
     });
-    // localStorage.setItem("accessToken", data.accessToken);
-    // localStorage.setItem("refreshToken", data.refreshToken);
-    // localStorage.setItem("cognitoId", data?.user?.cognitoId);
-    // setCurrentUser(data.user);
-    // }
     return data;
   };
 
@@ -126,7 +118,6 @@ const useCustomHook = () => {
     return api.get(COMPANY_VERIFICATION, payload);
   };
 
-  // for manager signup only
   const updateUserProfile = async (id: any, payload: any): Promise<any> => {
     return api.patch(`${MANAGER_USER_PROFILE}?userId=${id}`, payload);
   };
@@ -148,7 +139,6 @@ const useCustomHook = () => {
     companyVerification,
     addCompanyInfo,
     getCompanyList,
-    // verifStudent
   };
 };
 

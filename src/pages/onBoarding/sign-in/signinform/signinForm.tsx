@@ -69,13 +69,11 @@ const SigninForm = (props: any) => {
   };
 
   const onFinish = (values: any) => {
+    const { Email, password, remember } = values;
     setBtnLoading(true);
-    const { Email, password } = values;
-    action
-      .login({
-        email: Email,
-        password: password,
-      })
+
+    setRememberMe(remember)
+    action.login({email: Email, password: password})
       .then((response: any) => {
         setBtnLoading(false);
         const { data } = response;
@@ -94,7 +92,7 @@ const SigninForm = (props: any) => {
           }
           return;
         }
-
+        localStorage.setItem("remeberMe", remember)
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
@@ -107,22 +105,19 @@ const SigninForm = (props: any) => {
             data.user.role == constants.INTERN)
         )
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
 
         if (data.accessToken) {
           window.location.replace(
-            `${constants.WEBSITE_URL}/Auth?accessToken=${
-              data.accessToken
-            }&refreshToken=${data.refreshToken}&cognitoId=${
-              data?.user?.cognitoId
+            `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
+            }&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId
             }&redirect=${window.location.origin + "/dashboard"}`
           );
         }
       })
       .catch((err) => {
-        console.log(err);
         Notifications({
           title: "Error",
           description: err.message,
@@ -130,7 +125,6 @@ const SigninForm = (props: any) => {
           key: "token",
         });
         setBtnLoading(false);
-        // setVerificationStatus
       });
   };
 
@@ -193,7 +187,7 @@ const SigninForm = (props: any) => {
               >
                 <Checkbox
                   checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  // onChange={(e) => setRememberMe(e.target.checked)}
                 >
                   <span className="text-teriary-color text-base font-normal">
                     Remember me
@@ -221,7 +215,6 @@ const SigninForm = (props: any) => {
                 danger
                 block
                 loading={btnLoading}
-                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification
@@ -242,7 +235,7 @@ const SigninForm = (props: any) => {
               className="text-center primary-color text-base"
               onClick={showModal}
             >
-              Don’t have an account?{" "}
+              Don’t have an account?
               <span className="a-tag-signup cursor-pointer font-semibold">
                 Sign up
               </span>

@@ -81,7 +81,6 @@
   background-color: $dashboard-primary-bg-color;
   color: $white-bg-color;
 }
-// .candidate-table-wrapper {
 .internship-filter {
   .ant-select-selector {
     background-color: $text-input-bg-color !important;
@@ -157,10 +156,8 @@
     }
   }
 }
-// }
 
 .drop-down-wrapper {
-  // border: 1px solid $text-error-line-color;
   border-radius: 8px;
   padding: 8px, 16px, 8px, 16px;
   background-color: $text-input-bg-color;
@@ -176,7 +173,6 @@
     font-size: 16px;
     margin-top: 30px;
     margin-bottom: 10px;
-    // border: 1px solid black;
   }
 }
 
@@ -548,6 +544,8 @@
   }
 }
 .reject-modal-description {
+  border: 1px solid $text-error-line-color;
+  border-radius: 8px;
   .text-editor {
     @include text-editor();
     min-height: 200px;

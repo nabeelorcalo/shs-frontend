@@ -10,8 +10,9 @@ export const HiringPipeline = (props: any) => {
   };
   return (
     <div className="pipeline-wrapper">
-      {hiringProcessStatusList.map((item: any) => (
+      {hiringProcessStatusList.map((item: any, index: number) => (
         <div
+          key={index}
           style={{
             backgroundColor: hiringList.includes(item?.title)
               ? pipelineColors[item?.title] || "#363565"

@@ -3,12 +3,10 @@ import { Button, Form, Input, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../actionHandler";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { Notifications } from "../../../../../components";
 import { CloseCircleFilled } from '@ant-design/icons';
 
 const CreatePasswordForm = () => {
-  const navigate = useNavigate();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const email = searchParams.get('email');
@@ -20,7 +18,6 @@ const CreatePasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const onFinish = (values: any) => {
-    console.log("Received reset values of form: ", values);
     const { currentPassword, newPassword } = values;
     if (password === confirmPassword) {
       action

@@ -19,7 +19,7 @@ export const InterviewList = (props: any) => {
   const [alert, setAlert] = useState(false);
   return (
     <Fragment key={useId()}>
-      <div className="onTime mt-8 mb-5">{dayjs(item?.dateFrom).format("DD MMM YYYY")}</div>
+      <div className="onTime mt-8 mb-5">{dayjs(item?.dateFrom).format("DD MMMM, YYYY")}</div>
       <div className="main-wrapperr pb-6 relative">
         <div className="interview-content px-4 py-4">
           <Row gutter={[20, 20]} align="middle">
@@ -39,9 +39,8 @@ export const InterviewList = (props: any) => {
                   />
                 </div>
                 <div>
-                  <h2 className="m-0 text-sm headingg capitalize">{`${candidateFirstName && candidateFirstName} ${
-                    candidateLastName && candidateLastName
-                  }`}</h2>
+                  <h2 className="m-0 text-sm headingg capitalize">{`${candidateFirstName && candidateFirstName} ${candidateLastName && candidateLastName
+                    }`}</h2>
                   <p className="bottom-heading capitalize">{candidateDesignation && candidateDesignation}</p>
                 </div>
               </div>
@@ -49,7 +48,7 @@ export const InterviewList = (props: any) => {
             <Col xl={6} lg={6} md={6}>
               <div className="inteview-wrapper ">
                 <h2 className="text-sm m-0 font-medium ">
-                  schedule by
+                  Scheduled by
                   <span className="headingg">{` ${item?.organizeBy?.firstName} ${item?.organizeBy?.lastName}`}</span>
                 </h2>
                 <p className="bottom-heading">{item?.locationType}</p>

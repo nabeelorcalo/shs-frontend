@@ -4,13 +4,11 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import constants from "../../../config/constants";
 import apiEndPoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { companySystemAdminState } from "../../../store";
 import { Notifications } from "../../../components";
 
-// Chat operation and save into store
 const useCustomHook = () => {
   const [subAdminCompany, setSubAdminCompany] = useRecoilState(
     companySystemAdminState

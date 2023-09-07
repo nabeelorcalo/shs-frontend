@@ -40,6 +40,7 @@ import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
 import { disabledDate } from "../../../../../helpers";
 import { CalendarIcon } from "../../../../../assets/images";
+import dayjs from "dayjs";
 
 const visa = [
   {
@@ -96,6 +97,7 @@ const PersonalInformation = () => {
       personalInfo: {
         ...personalInfo,
         ...values,
+        DOB: dayjs(values.DOB).format("YYYY-MM-DD"),
         dependents: values?.dependents?.length === 0 ? [] : values?.dependents,
         haveDependents: values?.dependents?.length === 0 ? false : true,
       },

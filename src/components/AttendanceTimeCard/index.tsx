@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Divider, Typography } from 'antd';
 import './style.scss';
 
 interface TimeProps {
@@ -14,7 +14,9 @@ export const AttendanceTimeCard: any = (props: TimeProps) => {
   const { Icon, heading, time, colorClass = '', isLast = false, total = 25 } = props;
 
   return (
-    <div className={`flex flex-row items-center gap-4 time-card ${isLast ? '' : 'border-right'}`}>
+    <div className={`flex flex-row items-center gap-4 time-card`}
+    // ${isLast ? '' : 'border-right'}
+    >
       {Icon}
       <div className="flex flex-col justify-around">
         <p className="heading">
@@ -33,6 +35,7 @@ export const AttendanceTimeCard: any = (props: TimeProps) => {
           </p>
         </div>
       </div>
+      {!isLast && <Divider type='vertical' className='card-divider' />}
     </div>
   )
 }

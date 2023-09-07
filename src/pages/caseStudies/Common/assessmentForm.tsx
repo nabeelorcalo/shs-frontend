@@ -9,10 +9,14 @@ import "./style.scss";
 import dayjs from "dayjs";
 import { Emoji3rd } from "../../../assets/images";
 import { checkForImage } from "../../../helpers";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../store";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
+  const currentUser = useRecoilValue(currentUserState);
+  const { firstName, lastName } = currentUser;
 
   const {
     getSelectedCasStudyData,
@@ -76,11 +80,11 @@ const AssessmentFormCaseStudies = () => {
       id: obj?.id,
     })) ?? [];
   const remarked = selectedCasStudyData?.remarked;
+  const approved = selectedCasStudyData?.approved;
   const userDetail = selectedCasStudyData?.intern?.userDetail;
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
@@ -94,13 +98,10 @@ const AssessmentFormCaseStudies = () => {
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
 
-  console.log("feedbackFormData", feedbackFormData);
-
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      {/* for destop */}
       {isLoading ? (
         <Loader />
       ) : (
@@ -205,7 +206,14 @@ const AssessmentFormCaseStudies = () => {
                   </div>
                 </div>
                 <div className="w-full relative">
-                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
+                  <Typography className="text-xl font-semibold mt-5 capitalize">
+                    {
+                      managerStatus === "pending" ?
+                        `${firstName} ${lastName}` : approved ?
+                          `${approved?.firstName} ${approved?.lastName}` :
+                          `${remarked?.firstName} ${remarked?.lastName}`
+                    }
+                  </Typography>
                   <div className="sign-box w-full rounded-lg flex items-center justify-around">
                     {!feedbackFormData?.supervisorSig &&
                       !["approved", "rejected"].includes(managerStatus?.toLowerCase()) ? (
@@ -251,7 +259,6 @@ const AssessmentFormCaseStudies = () => {
                     Reject
                   </Button>
                   <ButtonThemePrimary
-                    // className="teriary-bg-color  white-color  finalise-btn font-semibold  "
                     onClick={() => handleSubmit("Approved")}
                   >
                     Finalise

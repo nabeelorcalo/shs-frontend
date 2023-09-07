@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Col,
   Divider,
   Form,
@@ -17,9 +16,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
-import "react-phone-input-2/lib/style.css";
 import { newCountryListState } from "../../../store/CountryList";
-import UserSelector from "../../../components/UserSelector";
 import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
@@ -31,8 +28,6 @@ const breadcrumbArray = [
 const AddManager = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
-  const [searchValue, setSearchValue] = useState("");
-  const [value, setValue] = useState("");
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false);
   const departmentData = useRecoilState<any>(settingDepartmentState);

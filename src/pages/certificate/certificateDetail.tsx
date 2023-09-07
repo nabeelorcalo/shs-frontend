@@ -249,7 +249,7 @@ const CertificateDetail = () => {
           <OverAllPerfomance
             data={performanceEvaulation}
             heading={'Overall Performance'}
-          />
+          />  
         </Col>
         <Col xxl={6} xl={12} xs={24}>
           <LeaveChart heading='Leaves' leavesData={internLeaves} />

@@ -25,8 +25,6 @@ const UniversityPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const currentUser = useRecoilValue(currentUserState);
-  console.log("currentUser", currentUser);
-
   const navigate = useNavigate()
   const {
     getAllPerformance,

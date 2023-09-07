@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import {
   announcementDataState,
@@ -69,10 +69,10 @@ const CompanyAdmin = () => {
     getCompanyWidgets,
     companyWidgets,
     internshipsSummeryGraph,
-    companyAdminLoaders
+    companyAdminLoaders,
   } = useCustomHook()
-  const { isPiplineLoading, isSummeryLoading } = companyAdminLoaders;
-  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+  const { isPiplineLoading, isSummeryLoading, isWidgetsLoading } = companyAdminLoaders;
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
@@ -193,7 +193,7 @@ const CompanyAdmin = () => {
                 isLoading={isPerformanceLoading}
               />
             </BoxWrapper>
-          </Col> 
+          </Col>
 
           <Col xs={24}>
             <AttendanceAndListingGraph
@@ -230,7 +230,6 @@ const CompanyAdmin = () => {
           </Col>
         </Row>
       </Col>
-
       <Col xs={24}>
         <Row gutter={gutter} align="middle">
           <Col xs={24} lg={24} xl={24} xxl={19}>
@@ -238,8 +237,8 @@ const CompanyAdmin = () => {
               {isUniversitiesLoading ? <div className="h-[145px]"><Loader /></div> : universityList?.length > 0 ? (
                 universityList
                   ?.slice(0, 3)
-                  ?.map(({ logo, title, internList }: any) => (
-                    <Col flex={1}>
+                  ?.map(({ logo, title, internList }: any, index: number) => (
+                    <Col flex={1} key={index}>
                       <UniversityCard
                         logo={logo}
                         title={title}
