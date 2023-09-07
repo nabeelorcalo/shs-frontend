@@ -7,13 +7,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, SettingCommonModal, ButtonThemePrimary } from "../../../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { PhoneInput } from 'react-international-phone';
 import useCustomHook from "../actionHandler";
 import 'react-phone-input-2/lib/style.css';
-import {useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
 import "./style.scss";
+import { PhoneValidator, extractCountryCode, extractPhoneNumber } from "../../../../../helpers/phoneNumber";
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
@@ -28,13 +30,14 @@ const AddLocation: React.FC = () => {
       }
     )
   })
+
   const navigate = useNavigate()
   const { state } = useLocation()
   const [files, setFiles] = useState<any>(null)
   const [states, setState] = useState<any>(
     {
       country: "",
-      phoneCode: null,
+      phone: null,
       interns: state?.interns ?? filteredInternsData,
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
@@ -66,8 +69,11 @@ const AddLocation: React.FC = () => {
     town: state?.town
   }
 
+  console.log(initialValues);
+
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;
+    // values.postCode = parseInt(values.postCode)
     let locationValuesParams: any = {
       name,
       postCode,
@@ -75,8 +81,8 @@ const AddLocation: React.FC = () => {
       street,
       town,
       country,
-      phoneCode: states.phoneCode,
-      phoneNumber,
+      phoneCode: extractCountryCode(phoneNumber),
+      phoneNumber: extractPhoneNumber(phoneNumber),
       email,
       image: files?.files[0],
       interns: states.interns?.map((item: any) => item?.id),
@@ -218,10 +224,31 @@ const AddLocation: React.FC = () => {
               </Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <span className="label">
+              <Form.Item
+                name="phoneNumber"
+                label=" Phone Number (Optional)"
+                className={states?.phone ? 'phone-input' : 'phone-input-error'}
+                rules={[
+                  {
+                    validator: (_, value) => PhoneValidator(states?.phone, value)
+                  }
+                ]}
+              >
+
+                <PhoneInput
+                  value={states?.phone}
+                  className="w-auto"
+                  defaultCountry="pk"
+                  // placeholder="+92 312-9966188"
+                  // disableDialCodePrefill
+                  onChange={(phone: string, country: any) => { setState({ ...states, phone: phone }) }}
+                />
+
+              </Form.Item>
+              {/* <span className="label">
                 Phone Number (optional)<span className="text-[red]"></span>
-              </span>
-              <div className="flex">
+              </span> */}
+              {/* <div className="flex">
                 <div className="w-[30%]" >
                   <Form.Item
                     required={false}
@@ -239,7 +266,7 @@ const AddLocation: React.FC = () => {
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>
-              </div>
+              </div> */}
               <Form.Item name="email"
                 label={<span>Email <span className="text-teriary-color">(optional)</span></span>}
               >
