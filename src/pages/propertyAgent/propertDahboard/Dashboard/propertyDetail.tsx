@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import { getAllListingState, getRecentListingState } from "../../../../store/getListingState";
 import useCustomHook from "../../actionHandler";
 import Documents from "./propertyTabs/documents";
+import { BoxWrapper } from "../../../../components";
 
 const statuses: any = {
   published: "#3DC575",
@@ -95,9 +96,9 @@ const PropertyDetail = () => {
         </div>
       </div>
       <Divider />
-      <Row gutter={15}>
-        <Col xxl={6} xl={6} lg={7} md={6} sm={6} xs={24}>
-          <div className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg">
+      <Row gutter={20}>
+        <Col xxl={4.5} xl={6} lg={7} md={6} sm={6} xs={24}>
+          <BoxWrapper>
             {recentlists?.map((item: any, index: any) => {
               return (
                 <>
@@ -112,7 +113,7 @@ const PropertyDetail = () => {
                     <div className="grid mx-auto justify-items-center">
                       <Avatar
                         size={80}
-                        // src={`${constants.MEDIA_URL}/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`}
+                        src={`${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData.extension}`}
                       >
                         {item?.user?.firstName?.charAt(0)}
                         {item?.user?.lastName?.charAt(0)}
@@ -159,12 +160,12 @@ const PropertyDetail = () => {
                 </>
               );
             })}
-          </div>
+          </BoxWrapper>
         </Col>
-        <Col xxl={18} xl={18} lg={17} md={18} sm={18} xs={24}>
-          <div className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg p-2">
+        <Col xxl={18.5} xl={18} lg={17} md={18} sm={18} xs={24}>
+          <BoxWrapper className="px-3 py-3">
             <AppTabs items={items} />
-          </div>
+          </BoxWrapper>
         </Col>
       </Row>
     </div>
