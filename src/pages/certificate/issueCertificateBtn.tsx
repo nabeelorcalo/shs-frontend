@@ -6,7 +6,7 @@ const IssueCertificateBtn = (props: any) => {
   return (
     <ButtonThemePrimary onClick={onClick}>
       <IssueCertificateIcon className='mr-[15px]' />
-      <span className='text-base font-semibold text-white'>issue certificate</span>
+      <span className='text-base font-semibold text-white'>Issue Certificate</span>
     </ButtonThemePrimary>
   )
 }

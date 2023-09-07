@@ -9,48 +9,44 @@ import {
   Select,
   Typography,
 } from "antd";
-import { CommonDatePicker, Notifications } from "../../../../components";
-import "../../styles.scss";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
-import useCustomHook from "../../actionHandler";
-import "react-phone-input-2/lib/style.css";
-import PasswordCritera from "./PasswordCritera";
-import useCountriesCustomHook from "../../../../helpers/countriesList";
-import UserSelector from "../../../../components/UserSelector";
-import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { signupUserData } from "../../../../store/Signup";
-import { disabledDate } from "../../../../helpers";
-import { newCountryListState } from "../../../../store/CountryList";
-import { newPasswordUser } from "../../../../store";
-import { CalendarIcon } from "../../../../assets/images";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 import dayjs from "dayjs";
+import { Notifications } from "../../../../components";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { newPasswordUser } from "../../../../store";
+import { signupUserData } from "../../../../store/Signup";
+import { newCountryListState } from "../../../../store/CountryList";
+import useCustomHook from "../../actionHandler";
+import PasswordCritera from "./PasswordCritera";
+import { disabledDate } from "../../../../helpers";
+import useCountriesCustomHook from "../../../../helpers/countriesList";
+import {PhoneValidator} from '../../../../helpers/phoneNumber';
+import { CalendarIcon } from "../../../../assets/images";
+import "../../styles.scss";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const refNo: any = searchParams.get("referenceNo") || "";
   const [signupData, setSignupData] = useRecoilState(signupUserData);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [btnLoading, setBtnLoading] = React.useState(false);
   const [password, setPassword] = useState("");
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [code, setCode] = useState("+44");
+  const [phone, setPhone] = useState('');
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const tempUser: any = useRecoilValue(newPasswordUser);
-  const { signup, newPasswordSetup, updateUserProfile, initVerifcation } =
-    useCustomHook();
+  const { signup, newPasswordSetup, updateUserProfile, initVerifcation } =useCustomHook();
   const [form] = Form.useForm();
 
   useEffect(() => {
     getCountriesList();
-    setCode(form.getFieldValue("phoneCode"));
   }, []);
 
   const handleConfirmPasswordChange = (e: any) => {
@@ -155,7 +151,6 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="First Name"
               name="firstName"
-              // initialValue={'Test'}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter First Name" className="input-style" />
@@ -165,7 +160,6 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="Last Name"
               name="lastName"
-              // initialValue={'Test2'}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Last Name" className="input-style" />
@@ -190,13 +184,12 @@ const SignupForm = ({ signupRole }: any) => {
             signupRole == constants.UNIVERSITY ? "University Email" : "Email"
           }
           name="email"
-          // initialValue={'testing@test.com'}
           rules={[{ required: true }, { type: "email" }]}
         >
           <Input
             readOnly={
               signupRole == constants.MANAGER ||
-              signupRole == constants.SUB_ADMIN
+                signupRole == constants.SUB_ADMIN
                 ? true
                 : false
             }
@@ -267,32 +260,32 @@ const SignupForm = ({ signupRole }: any) => {
           </Row>
         )}
         <Row gutter={20}>
-          <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
-            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
-              <CountryCodeSelect defaultVal={code} key={code} />
-            </Form.Item>
-          </Col>
-          <Col xxl={17} xl={16} lg={16} md={16} xs={24}>
+          <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
             <Form.Item
               name="phoneNumber"
               label=" Phone Number"
+              className={ phone ? 'phone-input' : 'phone-input-error'}
               rules={[
-                { required: true },
                 {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
+                  validator: (_, value) => PhoneValidator(phone, value)
+                }
               ]}
             >
-              <Input placeholder="Enter Phone Number" className="input-style" />
+
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry="pk"
+                // placeholder="+92 312-9966188"
+                // disableDialCodePrefill
+                onChange={(phone: string, country: any) => {setPhone(phone)}}
+              />
+
             </Form.Item>
           </Col>
+
         </Row>
+
         <Row gutter={20}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item
@@ -335,9 +328,9 @@ const SignupForm = ({ signupRole }: any) => {
                 onChange={handleConfirmPasswordChange}
               />
             </Form.Item>
-            {/* <Typography>{passwordMatchedMessage}</Typography> */}
           </Col>
         </Row>
+
         <Form.Item>
           <Button
             type="primary"
@@ -348,6 +341,7 @@ const SignupForm = ({ signupRole }: any) => {
             Sign Up
           </Button>
         </Form.Item>
+
         <div>
           <Typography className="text-center primary-color text-base">
             Already have an account?&nbsp;
@@ -359,6 +353,7 @@ const SignupForm = ({ signupRole }: any) => {
             </a>
           </Typography>
         </div>
+        
         <div className="mt-[1.5rem] text-center">
           <Typography className="text-teriary-color font-normal text-base">
             By continuing to create account your are agree to Student Help
