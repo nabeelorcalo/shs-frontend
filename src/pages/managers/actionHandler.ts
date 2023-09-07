@@ -12,6 +12,7 @@ import { Notifications } from "../../components";
 import { settingDepartmentState } from "../../store";
 import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
+import { extractCountryCode, extractPhoneNumber } from "../../helpers/phoneNumber";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
@@ -31,7 +32,13 @@ const useCustomHook = () => {
     UPDATE_MANAGER_PROFILE,
     FORGOTPASSWORD
   } = apiEndPoints;
-  const addManagerCompany = async (body: any): Promise<any> => {
+  const addManagerCompany = async (params: any): Promise<any> => {
+
+    const phoneCode = extractCountryCode(params.phoneNumber);
+    const phoneNumber = extractPhoneNumber(params.phoneNumber);
+
+    const body = {...params, phoneCode, phoneNumber};
+
     const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
     if (!data.error) {
       setCurrentManager(data.user);

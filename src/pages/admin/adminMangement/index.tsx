@@ -44,7 +44,10 @@ import {
 } from "../../../store/adminSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
+import {PhoneValidator} from '../../../helpers/phoneNumber';
+import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
+
 
 const statuses: any = {
   true: "#D83A52",
@@ -88,8 +91,10 @@ const AdminManagement = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [accessState, setAccessState] = useState('')
+  const [phone, setPhone] = useState('');
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
+
 
   const pdfBody = adminSubAdmin[0].map((item: any) =>
     [
@@ -407,8 +412,8 @@ const AdminManagement = () => {
                   }))
                 }}
               >
-                <Option value="active">Active</Option>
-                <Option value="inactive">Inactive</Option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
               </Select>
             </div>
           </Form.Item>
@@ -556,34 +561,26 @@ const AdminManagement = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
-              <Form.Item
-                name="phoneCode"
-                label="Phone Code"
-                initialValue={"+44"}
-              >
-                <CountryCodeSelect />
-              </Form.Item>
-            </Col>
-            <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
-              <Form.Item
-                name="phoneNumber"
-                label=" Phone Number"
-                rules={[
-                  { required: true },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message:
-                      "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
-              </Form.Item>
+            <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
+            <Form.Item
+              name="phoneNumber"
+              label="Phone Number"
+              className={ phone ? 'phone-input' : 'phone-input-error'}
+              rules={[
+                {
+                  validator: (_, value) => PhoneValidator(phone, value)
+                }
+              ]}
+            >
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry="pk"
+                // placeholder="+92 312-9966188"
+                // disableDialCodePrefill
+                onChange={(phone: string, country: any) => {setPhone(phone)}}
+                />
+                </Form.Item>
             </Col>
           </Row>
           <div className="flex justify-end gap-3">
