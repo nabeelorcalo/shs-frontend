@@ -66,7 +66,7 @@ const SelectUserType = (props: any) => {
         </div>
         <div className="images-wrapper">
           <Row gutter={[24, 15]}>
-            {userType.map((item) => {
+            {userType?.map((item) => {
               return (
                 <Col xxl={8} xl={8} lg={8} md={12} xs={24} key={item.id}>
                   <center
@@ -103,6 +103,8 @@ const SelectUserType = (props: any) => {
           <BackButton
             style={{ cursor: "pointer" }}
             onClick={() => {
+              setActiveButton('');
+              setUserTypeRole('')
               props.setIsModalOpen(false);
             }}
           />
@@ -111,8 +113,10 @@ const SelectUserType = (props: any) => {
               navigate(
                 `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${userTypeRole}${
                   referenceToken ? referenceToken : ""
-                }`
+                }`,
+                
               );
+              
             }}
             className="select-user-continue"
           >
