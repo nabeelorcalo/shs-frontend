@@ -1,5 +1,5 @@
-import { useRecoilState } from "recoil";
-import { countryList } from "../store/CountryList";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { countryList, callingCodesState } from "../store/CountryList";
 import api from "../api";
 import endpoints from "../config/apiEndpoints";
 
@@ -7,6 +7,7 @@ import endpoints from "../config/apiEndpoints";
 const useCountriesCustomHook = () => {
   const { GET_COUNTRIES_LIST } = endpoints;
   const [allCountriesList, setAllCountriesList] = useRecoilState(countryList);
+  const callingCodes = useRecoilValue(callingCodesState);
 
   // get setting locations
   const getCountriesList = async () => {
@@ -18,9 +19,15 @@ const useCountriesCustomHook = () => {
     }
   };
 
+  // Calling codes
+  const getCountriesCallingCodes = async () => {
+    return callingCodes;
+  };
+
   return {
     allCountriesList,
     getCountriesList,
+    getCountriesCallingCodes,
   };
 };
 
