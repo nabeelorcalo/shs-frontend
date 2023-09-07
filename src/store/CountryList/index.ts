@@ -33,3 +33,21 @@ export const nationalityList = selector({
     }));
   },
 });
+
+export const callingCodesState = selector({
+  key: "callingCodesState",
+  get: ({ get }) => {
+    const countryLists = get(countryList);
+    const callingCodes: any = {};
+
+    countryLists.map((item: any) => {
+      const {cca2, idd: {root, suffixes}} = item;
+
+      let suffix = suffixes?.length > 0 ? suffixes[0] : '';
+
+      callingCodes[`${root}${suffix}`] = cca2.toLowerCase();
+    });
+
+    return callingCodes;
+  },
+});
