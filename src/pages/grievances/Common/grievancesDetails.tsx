@@ -464,20 +464,22 @@ const GrievancesDetails = (props: any) => {
                       label: (
                         <div className="max-h-96 overflow-y-auto">
                           {managers &&
-                            managers.map((item: any, index: any) => (
-                              <div
-                                key={index}
-                                className="flex items-center gap-3 mb-[20px]"
-                                onClick={() => {
-                                  setFilterValue({
-                                    ...filterValue,
-                                    userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                    userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
-                                  });
-                                  handleUpdate(item?.managerId);
-                                }}
-                              >
-                                {/* <img
+                            managers
+                              .filter((item: any) => item?.role === constants.MANAGER || item?.role === constants.COMPANY_ADMIN)
+                              .map((item: any, index: any) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-3 mb-[20px]"
+                                  onClick={() => {
+                                    setFilterValue({
+                                      ...filterValue,
+                                      userName: item?.firstName + " " + item?.lastName,
+                                      userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+                                    });
+                                    handleUpdate(item?.managerId);
+                                  }}
+                                >
+                                  {/* <img
                                   src={
                                     item?.companyManager?.profileImage
                                       ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
@@ -485,16 +487,16 @@ const GrievancesDetails = (props: any) => {
                                   }
                                   className="h-[20px] w-[20px] rounded-full object-cover"
                                 /> */}
-                                <Avatar
-                                  size={30}
-                                  src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
-                                >
-                                  {item?.companyManager?.firstName?.charAt(0)}
-                                  {item?.companyManager?.lastName?.charAt(0)}
-                                </Avatar>
-                                <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
-                              </div>
-                            ))}
+                                  <Avatar
+                                    size={30}
+                                    src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`}
+                                  >
+                                    {item?.firstName?.charAt(0)}
+                                    {item?.lastName?.charAt(0)}
+                                  </Avatar>
+                                  <p>{item?.firstName + " " + item?.lastName}</p>
+                                </div>
+                              ))}
                         </div>
                       ),
                       key: "users",

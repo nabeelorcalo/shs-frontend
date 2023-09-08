@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import CommonModal from './CommonModal'
 import { certificateDetailsState } from '../../../store';
 import { Certificate } from '../../../components';
-import { useState } from 'react';
+
 interface Props {
   open?: boolean;
   setOpen?: any;

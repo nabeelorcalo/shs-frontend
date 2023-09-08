@@ -7,10 +7,10 @@ const PhoneNumberHook = () => {
 
   // Get phone calling code like "+1", "+91", "+44"
   const extractCountryCode = (phoneString: string) => {
-    const startsWithPlusSign = phoneString.startsWith("+");
+    const startsWithPlusSign = phoneString?.startsWith("+");
 
     if (startsWithPlusSign) {
-      const countryCode = phoneString.substring(0, phoneString.indexOf(" "));
+      const countryCode = phoneString?.substring(0, phoneString?.indexOf(" "));
       return countryCode;
     } else {
       return null;
@@ -19,9 +19,9 @@ const PhoneNumberHook = () => {
 
   // Get phone number string like "+1 (111) 111-1111"
   const extractPhoneNumber = (phoneString: string) => {
-    const spaceIndex = phoneString.indexOf(" ");
+    const spaceIndex = phoneString?.indexOf(" ");
 
-    const remainingPhoneString = phoneString.substring(spaceIndex + 1);
+    const remainingPhoneString = phoneString?.substring(spaceIndex + 1);
 
     return remainingPhoneString;
   }
@@ -33,11 +33,11 @@ const PhoneNumberHook = () => {
 
   // Phone input field validation
   const PhoneValidator = (phone: any, value: string) => {
-    const phoneUtil = PhoneNumberUtil.getInstance();
+    const phoneUtil = PhoneNumberUtil?.getInstance();
 
     const isPhoneValid = (phone: string) => {
       try {
-        return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
+        return phoneUtil.isValidNumber(phoneUtil?.parseAndKeepRawInput(phone));
       } catch (error) {
         return false;
       }

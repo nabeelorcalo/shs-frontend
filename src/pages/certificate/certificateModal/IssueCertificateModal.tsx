@@ -8,7 +8,6 @@ import constants from '../../../config/constants';
 import useTemplatesCustomHook from '../../setting/companyAdmin/Templates/actionHandler';
 import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../components';
 
-// const Options = Select;
 interface Props {
   internDetails?: any;
   open?: boolean;
@@ -30,10 +29,6 @@ const IssueCertificate = (props: Props) => {
   } = props;
 
   const { name, type, desc } = certificateDetails ?? {};
-
-  // const [openDate, setOpenDate] = useState({ start: false, end: false });
-  // const [dateVal, setDateVal] = useState({ start: '', end: '' });
-
   const { getCadidatesData, candidateData } = useCustomHook();
   const { getAllTemplates, templatesData } = useTemplatesCustomHook();
 
@@ -93,7 +88,6 @@ const IssueCertificate = (props: Props) => {
     return str.replace(/<[^>]*>/g, '');
   };
   const sanitizedContent = removeHTMLTags(desc);
-  // console.log(internDetails, name, 'internDetails');
 
   return (
     <CommonModal
@@ -109,7 +103,6 @@ const IssueCertificate = (props: Props) => {
         onChange={onChange}
         options={internsData}
         hasSearch={false}
-        // defaultValue={`${internDetails?.userDetail?.firstName} ${internDetails?.userDetail?.lastName}`}
         disabled={internDetails?.userDetail?.firstName ? true : false}
       />
 
@@ -179,13 +172,10 @@ const IssueCertificate = (props: Props) => {
           Preview
         </Button>}
         <ButtonThemeSecondary
-          // className='cancel-btn btn flex items-center font-semibold'
           onClick={() => setOpen(!open)}>
           Cancel
         </ButtonThemeSecondary>
         <ButtonThemePrimary
-          // className={`continue-btn btn flex items-center font-semibold`}
-          // style={{ pointerEvents: !name ? 'none' : 'inherit' }}
           onClick={() => {
             setOpen(!open);
             setOpenSignatureModal(true);

@@ -125,11 +125,22 @@ const Filters: React.FC<any> = (props: any) => {
     });
     setShowDrawer(false);
   };
+  const filterManagersByState = (item: any, stateValue: any) => {
+    switch (stateValue) {
+      case 2:
+      case 4:
+        return item?.role === constants.MANAGER || item?.role === constants.COMPANY_ADMIN;
+      case 3:
+        return item?.role === constants.INTERN || item?.role === constants.STUDENT;
+      default:
+        return true;
+    }
+  };
   return (
     <div className="filter_main_wrapper">
       <Form layout="vertical" form={form} onFinish={handleSubmit}>
         <Form.Item name="escalatedBy" label={`Escalated ${selectedTab == 2 ? "To" : "By"}`}>
-          <div className="asignee-wrap w-[100%]">
+          <div className="asignee1-wrap w-[100%]">
             <DropDownNew
               placement={"bottomRight"}
               items={[
@@ -137,19 +148,21 @@ const Filters: React.FC<any> = (props: any) => {
                   label: (
                     <div className="max-h-96 overflow-y-auto">
                       {managers &&
-                        managers.map((item: any) => (
-                          <div
-                            className="flex items-center gap-3 mb-[20px]"
-                            onClick={() => {
-                              setFilterValue({
-                                ...filterValue,
-                                userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
-                              });
-                              form.setFieldValue("escalatedBy", item?.managerId);
-                            }}
-                          >
-                            {/* <img
+                        managers
+                          .filter((item: any) => filterManagersByState(item, parseInt(selectedTab)))
+                          .map((item: any) => (
+                            <div
+                              className="flex items-center gap-3 mb-[20px]"
+                              onClick={() => {
+                                setFilterValue({
+                                  ...filterValue,
+                                  userName: item?.firstName + " " + item?.lastName,
+                                  userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+                                });
+                                form.setFieldValue("escalatedBy", item?.managerId);
+                              }}
+                            >
+                              {/* <img
                               src={
                                 item?.companyManager?.profileImage
                                   ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
@@ -157,16 +170,16 @@ const Filters: React.FC<any> = (props: any) => {
                               }
                               className="h-[24px] w-[24px] rounded-full object-cover"
                             /> */}
-                            <AntAvatar
-                              size={30}
-                              src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
-                            >
-                              {item?.companyManager?.firstName?.charAt(0)}
-                              {item?.companyManager?.lastName?.charAt(0)}
-                            </AntAvatar>
-                            <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
-                          </div>
-                        ))}
+                              <AntAvatar
+                                size={30}
+                                src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`}
+                              >
+                                {item?.firstName?.charAt(0)}
+                                {item?.lastName?.charAt(0)}
+                              </AntAvatar>
+                              <p>{item?.firstName + " " + item?.lastName}</p>
+                            </div>
+                          ))}
                     </div>
                   ),
                   key: "users",
@@ -190,7 +203,7 @@ const Filters: React.FC<any> = (props: any) => {
         </Form.Item>
         {(selectedTab == 3 || selectedTab == 4) && (
           <Form.Item name="escalatedTo" label={`Escalated To`}>
-            <div className="asignee-wrap w-[100%]">
+            <div className="asignee1-wrap w-[100%]">
               <DropDownNew
                 placement={"bottomRight"}
                 items={[
@@ -198,19 +211,21 @@ const Filters: React.FC<any> = (props: any) => {
                     label: (
                       <div className="max-h-96 overflow-y-auto">
                         {managers &&
-                          managers.map((item: any) => (
-                            <div
-                              className="flex items-center gap-3 mb-[20px]"
-                              onClick={() => {
-                                setFilterValue({
-                                  ...filterValue,
-                                  escalatedToUsername: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                  escalatedToImage: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
-                                });
-                                form.setFieldValue("escalatedTo", item?.managerId);
-                              }}
-                            >
-                              {/* <img
+                          managers
+                            .filter((item: any) => item?.role === constants.MANAGER || item?.role === constants.COMPANY_ADMIN)
+                            .map((item: any) => (
+                              <div
+                                className="flex items-center gap-3 mb-[20px]"
+                                onClick={() => {
+                                  setFilterValue({
+                                    ...filterValue,
+                                    escalatedToUsername: item?.firstName + " " + item?.lastName,
+                                    escalatedToImage: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+                                  });
+                                  form.setFieldValue("escalatedTo", item?.managerId);
+                                }}
+                              >
+                                {/* <img
                               src={
                                 item?.companyManager?.profileImage
                                   ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
@@ -218,16 +233,16 @@ const Filters: React.FC<any> = (props: any) => {
                               }
                               className="h-[24px] w-[24px] rounded-full object-cover"
                             /> */}
-                              <AntAvatar
-                                size={30}
-                                src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
-                              >
-                                {item?.companyManager?.firstName?.charAt(0)}
-                                {item?.companyManager?.lastName?.charAt(0)}
-                              </AntAvatar>
-                              <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
-                            </div>
-                          ))}
+                                <AntAvatar
+                                  size={30}
+                                  src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`}
+                                >
+                                  {item?.firstName?.charAt(0)}
+                                  {item?.lastName?.charAt(0)}
+                                </AntAvatar>
+                                <p>{item?.firstName + " " + item?.lastName}</p>
+                              </div>
+                            ))}
                       </div>
                     ),
                     key: "users",

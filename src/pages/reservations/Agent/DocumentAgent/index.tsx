@@ -1,4 +1,4 @@
-import { Divider } from "antd";
+import { Col, Divider, Row } from "antd";
 import { Documentcard, DocumentIcon } from "../../../../assets/images";
 import Preview from "../../../../assets/images/candidates/preview.svg";
 import useCustomHook from "../../actionHandler";
@@ -20,14 +20,14 @@ const DocumentsAgent = () => {
       <div className="font-semibold text-[28px] text-secondary-color pb-4">
         Documents
       </div>
-      {getDocuments.length === 0 && <p className="text-center">No Document Found</p>}
+      {getDocuments.length === 0 && <p className="text-center font-semibold text-success-placeholder-color">No Data Found</p>}
       {
         getDocuments?.map((item: any) => {
           const size = item.file.mediaSize / 1024;
           return (
             <div key={item.id}>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
+              <Row className="flex justify-between items-center">
+                <Col xs={18} className="flex items-center">
                   <div className="pr-2">
                     <Documentcard />
                   </div>
@@ -38,9 +38,9 @@ const DocumentsAgent = () => {
                       {item?.file?.filename}.{item?.file?.metaData?.extension}
                     </p>
                   </div>
-                </div>
+                </Col>
 
-                <div className="flex items-center">
+                <Col xs={6} className="flex items-center">
                   <div>
                     <p className="light-grey-color text-sm font-normal">{dayjs(item.createdAt).format("DD/MM/YYYY")}</p>
                     <p className="light-grey-color text-sm font-normal">{size.toFixed(2)} mb</p>
@@ -59,8 +59,8 @@ const DocumentsAgent = () => {
                   <a href={`${constants?.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData.extension}`}>
                     <DocumentIcon />
                   </a>
-                </div>
-              </div>
+                </Col>
+              </Row>
               <Divider />
             </div>
           )

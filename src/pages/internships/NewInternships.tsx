@@ -296,7 +296,6 @@ const NewInternships = () => {
             <Col xxl={8} xl={10} lg={24} xs={24} className='flex flex-col gap-4 p-4'>
               <Form.Item label="Total Positions" name="positions"
                 rules={[
-                  // { required: status === 'DRAFT' ? false : true },
                   {
                     validator: validatePositiveNumber,
                   }]}>
@@ -338,20 +337,13 @@ const NewInternships = () => {
               Save Draft
             </Button>
             <ButtonThemeSecondary
-              // type="default"
-              // size="middle"
-              // className="button-default-tertiary main-btn font-medium"
               onClick={() => {
                 navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS);
                 setInternShipFormData({})
               }}>Cancel
             </ButtonThemeSecondary>
             <ButtonThemePrimary
-              htmlType="submit"
-            // type="primary"
-            // size="middle"
-            // className="button-tertiary main-btn font-medium"
-            >
+              htmlType="submit">
               {role === constants.COMPANY_ADMIN ? "Publish" : "Submit"}
             </ButtonThemePrimary>
           </Row>
