@@ -11,7 +11,8 @@ import { PhoneInput } from 'react-international-phone';
 import useCustomHook from "../actionHandler";
 import 'react-phone-input-2/lib/style.css';
 import { useRecoilValue } from "recoil";
-import { newCountryListState } from "../../../../../store/CountryList";
+import { newCountryListState, postalCodeState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
 import "./style.scss";
 import usePhoneHook from "../../../../../helpers/phoneNumber";
@@ -22,6 +23,8 @@ const AddLocation: React.FC = () => {
   const { PhoneValidator, extractCountryCode, extractPhoneNumber, countryFlagCode } = usePhoneHook();
   const flag = countryFlagCode();
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue(postalCodeState);
+
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
@@ -35,15 +38,13 @@ const AddLocation: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [files, setFiles] = useState<any>(null)
-  const [states, setState] = useState<any>(
-    {
-      country: "",
-      phone: `${state?.phoneCode} ${state?.phoneNumber}`,
-      interns: state?.interns ?? filteredInternsData,
-      openModal: false,
-      internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
-    });
-  console.log("states are", states.phone);
+  const [states, setState] = useState<any>({
+    country: "United Kingdom",
+    phone: `${state?.phoneCode} ${state?.phoneNumber}`,
+    interns: state?.interns ?? filteredInternsData,
+    openModal: false,
+    internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
+  });
 
   const [form] = Form.useForm();
   const deselectArray: any = [];
@@ -60,18 +61,17 @@ const AddLocation: React.FC = () => {
     address: state?.address,
     email: state?.email,
     name: state?.name,
-    phoneNumber:`${state?.phoneCode} ${state?.phoneNumber}` ,
+    phoneNumber: `${state?.phoneCode} ${state?.phoneNumber}`,
     postCode: state?.postCode,
     street: state?.street,
     image: state?.image,
     town: state?.town
   }
-  
+
   useEffect(() => {
     getAllInterns()
   }, [states.openModal])
 
-  console.log(initialValues);
 
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;
@@ -115,7 +115,6 @@ const AddLocation: React.FC = () => {
       setState({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
-  console.log(flag[state?.phoneCode]);
 
   return (
     <div className="add-location">
@@ -163,9 +162,25 @@ const AddLocation: React.FC = () => {
                 name="postCode"
                 required={false}
                 label="Post Code"
-                rules={[{ required: true }]}
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      const regex = new RegExp(postalCodes[states.country]);
+                      
+                      if (value === '') {
+                        return Promise.reject('Required Field');
+                      }
+
+                      if (regex.test(value)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject('Invalid postal code');
+                      }
+                    }
+                  }
+                ]}
               >
-                <Input placeholder="Post Code" className="input-style" type="number" />
+                <Input placeholder="Post Code" className="input-style" type="text" />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -209,6 +224,10 @@ const AddLocation: React.FC = () => {
                       showSearch
                       placeholder='Select Country'
                       options={countries}
+                      onChange={(val: any) => setState((prevState: any) => ({
+                        ...prevState,
+                        country: val,
+                      }))}
                     />
                   </Form.Item>
                 </div>
@@ -237,13 +256,10 @@ const AddLocation: React.FC = () => {
                   }
                 ]}
               >
-
                 <PhoneInput
                   value={states?.phone}
                   className="w-auto"
                   defaultCountry={flag[state?.phoneCode]}
-                  // placeholder="+92 312-9966188"
-                  // disableDialCodePrefill
                   onChange={(phn: string, country: any) => {
                     setState((prevState: any) => ({
                       ...prevState,

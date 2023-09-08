@@ -235,7 +235,7 @@ const SigninForm = (props: any) => {
               className="text-center primary-color text-base"
               onClick={showModal}
             >
-              Don’t have an account?&nbsp;
+              {`Don’t have an account? `}
               <span className="a-tag-signup cursor-pointer font-semibold">
                 Sign up
               </span>
