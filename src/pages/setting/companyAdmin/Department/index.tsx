@@ -53,7 +53,7 @@ const SettingDepartment: React.FC = () => {
                     </p>
                     <p className="text-sm font-normal text-secondary-color w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">
                       {data?.description}
-                    </p>
+                    </p> 
                   </div>
                   <div className="float-right cursor-pointer">
                     <DropDownForSetting

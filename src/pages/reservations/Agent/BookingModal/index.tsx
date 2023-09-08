@@ -27,6 +27,7 @@ const BookingModal = (props: any) => {
         title="Bookings"
         open={open.openViewModal}
         close={() => setOpen(false)}
+        wrapClassName="booking-Modal"
         footer={false}
       >
         <AppTabs items={items} />

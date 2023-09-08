@@ -14,10 +14,13 @@ const JobDetails = (props: any) => {
     { name: "Job Details" },
     { name: "Search Jobs", onClickNavigateTo: `/${ROUTES_CONSTANTS.SEARCH_JOBS}` },
   ];
+
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const { state } = useLocation();
   const { id } = useParams();
   const { getDetailsJob, detailsJobsData, jobsApplicationApply }: any = useCustomHook();
+  console.log(detailsJobsData, "detailsJobsData");
+
 
   useEffect(() => {
     getDetailsJob(id)
@@ -55,21 +58,17 @@ const JobDetails = (props: any) => {
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
                   {detailsJobsData?.title ?? " N/A"}
                 </h2>
-
                 <span className="my-3 flex text-secondary-color text-base capitalize">
                   {detailsJobsData?.locationType === "VIRTUAL" ? `${detailsJobsData?.company?.town}${detailsJobsData?.company?.country}` :
                     `${detailsJobsData?.location?.name ?? "N/A"}, ${detailsJobsData?.location?.country ?? "N/A"}`
                   }
-
                   <span className="mx-3 text-secondary-color flex">
                     <li></li>
                     {`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
-
                 </span>
-
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
-                    {detailsJobsData?.internType?.toLowerCase()?.split("_",) ?? " N/A"}
+                    {detailsJobsData?.internType?.toLowerCase()?.split("_",).join(" ") ?? " N/A"}
                   </p>
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
                     {detailsJobsData?.salaryType?.toLowerCase()?.split("_",) ?? " N/A"}
@@ -90,12 +89,11 @@ const JobDetails = (props: any) => {
               </Button>
             </Col>
           </Row>
-
           <ul>
             <p className="text-primary-color text-lg font-semibold my-3">
               Description
             </p>
-            <p className="my-3 ">
+            <p className="my-3">
               {detailsJobsData?.description ?? " N/A"}
             </p>
             <p className="text-primary-color text-lg font-semibold">
@@ -107,7 +105,6 @@ const JobDetails = (props: any) => {
             </p>
             <li>{detailsJobsData?.requirements ?? "N/A"}</li>
           </ul>
-
           <Row gutter={[20, 20]} className="my-11">
             <Col lg={6} >
               <span className="mx-2 my-7 font-medium text-primary-color">
@@ -143,7 +140,7 @@ const JobDetails = (props: any) => {
                 Frequency:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
                   {`${detailsJobsData?.salaryCurrency?.toLowerCase() ?? "N/A"}
-                     ${detailsJobsData?.salaryAmount}/${detailsJobsData?.salaryFrequency?.toLowerCase()}
+                     ${detailsJobsData?.salaryAmount ?? "N/A"}/${detailsJobsData?.salaryFrequency?.toLowerCase() ?? "N/A"}
                      ` ?? " N/A"}
                 </span>
               </p> : ""}

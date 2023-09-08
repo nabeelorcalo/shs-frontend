@@ -51,3 +51,19 @@ export const callingCodesState = selector({
     return callingCodes;
   },
 });
+
+export const postalCodeState = selector({
+  key: "postalCodeState",
+  get: ({ get }) => {
+    const countryLists = get(countryList);
+    const postalCodes: any = {};
+    
+    countryLists.map((item: any) => {
+      const {name: {common}, postalCode } = item;
+
+      postalCodes[`${common}`] = postalCode?.regex;
+    });
+
+    return postalCodes;
+  },
+});

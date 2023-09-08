@@ -66,7 +66,7 @@ const ManagerInfo = (props: any) => {
                         }
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 
-                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]"
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px] profile-btn"
                       >
                         Profile
                       </Button>
@@ -86,7 +86,7 @@ const ManagerInfo = (props: any) => {
                         }}
                         style={{ minWidth: "0px" }}
                         className="text-green-color reset-bg-color text-base 
-                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]"
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px] reset-btn"
                       >
                         Reset
                       </Button>

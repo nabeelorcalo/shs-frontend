@@ -100,7 +100,7 @@ const Interns = () => {
     ];
     return (
       <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-        <More />
+        <More className="cursor-pointer"/>
       </Dropdown>
     );
   };

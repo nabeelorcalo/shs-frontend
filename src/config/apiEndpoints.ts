@@ -102,7 +102,7 @@ const endpoints = {
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
   POST_DIGIVAULT_PASSWORD: "/digivault/enable-disable-lock",
-  GET_COUNTRIES_LIST: "https://restcountries.com/v3/all",
+  GET_COUNTRIES_LIST: "https://restcountries.com/v3.1/all",
   POST_CREATE_FOLDER_FILE: "/digivault/create-folder-file",
   DEL_FOLDER_FILE: "/digivault/delete-folder-file",
   GET_RESERVATIONS: "/property/get-reservations",
