@@ -12,14 +12,15 @@ import useCustomHook from "../actionHandler";
 import 'react-phone-input-2/lib/style.css';
 import { useRecoilValue } from "recoil";
 import { newCountryListState } from "../../../../../store/CountryList";
-import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
 import "./style.scss";
-import { PhoneValidator, extractCountryCode, extractPhoneNumber } from "../../../../../helpers/phoneNumber";
+import usePhoneHook from "../../../../../helpers/phoneNumber";
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
+  const { PhoneValidator, extractCountryCode, extractPhoneNumber, countryFlagCode } = usePhoneHook();
+  const flag = countryFlagCode();
   const countries = useRecoilValue(newCountryListState);
   const filteredInternsData = internsData?.map((item: any) => {
     return (
@@ -37,17 +38,15 @@ const AddLocation: React.FC = () => {
   const [states, setState] = useState<any>(
     {
       country: "",
-      phone: null,
+      phone: `${state?.phoneCode} ${state?.phoneNumber}`,
       interns: state?.interns ?? filteredInternsData,
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
     });
+  console.log("states are", states.phone);
+
   const [form] = Form.useForm();
   const deselectArray: any = [];
-
-  useEffect(() => {
-    getAllInterns()
-  }, [states.openModal])
 
   const breadcrumbArray = [
     { name: "Add Location" },
@@ -58,16 +57,19 @@ const AddLocation: React.FC = () => {
   const initialValues = {
     interns: state?.interns,
     country: state?.country,
-    phoneCode: state?.phoneCode,
     address: state?.address,
     email: state?.email,
     name: state?.name,
-    phoneNumber: state?.phoneNumber,
+    phoneNumber:`${state?.phoneCode} ${state?.phoneNumber}` ,
     postCode: state?.postCode,
     street: state?.street,
     image: state?.image,
     town: state?.town
   }
+  
+  useEffect(() => {
+    getAllInterns()
+  }, [states.openModal])
 
   console.log(initialValues);
 
@@ -113,6 +115,7 @@ const AddLocation: React.FC = () => {
       setState({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
+  console.log(flag[state?.phoneCode]);
 
   return (
     <div className="add-location">
@@ -238,10 +241,15 @@ const AddLocation: React.FC = () => {
                 <PhoneInput
                   value={states?.phone}
                   className="w-auto"
-                  defaultCountry="pk"
+                  defaultCountry={flag[state?.phoneCode]}
                   // placeholder="+92 312-9966188"
                   // disableDialCodePrefill
-                  onChange={(phone: string, country: any) => { setState({ ...states, phone: phone }) }}
+                  onChange={(phn: string, country: any) => {
+                    setState((prevState: any) => ({
+                      ...prevState,
+                      phone: phn,
+                    }));
+                  }}
                 />
 
               </Form.Item>
