@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import SelectUserType from "../../userType";
@@ -38,6 +38,8 @@ const SigninForm = (props: any) => {
   };
   const navigate = useNavigate();
   const action = useCustomHook();
+  const location = useLocation()
+
 
   const [formData, setFormData] = useState({
     email: "",
@@ -113,7 +115,7 @@ const SigninForm = (props: any) => {
           window.location.replace(
             `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
             }&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId
-            }&redirect=${window.location.origin + "/dashboard"}`
+            }&redirect=${location?.search ? `${constants.WEBSITE_URL}/${location?.search?.slice(1)}` : window.location.origin + "/dashboard"}`
           );
         }
       })
