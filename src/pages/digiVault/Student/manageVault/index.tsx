@@ -341,7 +341,7 @@ const ManageVault = () => {
           }));
         }}
         width={705}
-        closeIcon={
+        closeIcon={ 
           <CloseCircleFilled className="text-success-placeholder-color" />
         }
         footer={[
@@ -351,7 +351,7 @@ const ManageVault = () => {
           <ButtonThemePrimary loading={loading} onClick={upLoadModalHandler} key="submit">
            {loading ? 'Uploading' : 'Upload'}
           </ButtonThemePrimary>,
-        ]}
+        ]} 
       >
         <UploadDocument
           handleDropped={handleDropped}

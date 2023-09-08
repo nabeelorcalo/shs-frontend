@@ -177,7 +177,7 @@ const Rejected = () => {
                   <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
                     Document History
                   </div>
-                  {contractDetails?.history?.length > 0 ? <div className="document p-4">
+                  {contractDetails?.history?.length > 0 ? <div className="document p-4 h-[400px] overflow-scroll">
                     {filteredHistory?.map((item: any) => {
                       const time = dayjs(item?.updatedAt).format('hh:mm A')
                       const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
