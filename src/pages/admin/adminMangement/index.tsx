@@ -44,7 +44,7 @@ import {
 } from "../../../store/adminSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
-import {PhoneValidator} from '../../../helpers/phoneNumber';
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
 import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
 
@@ -92,6 +92,7 @@ const AdminManagement = () => {
   const [searchItem, setSearchItem] = useState('');
   const [accessState, setAccessState] = useState('')
   const [phone, setPhone] = useState('');
+  const { PhoneValidator} = usePhoneNumberHook();
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
 

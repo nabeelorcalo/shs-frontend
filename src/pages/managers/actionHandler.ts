@@ -12,16 +12,15 @@ import { Notifications } from "../../components";
 import { settingDepartmentState } from "../../store";
 import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
-import { extractCountryCode, extractPhoneNumber } from "../../helpers/phoneNumber";
+import usePhoneNumberHook from "../../helpers/phoneNumber";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
   const [currentManager, setCurrentManager] = useRecoilState(addManagerDetailState);
-  const [getCurentManager, setGetManager] = useRecoilState(
-    getManagerDetailState
-  );
+  const [getCurentManager, setGetManager] = useRecoilState(getManagerDetailState);
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
   const [managerPaginationObject, setManagerPaginationObject] = useState<any>(null);
+  const { extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const limit = 100;
 
   const {

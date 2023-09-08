@@ -20,7 +20,7 @@ import { settingDepartmentState } from "../../../store";
 import { newCountryListState } from "../../../store/CountryList";
 import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
-import { PhoneValidator } from "../../../helpers/phoneNumber";
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
 
 const breadcrumbArray = [
   { name: "New Manager" },
@@ -30,6 +30,7 @@ const breadcrumbArray = [
 const AddManager = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
+  const { PhoneValidator } = usePhoneNumberHook();
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('');

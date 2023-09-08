@@ -31,7 +31,7 @@ import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import '../style.scss';
 import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
-import { PhoneValidator } from "../../../helpers/phoneNumber";
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
 
 const gender = [
   {
@@ -54,9 +54,9 @@ const gender = [
 const ManagerProfile = () => {
   const { id } = useParams();
   const [managerIdData, setManagerIdData] = useState<any>();
-  const [flagCode, setFlagCode] = useState<any>();
   const [phone, setPhone] = useState('');
   const action = useCustomHook();
+  const { PhoneValidator,countryFlagCode } = usePhoneNumberHook();
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
@@ -64,6 +64,7 @@ const ManagerProfile = () => {
     return { name: department.name, id: department.id };
   });
   const [form] = Form.useForm();
+  const flag = countryFlagCode();
 
   useEffect(() => {
     action.getSettingDepartment(1, "");
@@ -83,7 +84,6 @@ const ManagerProfile = () => {
         city: data?.companyManager?.city,
         country: data?.companyManager?.country
       });
-      // setFlagCode(data?.companyManager?.phoneCode)
     })
   }, [form])
   const handleChange = (value: string) => {
@@ -147,7 +147,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {managerIdData?.companyManager?.phoneCode} {managerIdData?.companyManager?.phoneNumber}
+                 {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
@@ -211,43 +211,6 @@ const ManagerProfile = () => {
                     />
                   </Form.Item>
                 </Col>
-                {/* <Col >
-                  <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
-                    {flagCode ?
-                      <Form.Item label='Phone Code' key={1}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                          defaultVal={flagCode}
-                        />
-                      </Form.Item>
-                      :
-                      <Form.Item label='Phone Code' key={2}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                        />
-                      </Form.Item>
-                    }
-                    <Form.Item label="Phone Number" name="phoneNumber"
-                      rules={[
-                        { required: false },
-                        {
-                          pattern: /^[+\d\s()-]+$/,
-                          message: "Please enter valid phone number  ",
-                        },
-                        {
-                          min: 6,
-                          message: "Please enter a valid phone number with a minimum of 6 digits",
-                        },
-                      ]}
-                    >
-                      <Input
-                        className="text-input-bg-color light-grey-color pl-2 text-base w-[full]"
-                        placeholder="Phone Number"
-                      />
-                    </Form.Item>
-                  </div>
-                </Col> */}
-
                 <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
                   <Form.Item
                     name="phoneNumber"
@@ -262,9 +225,9 @@ const ManagerProfile = () => {
                     <PhoneInput
                       value={phone}
                       className="w-auto"
-                      defaultCountry={"pk"}
+                      defaultCountry={`${flag[managerIdData?.companyManager?.phoneCode]}`}
                       // placeholder="+92 312-9966188"
-                      // disableDialCodePrefill
+                      disableDialCodePrefill
                       onChange={(phone: string, country: any) => { setPhone(phone) }}
                     />
                   </Form.Item>

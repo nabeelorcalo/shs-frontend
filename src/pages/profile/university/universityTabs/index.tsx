@@ -17,27 +17,26 @@ import "react-phone-input-2/lib/style.css";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, universityState } from "../../../../store";
-import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { newCountryListState } from "../../../../store/CountryList";
+import usePhoneNumberHook from "../../../../helpers/phoneNumber";
+import { PhoneInput } from 'react-international-phone';
+
 const { TextArea } = Input;
 
 const UniversityProfileForm = (props: any) => {
   const navigate = useNavigate();
   const action = useCustomHook();
+  const [phone, setPhone] = useState('');
+  const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const { userUniversity } = useRecoilValue(currentUserState);
-  const [FlagCode, setFlagCode] = useState<any>();
-  const [files, setFiles] = useState("");
-  const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [FormInputVal, setFormInputVal] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
-
+  const flag = countryFlagCode();
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
     return (
       {
@@ -50,10 +49,12 @@ const UniversityProfileForm = (props: any) => {
 
   const onFinish = (values: any) => {
     const formData = new FormData();
+    const phoneCode :any = extractCountryCode(phone);
+    const phoneNumber :any = extractPhoneNumber(phone);
     formData.append('name', values.name);
     formData.append('email', values.email);
-    formData.append('phoneCode',(FlagCode).toString());
-    formData.append('phoneNumber',(values.phoneNumber).toString());
+    formData.append('phoneCode',phoneCode);
+    formData.append('phoneNumber',(phoneNumber).toString());
     formData.append('postCode', (values.postCode).toString());
     formData.append('address', (values.address).toString());
     formData.append('city', (values.city).toString());
@@ -69,14 +70,13 @@ const UniversityProfileForm = (props: any) => {
         name: userUniversity?.university?.name,
         email: userUniversity?.university?.email,
         phoneCode: userUniversity?.university?.phoneCode,
-        phoneNumber: userUniversity?.university?.phoneNumber,
+        phoneNumber: userUniversity?.university?.phoneCode + userUniversity?.university?.phoneNumber ,
         postCode: userUniversity?.university?.postCode,
         address: userUniversity?.university?.address,
         city: userUniversity?.university?.city,
         country: userUniversity?.university?.country,
         aboutUni: userUniversity?.university?.aboutUni,
       })
-      setFlagCode(userUniversity?.university?.phoneCode)
     }
   }, [form])
 
@@ -120,41 +120,26 @@ const UniversityProfileForm = (props: any) => {
                     <Input placeholder="Enter email" className="input-style" />
                   </Form.Item>
                 </Col>
-                <Col>
-                <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-                {FlagCode ?
-                <Form.Item label='Phone Code' key={1}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                    defaultVal={FlagCode} 
-                  />
-                </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                  />
-                </Form.Item>
-              }
+                <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
                   <Form.Item
                     name="phoneNumber"
-                    label=" Phone Number"
+                    label="Phone Number"
+                    className={phone ? 'phone-input' : 'phone-input-error'}
                     rules={[
-                      { required: false },
                       {
-                        pattern: /^[+\d\s()-]+$/,
-                        message: "Please enter valid phone number ",
-                      },
-                      {
-                        min: 6,
-                        message:
-                          "Please enter a valid phone number with a minimum of 6 digits",
-                      },
+                        validator: (_, value) => PhoneValidator(phone, value)
+                      }
                     ]}
                   >
-                    <Input placeholder="Enter Phone Number" className="input-style" />
-                    </Form.Item>
-                    </div>
+                    <PhoneInput
+                      value={phone}
+                      className="w-auto"
+                      defaultCountry={`${flag[userUniversity?.university?.phoneCode]}`}
+                      // placeholder="+92 312-9966188"
+                      disableDialCodePrefill
+                      onChange={(phone: string, country: any) => { setPhone(phone) }}
+                    />
+                  </Form.Item>
                 </Col>
               </Row>
               <Divider />
