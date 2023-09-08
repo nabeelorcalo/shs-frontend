@@ -40,6 +40,8 @@ import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
 import { disabledDate } from "../../../../../helpers";
 import { CalendarIcon } from "../../../../../assets/images";
+import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
+import { PhoneInput } from 'react-international-phone';
 import dayjs from "dayjs";
 
 const visa = [
@@ -63,19 +65,20 @@ const visa = [
 
 const PersonalInformation = () => {
   const action = useCustomHook();
+  const { PhoneValidator,countryFlagCode,extractCountryCode,extractPhoneNumber } = usePhoneNumberHook();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
-
+  const [phone, setPhone] = useState('');
+  console.log(phone,'phone')
   const nationalities = useRecoilValue(nationalityList);
-  const [studentInformation, setStudentInformation] =
-    useRecoilState<any>(studentProfileState);
-
+  const [studentInformation, setStudentInformation] =useRecoilState<any>(studentProfileState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState();
   const [form] = Form.useForm();
+  const flag = countryFlagCode();
 
   const { personalInfo = {}, general: generalInfo = {} } =
     studentInformation || {};
@@ -91,12 +94,16 @@ const PersonalInformation = () => {
   };
 
   const onFinish = (values: any) => {
+    const phoneCode = extractCountryCode(phone);
+    const phoneNumber = extractPhoneNumber(phone)
     setLoading(true);
     let payload = {
       generalInfo,
       personalInfo: {
         ...personalInfo,
         ...values,
+        phoneCode,
+        phoneNumber,
         DOB: dayjs(values.DOB).format("YYYY-MM-DD"),
         dependents: values?.dependents?.length === 0 ? [] : values?.dependents,
         haveDependents: values?.dependents?.length === 0 ? false : true,
@@ -113,10 +120,13 @@ const PersonalInformation = () => {
   useEffect(() => {
     getCountriesList();
     action.getStudentProfile().then((data: any) => {
-      form.setFieldsValue(personalInfo);
-      setCode(form.getFieldValue("phoneCode"));
+      const updatedPhone = studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber;
+      form.setFieldsValue({ ...personalInfo, phoneNumber: updatedPhone });
+      setPhone(studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber)
     });
   }, [form, updateData]);
+
+ 
 
   const onNewPillList = (name: string, list: string[]) => {
     setStudentInformation((oldVal: any) => {
@@ -230,38 +240,27 @@ const PersonalInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <Form.Item name="phoneCode" label="Phone Code">
-              {code ? (
-                <CountryCodeSelect defaultVal={code} key={code} />
-              ) : (
-                <Skeleton.Input active={true} size={"default"} />
-              )}
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <Form.Item
-              name="phoneNumber"
-              label="Phone Number"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input
-                placeholder="Enter Phone Number"
-                className="input-style w-[100%]"
-              />
-            </Form.Item>
-          </Col>
+          <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
+                  <Form.Item
+                    name="phoneNumber"
+                    label="Phone Number"
+                    className={phone ? 'phone-input' : 'phone-input-error'}
+                    rules={[
+                      {
+                        validator: (_, value) => PhoneValidator(phone, value)
+                      }
+                    ]}
+                  >
+                    <PhoneInput
+                      value={phone}
+                      className="w-auto"
+                      defaultCountry={`${flag[studentInformation?.personalInfo?.phoneCode]}`}
+                      // placeholder="+92 312-9966188"
+                      disableDialCodePrefill
+                      onChange={(phone: string, country: any) => { setPhone(phone) }}
+                    />
+                  </Form.Item>
+                </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="National Ensurance Number"
