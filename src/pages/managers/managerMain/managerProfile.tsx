@@ -21,7 +21,6 @@ import {
   ButtonThemeSecondary
 } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
-import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -30,6 +29,9 @@ import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import '../style.scss';
+import { PhoneInput } from 'react-international-phone';
+const { Option } = Select;
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
 
 const gender = [
   {
@@ -52,8 +54,9 @@ const gender = [
 const ManagerProfile = () => {
   const { id } = useParams();
   const [managerIdData, setManagerIdData] = useState<any>();
-  const [flagCode, setFlagCode] = useState<any>();
+  const [phone, setPhone] = useState('');
   const action = useCustomHook();
+  const { PhoneValidator,countryFlagCode } = usePhoneNumberHook();
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
@@ -61,6 +64,7 @@ const ManagerProfile = () => {
     return { name: department.name, id: department.id };
   });
   const [form] = Form.useForm();
+  const flag = countryFlagCode();
 
   useEffect(() => {
     action.getSettingDepartment(1, "");
@@ -80,7 +84,6 @@ const ManagerProfile = () => {
         city: data?.companyManager?.city,
         country: data?.companyManager?.country
       });
-      setFlagCode(data?.companyManager?.phoneCode)
     })
   }, [form])
   const handleChange = (value: string) => {
@@ -90,7 +93,7 @@ const ManagerProfile = () => {
   const onFinish = (values: any) => {
     action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,
-      phoneCode: flagCode,
+      phoneCode: values.phoneCode,
       phoneNumber: values.phoneNumber,
       departmentId: values.department,
       title: values.title,
@@ -144,7 +147,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {managerIdData?.companyManager?.phoneCode} {managerIdData?.companyManager?.phoneNumber}
+                 {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
@@ -194,7 +197,7 @@ const ManagerProfile = () => {
                   >
                     <Select placeholder='Select' onChange={handleChange} disabled>
                       {gender?.map((item: any) => (
-                        <Option key={item.value} value={item.value}>{item.label}</Option>
+                        <option key={item.value} value={item.value}>{item.label}</option>
                       ))}
                     </Select>
                   </Form.Item>
@@ -208,41 +211,26 @@ const ManagerProfile = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col >
-                  <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
-                    {flagCode ?
-                      <Form.Item label='Phone Code' key={1}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                          defaultVal={flagCode}
-                        />
-                      </Form.Item>
-                      :
-                      <Form.Item label='Phone Code' key={2}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                        />
-                      </Form.Item>
-                    }
-                    <Form.Item label="Phone Number" name="phoneNumber"
-                      rules={[
-                        { required: false },
-                        {
-                          pattern: /^[+\d\s()-]+$/,
-                          message: "Please enter valid phone number  ",
-                        },
-                        {
-                          min: 6,
-                          message: "Please enter a valid phone number with a minimum of 6 digits",
-                        },
-                      ]}
-                    >
-                      <Input
-                        className="text-input-bg-color light-grey-color pl-2 text-base w-[full]"
-                        placeholder="Phone Number"
-                      />
-                    </Form.Item>
-                  </div>
+                <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
+                  <Form.Item
+                    name="phoneNumber"
+                    label="Phone Number"
+                    className={phone ? 'phone-input' : 'phone-input-error'}
+                    rules={[
+                      {
+                        validator: (_, value) => PhoneValidator(phone, value)
+                      }
+                    ]}
+                  >
+                    <PhoneInput
+                      value={phone}
+                      className="w-auto"
+                      defaultCountry={`${flag[managerIdData?.companyManager?.phoneCode]}`}
+                      // placeholder="+92 312-9966188"
+                      disableDialCodePrefill
+                      onChange={(phone: string, country: any) => { setPhone(phone) }}
+                    />
+                  </Form.Item>
                 </Col>
               </Row>
               <Divider />
@@ -265,7 +253,7 @@ const ManagerProfile = () => {
                       onChange={handleChange}
                     >
                       {departmentIds?.map((item: any) => {
-                        return <Option value={item?.id}>{item?.name}</Option>;
+                        return <option value={item?.id}>{item?.name}</option>;
                       })}
                     </Select>
                   </Form.Item>

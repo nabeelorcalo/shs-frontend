@@ -1,0 +1,16 @@
+@import "../../../../scss/colors";
+
+.booking-Modal .ant-modal-content {
+  height: 850px;
+
+  .ant-tabs {
+    .ant-tabs-tab-active svg path {
+      fill: $dashboard-primary-bg-color;
+    }
+
+    .ant-tabs-content-holder {
+      height: 670px;
+      overflow-y: scroll;
+    }
+  }
+}

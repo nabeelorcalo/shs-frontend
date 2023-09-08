@@ -136,27 +136,18 @@ const ViewInternshipDetails = () => {
             internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
               <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
                 <ButtonThemeSecondary
-                  // type="default"
-                  // className="button-default-tertiary max-sm:w-full"
-                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
-                >
+                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}>
                   Back
                 </ButtonThemeSecondary>
               </div>
               :
               <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
                 <ButtonThemeSecondary
-                  // type="default"
-                  // className="button-default-tertiary max-sm:w-full"
-                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
-                >
+                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}>
                   Cancel
                 </ButtonThemeSecondary>
                 <ButtonThemePrimary
-                  // type="primary"
-                  // className="button-tertiary max-sm:w-full"
-                  onClick={() => handleUpdateStatus('PUBLISHED')}
-                >
+                  onClick={() => handleUpdateStatus('PUBLISHED')}>
                   Publish
                 </ButtonThemePrimary>
               </div> : ''}

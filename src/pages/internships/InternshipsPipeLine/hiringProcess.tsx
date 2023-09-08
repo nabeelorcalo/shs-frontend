@@ -8,7 +8,6 @@ import {
   OfferLetterTemplateModal,
   RejectModal,
 } from "../../../components";
-// import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
 import actionHandler from "../actionHandler";
 import dayjs from "dayjs";

@@ -24,7 +24,7 @@ import useCustomHook from "../../actionHandler";
 import PasswordCritera from "./PasswordCritera";
 import { disabledDate } from "../../../../helpers";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
-import {PhoneValidator} from '../../../../helpers/phoneNumber';
+import usePhoneNumberHook from '../../../../helpers/phoneNumber';
 import { CalendarIcon } from "../../../../assets/images";
 import "../../styles.scss";
 
@@ -43,6 +43,7 @@ const SignupForm = ({ signupRole }: any) => {
   const countries = useRecoilValue(newCountryListState);
   const tempUser: any = useRecoilValue(newPasswordUser);
   const { signup, newPasswordSetup, updateUserProfile, initVerifcation } =useCustomHook();
+  const {PhoneValidator} = usePhoneNumberHook();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -275,7 +276,7 @@ const SignupForm = ({ signupRole }: any) => {
               <PhoneInput
                 value={phone}
                 className="w-auto"
-                defaultCountry="pk"
+                defaultCountry="gb"
                 // placeholder="+92 312-9966188"
                 // disableDialCodePrefill
                 onChange={(phone: string, country: any) => {setPhone(phone)}}

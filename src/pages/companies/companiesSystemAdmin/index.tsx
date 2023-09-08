@@ -365,8 +365,8 @@ const CompaniesSystemAdmin = () => {
                     className="w-[100%]"
                     onChange={(e: any) => handleChangeSelect(e, "statusFilter")}
                   >
-                    <Option value="active">Active</Option>
-                    <Option value="inactive">Inactive</Option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
                   </Select>
                 </Form.Item>
                 <Form.Item label="City" name="cityFilter">
@@ -379,9 +379,9 @@ const CompaniesSystemAdmin = () => {
                   >
                     {city?.map((item: any, i: any) => {
                       return (
-                        <Option key={i} value={item?.city}>
+                        <option key={i} value={item?.city}>
                           {item?.city}
-                        </Option>
+                        </option>
                       );
                     })}
                   </Select>
