@@ -223,7 +223,12 @@ const useCustomHook = () => {
   // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
     setISLoading(true)
-    let file = await signPad?.isEmpty() && !files ? null : urlToFile(feedbackFormData?.supervisorSig)
+    let file: any = null
+    if (signPad?.isEmpty() && !files || signatureText) {
+      file = null
+    } else {
+      file = urlToFile(feedbackFormData?.supervisorSig)
+    }
     let data: any = feedbackFormData;
     if (file) {
       const sig = await handleSignatureUpload(file ? file : uploadFile)
