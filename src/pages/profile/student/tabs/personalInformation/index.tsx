@@ -150,6 +150,7 @@ const PersonalInformation = () => {
         layout="vertical"
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
+        initialValues={{phoneNumber : studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber}}
         autoComplete="off"
         form={form}
       >
