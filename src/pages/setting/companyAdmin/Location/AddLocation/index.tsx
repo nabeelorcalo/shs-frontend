@@ -40,7 +40,7 @@ const AddLocation: React.FC = () => {
   const [files, setFiles] = useState<any>(null)
   const [states, setState] = useState<any>({
     country: "United Kingdom",
-    phone: `${state?.phoneCode} ${state?.phoneNumber}`,
+    phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
     interns: state?.interns ?? filteredInternsData,
     openModal: false,
     internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
@@ -61,7 +61,7 @@ const AddLocation: React.FC = () => {
     address: state?.address,
     email: state?.email,
     name: state?.name,
-    phoneNumber: `${state?.phoneCode} ${state?.phoneNumber}`,
+    phoneNumber: state?.phoneCode && `${state?.phoneCode} ${state?.phoneNumber}`,
     postCode: state?.postCode,
     street: state?.street,
     image: state?.image,
@@ -300,7 +300,7 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider className="mt-1" />
           {/*------------------------ Upload Picture----------------------------- */}
-          <Row className="mt-5">
+          <Row className="mt-5"> 
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Upload Image

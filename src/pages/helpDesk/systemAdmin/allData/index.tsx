@@ -1,9 +1,10 @@
 import { Tooltip } from "antd";
 import { GlobalTable } from "../../../../components";
 import HistoryModal from "../HistoryModal";
+import "./style.scss"
 
 const AllData = (props: any) => {
-  const { tableData, state, setState,pagination, loading, pagesObj, handleTableChange } = props;
+  const { tableData, state, setState, pagination, loading, pagesObj, handleTableChange } = props;
 
   const columns = [
     {
@@ -17,7 +18,7 @@ const AllData = (props: any) => {
       key: "Subject",
       minWidth: 300,
       render: (_: any, data: any) => (
-        <Tooltip color={"#363565"} placement="bottom" title={data.Subject}>
+        <Tooltip rootClassName="helpdesk-tooltip" color={"#363565"} placement="bottomLeft" title={data.Subject}>
           <p>{data.Subject}</p>
         </Tooltip>
       ),
@@ -58,7 +59,7 @@ const AllData = (props: any) => {
       dataIndex: 'status',
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "Action",
       dataIndex: "action",
     },
