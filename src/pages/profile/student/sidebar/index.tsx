@@ -32,8 +32,7 @@ const StudentSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [studentInformation, setStudentInformation] =
-    useRecoilState<any>(studentProfileState);
+  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
   const {
     general: { userUniversity = {} } = {},

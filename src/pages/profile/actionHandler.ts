@@ -87,7 +87,7 @@ const useCustomHook = () => {
   };
 
   const getStudentProfile = async (uId: any = id) => {
-    if (Object.keys(studentProfile).length == 0) {
+    if (Object?.keys(studentProfile).length == 0) {
       const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
       updateStudentState(data);
     }

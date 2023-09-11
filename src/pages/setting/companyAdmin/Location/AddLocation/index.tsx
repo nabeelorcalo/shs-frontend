@@ -303,7 +303,7 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider className="mt-1" />
           {/*------------------------ Upload Picture----------------------------- */}
-          <Row className="mt-5">
+          <Row className="mt-5"> 
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Upload Image
