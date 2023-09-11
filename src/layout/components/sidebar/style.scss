@@ -130,3 +130,12 @@
 
   }
 }
+
+.ant-tooltip.ant-menu-inline-collapsed-tooltip {
+  .ant-tooltip-content {
+    .ant-tooltip-inner {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

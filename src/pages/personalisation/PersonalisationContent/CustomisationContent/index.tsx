@@ -154,7 +154,6 @@ const InnerData = () => {
         <div className="flex justify-center md:justify-end gap-4 mt-10">
           <ButtonThemeSecondary
             onClick={openAlertRevertChanges}
-            loading={loadingUpdateTheme}
           >
             Reset
           </ButtonThemeSecondary>
