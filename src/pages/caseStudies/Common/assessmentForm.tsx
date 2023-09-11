@@ -5,12 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 import ManagerRemarks from "./managerRemarks";
 import useCustomHook from "../actionHandler";
-import "./style.scss";
 import dayjs from "dayjs";
 import { Emoji3rd } from "../../../assets/images";
 import { checkForImage } from "../../../helpers";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
+import "./style.scss";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {

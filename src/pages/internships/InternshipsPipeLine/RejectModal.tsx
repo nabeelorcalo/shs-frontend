@@ -51,8 +51,6 @@ export const RejectModal = (props: any) => {
         templateList={templateList}
         formValues={formValues}
         setValueFormValues={setValueFormValues}
-        // isSubject={isSubject}
-        // isSubjectTouched={isSubjectTouched}
       />
     </div>
   );

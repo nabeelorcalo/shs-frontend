@@ -9,15 +9,23 @@ import { currentUserState, settingDepartmentState } from '../../../../../../stor
 import useCountriesCustomHook from '../../../../../../helpers/countriesList';
 import { ROUTES_CONSTANTS } from '../../../../../../config/constants';
 import { useNavigate } from 'react-router-dom';
+import { PhoneInput } from 'react-international-phone';
 import '../../../styles.scss';
-const { TextArea } = Input;
 import { Option } from "antd/es/mentions";
 import useCustomHook from '../../../../actionHandler';
 import { newCountryListState } from '../../../../../../store/CountryList';
+import usePhoneNumberHook from "../../../../../../helpers/phoneNumber";
+const { TextArea } = Input;
 
 const MainForm = () => {
   const navigate = useNavigate();
+  const [phone, setPhone] = useState('');
   const action = useCustomHook();
+  const {
+    PhoneValidator,
+    countryFlagCode,
+    extractCountryCode,
+    extractPhoneNumber } = usePhoneNumberHook();
   const [form] = Form.useForm();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
@@ -35,9 +43,8 @@ const MainForm = () => {
     departmentId,
     address,
     title } = useRecoilValue(currentUserState);
-  const [flagCode, setFlagCode] = useState<any>(phoneCode);
+  const flag = countryFlagCode();
   const departmentData = useRecoilState<any>(settingDepartmentState);
-
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department?.name, id: department?.id };
   });
@@ -47,7 +54,7 @@ const MainForm = () => {
     lastName,
     gender,
     phoneCode,
-    phoneNumber,
+    phoneNumber: phoneCode + phoneNumber,
     postCode,
     email,
     address,
@@ -56,12 +63,14 @@ const MainForm = () => {
     departmentId,
     title
   });
-
   const onFinish = (values: any) => {
+    const phoneCode = extractCountryCode(phone);
+    const phoneNumber = extractPhoneNumber(phone);
+
     action.updateManagerProfile({
       gender: values.gender,
-      phoneCode: flagCode,
-      phoneNumber: values.phoneNumber,
+      phoneCode: phoneCode,
+      phoneNumber: phoneNumber,
       postCode: values.postCode,
       address: values.address,
       country: values.country,
@@ -69,7 +78,7 @@ const MainForm = () => {
       departmentId: values.departmentId,
       title: values.title
     })
-    setUserState({ ...userState, ...values })
+    setUserState({ ...userState, ...values, phoneCode, phoneNumber })
   }
 
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
@@ -157,41 +166,26 @@ const MainForm = () => {
                     <Input placeholder="Enter email" className="input-style" disabled />
                   </Form.Item>
                 </Col>
-                <Col>
-                  <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-                    {flagCode ?
-                      <Form.Item label='Phone Code' key={1}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                          defaultVal={flagCode}
-                        />
-                      </Form.Item>
-                      :
-                      <Form.Item label='Phone Code' key={2}>
-                        <CountryCodeSelect
-                          onChange={(e: any) => setFlagCode(e)}
-                        />
-                      </Form.Item>
-                    }
-                    <Form.Item
-                      name="phoneNumber"
-                      label=" Phone Number"
-                      rules={[
-                        { required: false },
-                        {
-                          pattern: /^[+\d\s()-]+$/,
-                          message: "Please enter valid phone number ",
-                        },
-                        {
-                          min: 6,
-                          message:
-                            "Please enter a valid phone number with a minimum of 6 digits",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Enter Phone Number" className="input-style" />
-                    </Form.Item>
-                  </div>
+                <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
+                  <Form.Item
+                    name="phoneNumber"
+                    label="Phone Number"
+                    className={phone ? 'phone-input' : 'phone-input-error'}
+                    rules={[
+                      {
+                        validator: (_, value) => PhoneValidator(phone, value)
+                      }
+                    ]}
+                  >
+                    <PhoneInput
+                      value={phone}
+                      className="w-full"
+                      defaultCountry={`${flag[phoneCode]}`}
+                      // placeholder="+92 312-9966188"
+                      disableDialCodePrefill
+                      onChange={(phone: string, country: any) => { setPhone(phone) }}
+                    />
+                  </Form.Item>
                 </Col>
               </Row>
               <Divider />

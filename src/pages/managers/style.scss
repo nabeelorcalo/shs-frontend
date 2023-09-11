@@ -57,3 +57,19 @@
     height: auto;
   }
 }
+
+.btn-wrapper {
+  .profile-btn {
+    &:hover {
+      background-color: $text-info-color-dark !important;
+      color: $white-bg-color !important;
+    }
+  }
+
+  .reset-btn {
+    &:hover {
+      background-color: $green-graph-tooltip-color !important;
+      color: $white-bg-color !important;
+    }
+  }
+}

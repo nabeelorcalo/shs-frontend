@@ -17,6 +17,7 @@
   @media only screen and (max-width:900px) {
     flex-wrap: wrap;
     gap: 10px;
+
     li {
       flex-basis: 50% !important;
     }
@@ -36,7 +37,23 @@
   &.active-stage {
     color: $white-bg-color;
     background: $primary-bg-color;
+
+    &:last-child {
+      color: $white-bg-color;
+      background: $teriary-bg-color;
+    }
   }
+
+  &.rejected-active-stage {
+    color: $white-bg-color;
+    background: $primary-bg-color;
+
+    &:last-child {
+      color: $white-bg-color;
+      background: $secondary-bg-color;
+    }
+  }
+
   &:first-child {
     padding: 10px 10px;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);

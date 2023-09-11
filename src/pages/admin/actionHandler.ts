@@ -11,12 +11,14 @@ import { useRecoilState } from "recoil";
 import { addAdminSystemAdminState, adminSystemAdminState } from "../../store";
 import { Notifications } from "../../components";
 import { Success } from '../../stories/NoData.stories';
+import usePhoneNumberHook from "../../helpers/phoneNumber";
 
 const useCustomHook = () => {
 
   const [subAdminSuperAdmin, setSubAdminSuperAdmin] = useRecoilState(adminSystemAdminState);
   const [addSuperAdminSystemAdmin, setAddSuperAdminSystemAdmin] = useRecoilState(addAdminSystemAdminState);
   const [paginationObject, setPaginationObject] = useState<any>(null);
+  const { extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const {
     SYS_SUB_ADMIN_SYSTEM_ADMIN,
     ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN,
@@ -48,7 +50,11 @@ const useCustomHook = () => {
     setPaginationObject(pagination)
   };
 
-  const addAdminSystemAdmin = async (body: any,email:any,onSuccess?: () => void): Promise<any> => {
+  const addAdminSystemAdmin = async (params: any, email: any, onSuccess?: () => void): Promise<any> => {
+    const phoneCode = extractCountryCode(params.phoneNumber);
+    const phoneNumber = extractPhoneNumber(params.phoneNumber);
+
+    const body = {...params, phoneCode, phoneNumber};
     const { data } = await api.post(ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, body);
     if (!data.error) {
       setAddSuperAdminSystemAdmin(data.user);

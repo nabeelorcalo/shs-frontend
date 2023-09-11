@@ -23,6 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
 
+  const location = useLocation()
 
   /* HOOKS
   -------------------------------------------------------------------------------------*/
@@ -40,7 +41,7 @@ function App() {
       pathname != `/${ROUTES_CONSTANTS.CREATE_PASSWORD}` &&
       pathname != `/${ROUTES_CONSTANTS.UNI_VERIFICATION_STEPS}`
     ) {
-      navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+      navigate(`/${ROUTES_CONSTANTS.LOGIN}${location?.search ? location?.search : ""}`);
     }
   }, [pathname]);
 
@@ -58,10 +59,10 @@ function App() {
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             {accessToken
               ? useRoutes(
-                  getRoutes(currentUser.role).concat(
-                    getRoutes(constants.PUBLIC)
-                  )
+                getRoutes(currentUser.role).concat(
+                  getRoutes(constants.PUBLIC)
                 )
+              )
               : useRoutes(getRoutes(constants.PUBLIC))}
           </ErrorBoundary>
         </ConfigProvider>
