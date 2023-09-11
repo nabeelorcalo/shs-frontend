@@ -26,7 +26,7 @@ const StatusOptions = [
   },
   {
     key: "2",
-    value: "INPROGRESS",
+    value: "IN PROGRESS",
   },
   {
     key: "3",

@@ -12,8 +12,8 @@ import useCustomHook from "../actionHandler";
 import 'react-phone-input-2/lib/style.css';
 import { useRecoilValue } from "recoil";
 import { newCountryListState, postalCodeState } from "../../../../../store/CountryList";
-import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
+import countryCustomHook from "../../../../../helpers/countriesList"
 import "./style.scss";
 import usePhoneHook from "../../../../../helpers/phoneNumber";
 import countryCustomHook from '../../../../../helpers/countriesList';
@@ -22,6 +22,7 @@ const { Paragraph } = Typography;
 const AddLocation: React.FC = () => {
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const { PhoneValidator, extractCountryCode, extractPhoneNumber, countryFlagCode } = usePhoneHook();
+  const { getCountriesList } = countryCustomHook()
   const flag = countryFlagCode();
   const countries = useRecoilValue(newCountryListState);
   const postalCodes = useRecoilValue(postalCodeState);
@@ -42,7 +43,7 @@ const AddLocation: React.FC = () => {
   const { getCountriesList } = countryCustomHook()
   const [states, setState] = useState<any>({
     country: "United Kingdom",
-    phone: `${state?.phoneCode} ${state?.phoneNumber}`,
+    phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
     interns: state?.interns ?? filteredInternsData,
     openModal: false,
     internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
@@ -67,7 +68,7 @@ const AddLocation: React.FC = () => {
     address: state?.address,
     email: state?.email,
     name: state?.name,
-    phoneNumber: `${state?.phoneCode} ${state?.phoneNumber}`,
+    phoneNumber: state?.phoneCode && `${state?.phoneCode} ${state?.phoneNumber}`,
     postCode: state?.postCode,
     street: state?.street,
     image: state?.image,
@@ -77,7 +78,9 @@ const AddLocation: React.FC = () => {
   useEffect(() => {
     getAllInterns()
   }, [states.openModal])
-
+  useEffect(() => {
+    getCountriesList()
+  })
 
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;
@@ -172,7 +175,7 @@ const AddLocation: React.FC = () => {
                   {
                     validator: (_, value) => {
                       const regex = new RegExp(postalCodes[states.country]);
-                      
+
                       if (value === '') {
                         return Promise.reject('Required Field');
                       }
@@ -306,7 +309,7 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider className="mt-1" />
           {/*------------------------ Upload Picture----------------------------- */}
-          <Row className="mt-5">
+          <Row className="mt-5"> 
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Upload Image

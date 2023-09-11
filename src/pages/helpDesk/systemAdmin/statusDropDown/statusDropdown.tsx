@@ -1,25 +1,23 @@
 import { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import useCustomHook from "../../actionHandler";
 
 const StatusDropdown = (props: any) => {
   const { StatusOptions, state, setState } = props;
   const [visible, setVisible] = useState(false);
-  const { EditHelpDeskDetails } = useCustomHook();
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
+  console.log(state);
 
   const opriorityOption = (
     <Menu>
       {StatusOptions?.map((item: any) => {
         return (
           <Menu.Item onClick={() => {
-            setState({ ...state, editStatus: item.value })
-            // EditHelpDeskDetails(state.details.id,null, item.value);
+            setState({ ...state, editStatus: item.value?.replace(" ", "") })
           }} key={item.key}>
-            {item.value}
+            <span className="capitalize">{item.value?.toLowerCase()}</span>
           </Menu.Item>
         );
       })}

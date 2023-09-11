@@ -3,7 +3,7 @@ import "./style.scss";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
-import constants from "../../../config/constants";
+import constants, {personalizeColorTheme} from "../../../config/constants";
 import { } from "../../../assets/images";
 import useMenuHook from "./menu";
 import { currentUserRoleState, currentUserState, sbColorState } from "../../../store";
@@ -48,12 +48,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleMenuClick: MenuProps["onClick"] = (item) => {
-    if (item.key) {
-      setSelectedKey(item.key);
-      navigate(item.key, { state: { from: location.pathname } });
-    }
-  };
   const menuSwitcher = (role: string) => {
     if (role === constants.STUDENT) {
       return itemsStudents;
@@ -76,6 +70,34 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
     }
   };
   
+  const handleMenuClick: MenuProps["onClick"] = (item) => {
+    if (item.key) {
+      navigate(item.key, { state: { from: location.pathname } });
+    }
+  };
+
+  const findMenuItem:any = (menuItems:any, pathname:any) => {
+    for (const item of menuItems) {
+      if (pathname.startsWith(item.key)) {
+        return item;
+      }
+      if (item.children) {
+        const nestedMatch = findMenuItem(item.children, pathname);
+        if (nestedMatch) {
+          return nestedMatch;
+        }
+      }
+    }
+    return null;
+  };
+
+  const currentMenuItem:any = findMenuItem(menuSwitcher(role), location.pathname);
+  useEffect(() => {
+    if (currentMenuItem) {
+      setSelectedKey(currentMenuItem.key);
+    }
+  }, [location.pathname]);
+
   // const themeSideMenuColor = useRecoilValue(sbColorState);
   function darkenColor(color:any, percent:any) {
     const r = parseInt(color.slice(1, 3), 16);
@@ -94,6 +116,9 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
       const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor , 20);
       document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
+    } else {
+      document.documentElement.style.setProperty('--theme-side-menu', personalizeColorTheme.defaultSIdeBarColor);
+      document.documentElement.style.setProperty('--theme-selected-menu', '#252445');
     }
   }
 
@@ -122,7 +147,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       <Menu
         items={menuSwitcher(role)}
         onClick={handleMenuClick}
-        defaultSelectedKeys={[selectedKey]}
+        selectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
       />
