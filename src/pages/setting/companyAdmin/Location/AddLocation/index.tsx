@@ -16,6 +16,7 @@ import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
 import "./style.scss";
 import usePhoneHook from "../../../../../helpers/phoneNumber";
+import countryCustomHook from '../../../../../helpers/countriesList';
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
@@ -38,6 +39,7 @@ const AddLocation: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [files, setFiles] = useState<any>(null)
+  const { getCountriesList } = countryCustomHook()
   const [states, setState] = useState<any>({
     country: "United Kingdom",
     phone: `${state?.phoneCode} ${state?.phoneNumber}`,
@@ -45,6 +47,10 @@ const AddLocation: React.FC = () => {
     openModal: false,
     internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
   });
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
 
   const [form] = Form.useForm();
   const deselectArray: any = [];

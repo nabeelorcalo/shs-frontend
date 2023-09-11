@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import UserSelector from '../../../../../components/UserSelector'
 import {
   Button,
@@ -15,7 +15,7 @@ import TextArea from "antd/es/input/TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from '@ant-design/icons';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { newCountryListState } from '../../../../../store/CountryList';
+import { newCountryListState, postalCodeState } from '../../../../../store/CountryList';
 import CountryCodeSelect from '../../../../../components/CountryCodeSelect';
 import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from '../../../../../components';
 import '../../../style.scss';
@@ -83,7 +83,9 @@ const companyInformation = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { getCompanyList, updateCompanyProfile } = useCustomHook();
+  const [country, setCountry] = useState('');
   const [userState, setUserState] = useRecoilState(currentUserState)
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const countries = useRecoilValue(newCountryListState);
   const { company, aboutUs } = useRecoilValue(currentUserState)
 
@@ -217,6 +219,7 @@ const companyInformation = () => {
                 showSearch
                 options={countries}
                 placeholder={"Select Country"}
+                onChange={(val: any) => setCountry(val)}
               />
             </Form.Item>
           </Col>
@@ -272,7 +275,22 @@ const companyInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                {
+                  validator: (_, value) => {
+                    const regex = new RegExp(postalCodes[country]);
+                    if (value === '') {
+                      return Promise.reject('Required Field');
+                    }
+
+                    if (regex.test(value)) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject('Invalid postal code');
+                    }
+                  }
+                }
+              ]}
             >
               <Input placeholder="Enter Post code" className="input-style" />
             </Form.Item>

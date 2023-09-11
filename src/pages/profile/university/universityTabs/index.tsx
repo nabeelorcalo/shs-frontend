@@ -21,7 +21,7 @@ import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-import { newCountryListState } from "../../../../store/CountryList";
+import { newCountryListState, postalCodeState } from "../../../../store/CountryList";
 import usePhoneNumberHook from "../../../../helpers/phoneNumber";
 import { PhoneInput } from 'react-international-phone';
 
@@ -31,10 +31,12 @@ const UniversityProfileForm = (props: any) => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const { userUniversity } = useRecoilValue(currentUserState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const [form] = Form.useForm();
   const flag = countryFlagCode();
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
@@ -47,14 +49,18 @@ const UniversityProfileForm = (props: any) => {
     )
   })
 
+  useEffect(() => {
+    getCountriesList()
+  }, [])
+
   const onFinish = (values: any) => {
     const formData = new FormData();
-    const phoneCode :any = extractCountryCode(phone);
-    const phoneNumber :any = extractPhoneNumber(phone);
+    const phoneCode: any = extractCountryCode(phone);
+    const phoneNumber: any = extractPhoneNumber(phone);
     formData.append('name', values.name);
     formData.append('email', values.email);
-    formData.append('phoneCode',phoneCode);
-    formData.append('phoneNumber',(phoneNumber).toString());
+    formData.append('phoneCode', phoneCode);
+    formData.append('phoneNumber', (phoneNumber).toString());
     formData.append('postCode', (values.postCode).toString());
     formData.append('address', (values.address).toString());
     formData.append('city', (values.city).toString());
@@ -70,7 +76,7 @@ const UniversityProfileForm = (props: any) => {
         name: userUniversity?.university?.name,
         email: userUniversity?.university?.email,
         phoneCode: userUniversity?.university?.phoneCode,
-        phoneNumber: userUniversity?.university?.phoneCode + userUniversity?.university?.phoneNumber ,
+        phoneNumber: userUniversity?.university?.phoneCode + userUniversity?.university?.phoneNumber,
         postCode: userUniversity?.university?.postCode,
         address: userUniversity?.university?.address,
         city: userUniversity?.university?.city,
@@ -149,7 +155,22 @@ const UniversityProfileForm = (props: any) => {
                   <Form.Item
                     label="Post Code"
                     name="postCode"
-                    rules={[{ required: false }, { type: "string" }]}
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          const regex = new RegExp(postalCodes[countryList]);
+                          if (value === '') {
+                            return Promise.reject('Required Field');
+                          }
+
+                          if (regex.test(value)) {
+                            return Promise.resolve();
+                          } else {
+                            return Promise.reject('Invalid postal code');
+                          }
+                        }
+                      }
+                    ]}
                   >
                     <Input className="input-style" />
                   </Form.Item>
@@ -182,6 +203,7 @@ const UniversityProfileForm = (props: any) => {
                       showSearch
                       options={countries}
                       placeholder={"Select Country"}
+                      onChange={(val: any) => setCountryList(val)}
                     />
                   </Form.Item>
                 </Col>
@@ -212,7 +234,7 @@ const UniversityProfileForm = (props: any) => {
                     className="btn-cancle"
                     onClick={() => {
                       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-                  }}
+                    }}
                   >
                     Cancel
                   </Button>
