@@ -96,10 +96,11 @@ const useCustomHook = () => {
     assign?: any,
     isFlagged?: any
   ) => {
+
     const params = {
       sort: "ASC",
       priority: priority?.toUpperCase(),
-      status: status && status,
+      status: status && status?.replace(" ", ""),
       type: type,
       assignedId: assign,
       isFlaged: isFlagged,

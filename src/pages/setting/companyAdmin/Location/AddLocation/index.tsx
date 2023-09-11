@@ -38,7 +38,7 @@ const AddLocation: React.FC = () => {
   const [states, setState] = useState<any>(
     {
       country: "",
-      phone: `${state?.phoneCode} ${state?.phoneNumber}`,
+      phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
       interns: state?.interns ?? filteredInternsData,
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
@@ -60,13 +60,13 @@ const AddLocation: React.FC = () => {
     address: state?.address,
     email: state?.email,
     name: state?.name,
-    phoneNumber:`${state?.phoneCode} ${state?.phoneNumber}` ,
+    phoneNumber: state?.phoneCode && `${state?.phoneCode} ${state?.phoneNumber}`,
     postCode: state?.postCode,
     street: state?.street,
     image: state?.image,
     town: state?.town
   }
-  
+
   useEffect(() => {
     getAllInterns()
   }, [states.openModal])
@@ -75,7 +75,6 @@ const AddLocation: React.FC = () => {
 
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;
-    // values.postCode = parseInt(values.postCode)
     let locationValuesParams: any = {
       name,
       postCode,
@@ -115,7 +114,6 @@ const AddLocation: React.FC = () => {
       setState({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
-  console.log(flag[state?.phoneCode]);
 
   return (
     <div className="add-location">
@@ -244,37 +242,14 @@ const AddLocation: React.FC = () => {
                   defaultCountry={flag[state?.phoneCode]}
                   // placeholder="+92 312-9966188"
                   // disableDialCodePrefill
-                  onChange={(phn: string, country: any) => {
+                  onChange={(phn: string) => {
                     setState((prevState: any) => ({
                       ...prevState,
                       phone: phn,
                     }));
                   }}
                 />
-
               </Form.Item>
-              {/* <span className="label">
-                Phone Number (optional)<span className="text-[red]"></span>
-              </span> */}
-              {/* <div className="flex">
-                <div className="w-[30%]" >
-                  <Form.Item
-                    required={false}
-                    name="phoneCode">
-                    <CountryCodeSelect
-                      onChange={(e: any) => setState({ ...states, phoneCode: e })}
-                      defaultVal={state?.phoneCode} />
-                  </Form.Item>
-                </div>
-                <Form.Item
-                  name="phoneNumber"
-                  required={false}
-                  className="w-full pl-2"
-                // rules={[{ type: "number" }]}
-                >
-                  <Input placeholder="xxxx xxxxxx" className="input-style" />
-                </Form.Item>
-              </div> */}
               <Form.Item name="email"
                 label={<span>Email <span className="text-teriary-color">(optional)</span></span>}
               >
@@ -284,7 +259,7 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider className="mt-1" />
           {/*------------------------ Upload Picture----------------------------- */}
-          <Row className="mt-5">
+          <Row className="mt-5"> 
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Upload Image

@@ -338,7 +338,7 @@ const ManageVault = () => {
           setState((prevState: any) => ({
             ...prevState,
             uploadFile: false,
-          }));
+          })); 
         }}
         width={705}
         closeIcon={ 
