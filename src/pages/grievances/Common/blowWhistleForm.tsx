@@ -47,7 +47,9 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
     formData.append("subject", values?.subject);
     formData.append("description", values?.description);
     formData.append("escalatedTo", values?.escalatedTo);
-    if (uploadFile?.length) formData.append("media", uploadFile[0]);
+    if (uploadFile?.length) {
+      uploadFile.forEach((file: any) => formData.append("media", file));
+    }
     createGrievance(formData, () => {
       setState(false);
       if (navigate) {
@@ -120,7 +122,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                                   userName: item?.firstName + " " + item?.lastName,
                                   userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
                                 });
-                                form.setFieldValue("escalatedTo", item?.managerId);
+                                form.setFieldValue("escalatedTo", item?.id);
                               }}
                             >
                               {/* <img

@@ -36,7 +36,7 @@ const useCustomHook = () => {
   const setOrgLogo = useSetRecoilState(OrgLogoState);
   const setPreviewLogo = useSetRecoilState(PreviewLogoState);
 
-  const login = async (body: any): Promise<any> => {
+  const login = async (body: any, salesPath?: string): Promise<any> => {
     let res: any;
     try {
       res = await axios.post(`${constants.APP_URL}/${LOGIN}`, body);
@@ -78,6 +78,14 @@ const useCustomHook = () => {
         setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor ?? personalizeColorTheme.defaultSecIconColor);
         setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor ?? personalizeColorTheme.defaultBtnPrimColor);
         setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor ?? personalizeColorTheme.defaultBtnSecColor);
+
+      console.log("salesPath", salesPath);
+
+
+      // if (salesPath) {
+      //   // window.location.href = `https://studenthelpsquad.co.uk/${salesPath}`
+      //   window.location.href = `http://localhost:8080//${salesPath}`
+      // }
 
       return res.data;
     } catch (error: any) {

@@ -133,7 +133,9 @@ const GrievancesDetails = (props: any) => {
     const formData = new FormData();
     formData.append("description", values?.description);
     formData?.append("grievanceId", grievanceId);
-    if (uploadFile?.length) formData.append("media", uploadFile[0]);
+    if (uploadFile?.length) {
+      uploadFile.forEach((file: any) => formData.append("media", file));
+    }
     addReply(formData, () => {
       fetchGreivanceDetailData();
       form.resetFields();
@@ -253,7 +255,7 @@ const GrievancesDetails = (props: any) => {
             </Row>
           </BoxWrapper>
           {grievanceDetail?.status && grievanceDetail?.status !== "RESOLVED" && (
-            <BoxWrapper className="xs:mt-2 sm:mt-5 p-3">
+            <BoxWrapper className="xs:mt-2 sm:mt-5 p-3 max-h-none">
               <Text className="text-lg sm:text-xl font-medium">Reply To Grievance</Text>
               <Form form={form} onFinish={handleFinish} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
                 <Form.Item className="mt-3" name="description" rules={[{ required: true }]}>
@@ -476,7 +478,7 @@ const GrievancesDetails = (props: any) => {
                                       userName: item?.firstName + " " + item?.lastName,
                                       userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
                                     });
-                                    handleUpdate(item?.managerId);
+                                    handleUpdate(item?.id);
                                   }}
                                 >
                                   {/* <img

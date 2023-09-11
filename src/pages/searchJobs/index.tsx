@@ -9,7 +9,6 @@ const SearchJobs = () => {
 
   const [drawer, setDrawer] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  // const [tabValue, setTabValue] = useState("all");
   const { getSearchJob } = useCustomHook();
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const SearchJobs = () => {
 
   const handleTabChange = (value: string) => {
     getSearchJob(null, null, null, value === "all" ? "" : value);
-
   }
 
   const handleChangeSearch = (value: string) => {

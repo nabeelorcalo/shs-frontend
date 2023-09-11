@@ -27,6 +27,11 @@ export const GlobalTable = (props: TableProps) => {
     ...rest
   } = props;
 
+  const handleTotalCount = (count: number) => {
+    if (!count) return `00`
+    return count < 10 ? `0${count}` : count
+  }
+
   return (
     <div className={`shs-table ${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table
@@ -48,7 +53,7 @@ export const GlobalTable = (props: TableProps) => {
       {
         pagination && !hideTotal &&
         <span className="Counter">
-          Total: {pagination?.total < 10 ? `0${pagination?.total}` : pagination?.total}
+          Total: {handleTotalCount(Number(pagination?.total))}
         </span>
       }
     </div>

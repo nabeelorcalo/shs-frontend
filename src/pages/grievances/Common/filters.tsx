@@ -159,7 +159,7 @@ const Filters: React.FC<any> = (props: any) => {
                                   userName: item?.firstName + " " + item?.lastName,
                                   userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
                                 });
-                                form.setFieldValue("escalatedBy", item?.managerId);
+                                form.setFieldValue("escalatedBy", item?.id);
                               }}
                             >
                               {/* <img
@@ -222,7 +222,7 @@ const Filters: React.FC<any> = (props: any) => {
                                     escalatedToUsername: item?.firstName + " " + item?.lastName,
                                     escalatedToImage: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
                                   });
-                                  form.setFieldValue("escalatedTo", item?.managerId);
+                                  form.setFieldValue("escalatedTo", item?.id);
                                 }}
                               >
                                 {/* <img
