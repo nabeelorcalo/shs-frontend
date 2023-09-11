@@ -6,22 +6,13 @@ import {
   Divider,
   Form,
   Input,
-  Modal,
-  Radio,
   Row,
   Select,
-  Skeleton,
   Space,
   Typography,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import {
-  PlusOutlined,
-  PlusCircleFilled,
-  DeleteFilled,
-  CaretDownOutlined,
-  CloseOutlined,
-} from "@ant-design/icons";
+import { CaretDownOutlined, } from "@ant-design/icons";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import "../../../style.scss";
@@ -29,17 +20,18 @@ import { Option } from "antd/es/mentions";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
-import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import {
   nationalityList,
   newCountryListState,
+  postalCodeState,
 } from "../../../../../store/CountryList";
-import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
 import { disabledDate } from "../../../../../helpers";
 import { CalendarIcon } from "../../../../../assets/images";
+import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
+import { PhoneInput } from 'react-international-phone';
 import dayjs from "dayjs";
 
 const visa = [
@@ -63,19 +55,18 @@ const visa = [
 
 const PersonalInformation = () => {
   const action = useCustomHook();
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState();
-
+  const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();;
+  const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const nationalities = useRecoilValue(nationalityList);
-  const [studentInformation, setStudentInformation] =
-    useRecoilState<any>(studentProfileState);
-
+  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [code, setCode] = useState();
   const [form] = Form.useForm();
+  const flag = countryFlagCode();
 
   const { personalInfo = {}, general: generalInfo = {} } =
     studentInformation || {};
@@ -91,18 +82,21 @@ const PersonalInformation = () => {
   };
 
   const onFinish = (values: any) => {
+    const phoneCode = extractCountryCode(phone);
+    const phoneNumber = extractPhoneNumber(phone)
     setLoading(true);
     let payload = {
       generalInfo,
       personalInfo: {
         ...personalInfo,
         ...values,
+        phoneCode,
+        phoneNumber,
         DOB: dayjs(values.DOB).format("YYYY-MM-DD"),
         dependents: values?.dependents?.length === 0 ? [] : values?.dependents,
         haveDependents: values?.dependents?.length === 0 ? false : true,
       },
     };
-    console.log("updated", values, payload);
     action.updateStudentProfile(payload, () => {
       setUpdateData(true);
       setLoading(false);
@@ -113,8 +107,9 @@ const PersonalInformation = () => {
   useEffect(() => {
     getCountriesList();
     action.getStudentProfile().then((data: any) => {
-      form.setFieldsValue(personalInfo);
-      setCode(form.getFieldValue("phoneCode"));
+      const updatedPhone = studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber;
+      form.setFieldsValue({ ...personalInfo, phoneNumber: updatedPhone });
+      setPhone(studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber)
     });
   }, [form, updateData]);
 
@@ -140,6 +135,7 @@ const PersonalInformation = () => {
         layout="vertical"
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
+        initialValues={{ phoneNumber: studentInformation?.personalInfo?.phoneCode + studentInformation?.personalInfo?.phoneNumber }}
         autoComplete="off"
         form={form}
       >
@@ -230,35 +226,24 @@ const PersonalInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <Form.Item name="phoneCode" label="Phone Code">
-              {code ? (
-                <CountryCodeSelect defaultVal={code} key={code} />
-              ) : (
-                <Skeleton.Input active={true} size={"default"} />
-              )}
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
+          <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
             <Form.Item
               name="phoneNumber"
               label="Phone Number"
+              className={phone ? 'phone-input' : 'phone-input-error'}
               rules={[
-                { required: false },
                 {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
+                  validator: (_, value) => PhoneValidator(phone, value)
+                }
               ]}
             >
-              <Input
-                placeholder="Enter Phone Number"
-                className="input-style w-[100%]"
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry={`${flag[studentInformation?.personalInfo?.phoneCode]}`}
+                // placeholder="+92 312-9966188"
+                disableDialCodePrefill
+                onChange={(phone: string, country: any) => { setPhone(phone) }}
               />
             </Form.Item>
           </Col>
@@ -330,7 +315,22 @@ const PersonalInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                {
+                  validator: (_, value) => {
+                    const regex = new RegExp(postalCodes[countryList]);
+                    if (value === '') {
+                      return Promise.reject('Required Field');
+                    }
+
+                    if (regex.test(value)) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject('Invalid postal code');
+                    }
+                  }
+                }
+              ]}
             >
               <Input placeholder="Enter PostCode" className="input-style" />
             </Form.Item>
@@ -366,6 +366,7 @@ const PersonalInformation = () => {
                 showSearch
                 options={countries}
                 placeholder={"Select Country"}
+                onChange={(val: any) => setCountryList(val)}
               />
             </Form.Item>
           </Col>

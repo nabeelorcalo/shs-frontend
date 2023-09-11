@@ -137,7 +137,7 @@ const DrawerBar = (props: any) => {
                   setDuration(e);
                 }}
                 placeholder="Enter months"
-                className="w-full input-number"
+                className="w-full input-number h-[30px]"
               />
             </div>
             <div className="flex justify-end">

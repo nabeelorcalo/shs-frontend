@@ -51,9 +51,7 @@ const useCustomHook = () => {
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id, userUniversity } = useRecoilValue(currentUserState);
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
-    settingDepartmentState
-  );
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
   const limit = 100;
 
   const updateStudentState = (data: any) => {
@@ -89,7 +87,7 @@ const useCustomHook = () => {
   };
 
   const getStudentProfile = async (uId: any = id) => {
-    if (Object.keys(studentProfile).length == 0) {
+    if (Object?.keys(studentProfile).length == 0) {
       const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
       updateStudentState(data);
     }
@@ -314,7 +312,7 @@ const useCustomHook = () => {
     if (!response.error) {
       Notifications({
         title: "Success",
-        description: "Update successfully",
+        description: "Update successfully manager",
         type: "success",
       });
     }

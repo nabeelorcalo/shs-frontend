@@ -44,6 +44,7 @@ import {
   PersonalChatListState,
   PersonalChatMediaListState,
   PersonalChatMsgxState,
+  currentUserRoleState,
   currentUserState,
 } from "../../../store";
 import useCustomHook from "../actionHandler";
@@ -182,6 +183,7 @@ const index = (props: any) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isSuportModal, setIsSuportModal] = useState(false);
   const initUser = useRecoilValue(ExternalChatUser);
+  const role = useRecoilValue(currentUserRoleState);
 
   const { externalUser } = props;
   const [sendMessages, setSendMessages] = useState<any>({
@@ -498,11 +500,10 @@ const index = (props: any) => {
                               {getConvoName({ item, id: user.id })}
                             </div>
                             <div
-                              className={`text-base text-bold text-teriary-color truncate ${
-                                item.unreadCount > 0
-                                  ? "font-bold text-black"
-                                  : null
-                              }`}
+                              className={`text-base text-bold text-teriary-color truncate ${item.unreadCount > 0
+                                ? "font-bold text-black"
+                                : null
+                                }`}
                             >
                               {item?.lastMessage?.content || ""}
                             </div>
@@ -514,7 +515,7 @@ const index = (props: any) => {
                             {getTime(item?.updatedAt) || ""}
                           </div>
                           {item.unreadCount &&
-                          item?.lastMessage?.authorId != user.id ? (
+                            item?.lastMessage?.authorId != user.id ? (
                             <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
                               {item.unreadCount || 0}
                             </div>
@@ -541,15 +542,16 @@ const index = (props: any) => {
               sm={12}
               xs={24}
             >
-              <div className="flex justify-end mb-3">
-                <ButtonThemePrimary
-                  className="green-graph-tooltip-bg white-color flex items-center"
-                  onClick={() => setIsSuportModal(true)}
-                >
-                  <QuestionCircleFilled />
-                  <span>Customer Support</span>
-                </ButtonThemePrimary>
-              </div>
+              {role !== constants.SYSTEM_ADMIN &&
+                <div className="flex justify-end mb-3">
+                  <ButtonThemePrimary
+                    className="green-graph-tooltip-bg white-color flex items-center"
+                    onClick={() => setIsSuportModal(true)}
+                  >
+                    <QuestionCircleFilled />
+                    <span>Customer Support</span>
+                  </ButtonThemePrimary>
+                </div>}
               <BoxWrapper className="message-box-container p-0 relative h-[calc(100%-60px)]">
                 <div className="px-[20px] absolute top-0 left-0 right-0 h-[77px]">
                   <div className="flex items-center relative py-[20px] message-box-header">
@@ -569,18 +571,16 @@ const index = (props: any) => {
                     return (
                       <div key={item.id}>
                         {item?.content?.length > 0 ||
-                        item?.media?.length > 0 ? (
+                          item?.media?.length > 0 ? (
                           <div
                             key={item.id}
-                            className={`incoming mb-4 ${
-                              item.authorId == user.id ? "ml-auto" : ""
-                            }`}
+                            className={`incoming mb-4 ${item.authorId == user.id ? "ml-auto" : ""
+                              }`}
                           >
                             <div className="mb-[10px]" key={item.id}>
                               <div
-                                className={`incoming-message text-base text-secondary-color mb-[10px] ${
-                                  item.authorId == user.id ? "my-messages" : ""
-                                }`}
+                                className={`incoming-message text-base text-secondary-color mb-[10px] ${item.authorId == user.id ? "my-messages" : ""
+                                  }`}
                               >
                                 {item.content}
                                 {"media" in item && item.media.length > 0 ? (
@@ -623,11 +623,10 @@ const index = (props: any) => {
                                 ) : null}
                               </div>
                               <div
-                                className={`font-normal text-sm light-grey-color mix-blend-normal ${
-                                  item.authorId == user.id
-                                    ? "text-right"
-                                    : "text-left"
-                                }`}
+                                className={`font-normal text-sm light-grey-color mix-blend-normal ${item.authorId == user.id
+                                  ? "text-right"
+                                  : "text-left"
+                                  }`}
                               >
                                 {getMessageTime(item.createdAt)}
                               </div>
@@ -775,9 +774,8 @@ const index = (props: any) => {
                   </div>
 
                   <div
-                    className={`mt-[12px] px-4 max-h-[210px] ${
-                      isExpanded ? "overflow-y-auto" : "overflow-hidden"
-                    }`}
+                    className={`mt-[12px] px-4 max-h-[210px] ${isExpanded ? "overflow-y-auto" : "overflow-hidden"
+                      }`}
                   >
                     <Row justify="center" gutter={[12, 12]}>
                       {mediaList
@@ -814,9 +812,8 @@ const index = (props: any) => {
                     </p>
                   </div>
                   <div
-                    className={`max-h-[96px] ${
-                      toggleHide ? "overflow-y-auto" : "overflow-hidden"
-                    }`}
+                    className={`max-h-[96px] ${toggleHide ? "overflow-y-auto" : "overflow-hidden"
+                      }`}
                   >
                     {mediaList
                       .filter(
@@ -848,7 +845,7 @@ const index = (props: any) => {
         ) : (
           <>
             <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
-              <div className="flex justify-end mb-3">
+              {role !== constants.SYSTEM_ADMIN && <div className="flex justify-end mb-3">
                 <Button
                   className="green-graph-tooltip-bg white-color flex items-center"
                   onClick={() => setIsSuportModal(true)}
@@ -856,7 +853,7 @@ const index = (props: any) => {
                   <QuestionCircleFilled />
                   <span>Customer Support</span>
                 </Button>
-              </div>
+              </div>}
               <Space
                 direction="horizontal"
                 className="mt-10 w-full justify-center"

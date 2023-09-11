@@ -1,6 +1,6 @@
 @import "../../scss/colors";
 
-.txtColor{
+.txtColor {
   color: $text-success-placeholder-color;
 }
 
@@ -33,19 +33,20 @@
 .ant-tooltip.ant-slider-tooltip {
   z-index: 0;
 
-  .ant-tooltip-arrow{
+  .ant-tooltip-arrow {
     visibility: hidden;
   }
+
   .ant-tooltip-content {
     top: 8px;
 
     .ant-tooltip-inner {
       color: $text-success-placeholder-color;
       background-color: transparent;
-      box-shadow: none ;
+      box-shadow: none;
       min-width: 0;
       min-height: 0;
-      padding:0;
+      padding: 0;
       font-size: 12px;
     }
   }

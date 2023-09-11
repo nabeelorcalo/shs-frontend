@@ -23,7 +23,7 @@ const Meeting = (props: any) => {
   const { onClose, addEvent, getData, form } = props;
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [searchUser, setSearchUser] = useState("");
-  const [weekDuration, setWeekDuration] = useState(0);
+  const [weekDuration, setWeekDuration] = useState<any>(0);
   const [formValues, setFormValues] = useState({
     title: "",
     attendees: "",
@@ -112,7 +112,7 @@ const Meeting = (props: any) => {
     const dateFrom = form.getFieldValue("dateFrom");
     const dateTo = form.getFieldValue("dateTo");
     if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
-      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+      setWeekDuration(Math.floor(dateTo?.diff(dateFrom, "day") / 7));
     } else {
       setWeekDuration(0);
     }

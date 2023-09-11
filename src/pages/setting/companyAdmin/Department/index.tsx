@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { DepartmentAddIcon } from "../../../../assets/images";
 import { Col, Row } from "antd";
 import { Alert, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../components";
@@ -28,7 +28,7 @@ const SettingDepartment: React.FC = () => {
     <div className="setting-department">
       <div className="flex justify-between location-header">
 
-        <SearchBar
+        <SearchBar 
           placeholder="Search by department"
           className="max-sm:w-full w-[375px]"
           size="middle"
@@ -40,11 +40,11 @@ const SettingDepartment: React.FC = () => {
           <DepartmentAddIcon /> Add Department
         </ButtonThemePrimary>
       </div>
-      {settingDepartmentdata?.length === 0 && <NoDataFound />}
+      {settingDepartmentdata?.length === 0 && <NoDataFound />} 
       <Row gutter={[20, 20]} className="mt-5">
         {settingDepartmentdata?.map((data: any) => (
-          <>
-            {loading ? <Loader /> : <Col key={data.id} className="gutter-row" xs={24} xl={12} xxl={8}>
+          <Fragment key={data.id}>
+            {loading ? <Loader /> : <Col className="gutter-row" xs={24} xl={12} xxl={8}>
               <div className="department-box-wrapper">
                 <div className="flex justify-between gap-3">
                   <div className="flex flex-wrap flex-col break-all">
@@ -53,7 +53,7 @@ const SettingDepartment: React.FC = () => {
                     </p>
                     <p className="text-sm font-normal text-secondary-color w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">
                       {data?.description}
-                    </p>
+                    </p> 
                   </div>
                   <div className="float-right cursor-pointer">
                     <DropDownForSetting
@@ -65,10 +65,10 @@ const SettingDepartment: React.FC = () => {
                 </div>
               </div>
             </Col>}
-          </>
+          </Fragment>
         ))
         }
-      </Row>
+      </Row> 
       {state.isEditModal &&
         <AddNewDepaertmentModal state={state} setState={setState} />
       }

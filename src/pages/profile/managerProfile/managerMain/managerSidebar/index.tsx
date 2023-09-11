@@ -126,7 +126,7 @@ const ManagerSidebar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode || 'N/A'} {phoneNumber || 'N/A'}
+            {phoneCode || 'N/A'}  {phoneNumber || 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">

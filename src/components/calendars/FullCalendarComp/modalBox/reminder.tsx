@@ -69,7 +69,7 @@ const Reminder = (props: any) => {
     const dateFrom = form.getFieldValue("dateFrom");
     const dateTo = form.getFieldValue("dateTo");
     if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
-      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+      setWeekDuration(Math.floor(dateTo?.diff(dateFrom, "day") / 7));
     } else {
       setWeekDuration(0);
     }

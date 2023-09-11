@@ -19,7 +19,7 @@ import CountryCodeSelect from '../../../../../components/CountryCodeSelect';
 import TextArea from "antd/es/input/TextArea";
 import UserSelector from '../../../../../components/UserSelector';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { newCountryListState } from '../../../../../store/CountryList';
+import { newCountryListState, postalCodeState } from '../../../../../store/CountryList';
 import '../../../style.scss';
 import { currentUserState } from '../../../../../store';
 import { RangePickerProps } from "antd/es/date-picker";
@@ -27,18 +27,25 @@ import useCustomHook from '../../../actionHandler';
 import dayjs from 'dayjs';
 import '../../style.scss'
 import type { DatePickerProps } from 'antd';
+import { PhoneInput } from 'react-international-phone';
 import { disabledDate } from '../../../../../helpers';
 import { IconDatePicker } from '../../../../../assets/images';
 import { useNavigate } from 'react-router-dom';
+import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
+import countryCustomHook from '../../../../../helpers/countriesList';
 
 const personalInformation = () => {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
+  const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const action = useCustomHook();
-  const [open, setOpen] = useState(false);
-  const [valueDate, setValueDate] = useState();
+  const { getCountriesList } = countryCustomHook()
+  const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
+  const [form] = Form.useForm();
+  const flag = countryFlagCode();
   const { firstName,
     lastName,
     gender,
@@ -53,7 +60,6 @@ const personalInformation = () => {
     address,
     town
   } = useRecoilValue(currentUserState)
-  const [flagCode, setFlagCode] = useState<any>(phoneCode);
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log(date, dateString);
@@ -64,7 +70,7 @@ const personalInformation = () => {
     lastName,
     gender,
     phoneCode,
-    phoneNumber,
+    phoneNumber : phoneCode + phoneNumber,
     postCode,
     email,
     DOB: DOB ? dayjs(DOB) : null,
@@ -76,12 +82,15 @@ const personalInformation = () => {
   });
 
   const onFinish = (values: any) => {
+    const phoneCode = extractCountryCode(phone);
+    const phoneNumber = extractPhoneNumber(phone);
+
     action.updateCompanyPersonal({
       firstName: values.firstName,
       lastName: values.lastName,
       gender: values.gender,
-      phoneCode: flagCode,
-      phoneNumber: values.phoneNumber,
+      phoneCode: phoneCode,
+      phoneNumber: phoneNumber,
       postCode: values.postCode,
       DOB: values.DOB,
       address: values.address,
@@ -90,7 +99,7 @@ const personalInformation = () => {
       country: values.country,
       city: values.city,
     })
-    setUserState({ ...userState, ...values })
+    setUserState({ ...userState, ...values, phoneCode, phoneNumber })
   }
 
   const handleChange = (value: string) => {
@@ -165,41 +174,27 @@ const personalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" disabled />
             </Form.Item>
           </Col>
-          <Col className="p-0">
-            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-              {flagCode ?
-                <Form.Item label='Phone Code' key={1}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                    defaultVal={flagCode}
-                  />
-                </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                  />
-                </Form.Item>
-              }
-              <Form.Item
-                name="phoneNumber"
-                label="Phone Number"
-                rules={[
-                  { required: false },
-                  {
-                    pattern: /^[\d\s()-]+$/,
-                    message: "Please enter valid phone number",
-                  },
-                  {
-                    min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Phone Number" className="input-style w-[full]" />
-              </Form.Item>
-            </div>
-          </Col>
+          <Col xxl={8} xl={8} lg={12} md={24} xs={24}>
+                  <Form.Item
+                    name="phoneNumber"
+                    label="Phone Number"
+                    className={phone ? 'phone-input' : 'phone-input-error'}
+                    rules={[
+                      {
+                        validator: (_, value) => PhoneValidator(phone, value)
+                      }
+                    ]}
+                  >
+                    <PhoneInput
+                      value={phone}
+                      className="w-full"
+                      defaultCountry={`${flag[phoneCode]}`}
+                      // placeholder="+92 312-9966188"
+                      disableDialCodePrefill
+                      onChange={(phone: string, country: any) => { setPhone(phone) }}
+                    />
+                  </Form.Item>
+                </Col>
         </Row>
         <Divider />
         <div>
@@ -210,7 +205,22 @@ const personalInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                {
+                  validator: (_, value) => {
+                    const regex = new RegExp(postalCodes[countryList]);
+                    if (value === '') {
+                      return Promise.reject('Required Field');
+                    }
+
+                    if (regex.test(value)) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject('Invalid postal code');
+                    }
+                  }
+                }
+              ]}
             >
               <Input placeholder="Enter PostCode" className="input-style" />
             </Form.Item>
@@ -251,6 +261,7 @@ const personalInformation = () => {
                 showSearch
                 options={countries}
                 placeholder={"Select Country"}
+                onChange={(val: any) => setCountryList(val)}
               />
             </Form.Item>
           </Col>

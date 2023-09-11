@@ -5,11 +5,9 @@ import Menu from "antd/es/menu";
 import useCustomHook from "../../actionHandler";
 
 const PriorityDropDown = (props?: any) => {
-  const { activeValue, priorityOptions, activeId, show, args, setLoading, setFilter, filter } = props;
-  const [priorityValue, setPriorityValue] = useState(activeValue);
+  const { activeValue, priorityOptions, activeId, show, args, setLoading } = props;
   const priority = activeValue?.toLowerCase()
   const { EditHelpDeskDetails } = useCustomHook();
-  // console.log("active val ", activeValue, "pri val ", priorityValue);
 
   const opriorityOption = (
     <Menu>
@@ -17,7 +15,6 @@ const PriorityDropDown = (props?: any) => {
         return (
           <Menu.Item
             onClick={() => {
-              setPriorityValue(item.value);
               if (show) {
                 EditHelpDeskDetails(args, setLoading, activeId, null, item.value);
               }
@@ -27,7 +24,7 @@ const PriorityDropDown = (props?: any) => {
             }}
             key={item.key}
           >
-            {item.value}
+            <span className="capitalize">{item.value?.toLowerCase()}</span>
           </Menu.Item>
         );
       })}

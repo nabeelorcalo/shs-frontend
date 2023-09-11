@@ -24,15 +24,6 @@ import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { byteToHumanSize } from "../../../../helpers";
 
 const ManageVault = () => {
-  const [isState, setState] = useState<any>({
-    isOpenModal: false,
-    isVisible: false,
-    uploadFolder: false,
-    uploadFile: false,
-    isOpenDelModal: false,
-    DelModalId: null,
-    files: [],
-  });
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
@@ -40,9 +31,10 @@ const ManageVault = () => {
   });
   const [form] = Form.useForm();
   const {
+    loading,
     postCreateFolderFile,
     studentVault,
-    deleteFolderFile,
+    deleteFolderFile, isState, setState
   }: any = useCustomHook();
 
   const { state } = useLocation();
@@ -79,6 +71,7 @@ const ManageVault = () => {
         key: "1",
         label: <a
           onClick={() => {
+            setOpenPreview(true)
             setPreViewModal({
               extension: item?.mimeType?.split("/")?.pop(),
               url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType?.split("/")?.pop()}`,
@@ -175,16 +168,14 @@ const ManageVault = () => {
     values.root = state.toUpperCase();
     values.mode = "folder";
     values.folderId = "";
-
-    postCreateFolderFile(values);
+    postCreateFolderFile(values).then(() => {
+      setState({ ...isState, isOpenModal: false })
+    })
     form.resetFields();
-    setState((prevState: any) => ({
-      ...prevState,
-      isOpenModal: false,
-    }));
   };
 
   const modalHandler = () => {
+    form.resetFields();
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
@@ -212,11 +203,11 @@ const ManageVault = () => {
       digivautUploadFile?.append(a, payload[a]);
     });
     postCreateFolderFile(digivautUploadFile);
-    setState((prevState: any) => ({
-      ...prevState,
-      uploadFile: false,
-      files: [],
-    }));
+    // !loading && setState((prevState: any) => ({
+    //   ...prevState,
+    //   uploadFile: false,
+    //   files: [],
+    // }));
     setSelectArrayData(studentVault?.dashboardFolders[stateData])
   };
 
@@ -325,7 +316,7 @@ const ManageVault = () => {
             </Form.Item>
             <div className="flex justify-end items-center gap-3">
               <ButtonThemeSecondary
-                onClick={modalHandler}
+                onClick={modalHandler} 
                 key="Cancel"
               >
                 Cancel
@@ -338,7 +329,7 @@ const ManageVault = () => {
         </div>
       </Modal>
 
-      <Modal
+      {isState?.uploadFile && <Modal
         className="folders-modal"
         centered
         title="Upload File"
@@ -347,27 +338,27 @@ const ManageVault = () => {
           setState((prevState: any) => ({
             ...prevState,
             uploadFile: false,
-          }));
+          })); 
         }}
         width={705}
-        closeIcon={
+        closeIcon={ 
           <CloseCircleFilled className="text-success-placeholder-color" />
         }
         footer={[
           <ButtonThemeSecondary onClick={modalHandler} key="Cancel">
             Cancel
           </ButtonThemeSecondary>,
-          <ButtonThemePrimary onClick={upLoadModalHandler} key="submit">
-            Upload
+          <ButtonThemePrimary loading={loading} onClick={upLoadModalHandler} key="submit">
+           {loading ? 'Uploading' : 'Upload'}
           </ButtonThemePrimary>,
-        ]}
+        ]} 
       >
         <UploadDocument
           handleDropped={handleDropped}
           setFiles={setState}
           files={isState}
         />
-      </Modal>
+      </Modal>}
       {openPreview && <PdfPreviewModal
         setOpen={setOpenPreview}
         open={openPreview}

@@ -47,7 +47,9 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
     formData.append("subject", values?.subject);
     formData.append("description", values?.description);
     formData.append("escalatedTo", values?.escalatedTo);
-    if (uploadFile?.length) formData.append("media", uploadFile[0]);
+    if (uploadFile?.length) {
+      uploadFile.forEach((file: any) => formData.append("media", file));
+    }
     createGrievance(formData, () => {
       setState(false);
       if (navigate) {
@@ -101,7 +103,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
           />
         </Form.Item>
         <Form.Item name="escalatedTo" label="Escalate To" rules={[{ required: true }]}>
-          <div className="asignee-wrap w-[100%]">
+          <div className="asignee1-wrap w-[100%]">
             <DropDownNew
               placement={"bottomRight"}
               items={[
@@ -109,19 +111,21 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                   label: (
                     <div className="max-h-96 overflow-y-auto">
                       {managers &&
-                        managers.map((item: any) => (
-                          <div
-                            className="flex items-center gap-3 mb-[20px]"
-                            onClick={() => {
-                              setSelectValue({
-                                ...selectValue,
-                                userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
-                              });
-                              form.setFieldValue("escalatedTo", item?.managerId);
-                            }}
-                          >
-                            {/* <img
+                        managers
+                          .filter((item: any) => item?.role === constants.MANAGER || item?.role === constants.COMPANY_ADMIN)
+                          .map((item: any) => (
+                            <div
+                              className="flex items-center gap-3 mb-[20px]"
+                              onClick={() => {
+                                setSelectValue({
+                                  ...selectValue,
+                                  userName: item?.firstName + " " + item?.lastName,
+                                  userImg: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+                                });
+                                form.setFieldValue("escalatedTo", item?.id);
+                              }}
+                            >
+                              {/* <img
                               src={
                                 item?.companyManager?.profileImage
                                   ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
@@ -129,16 +133,16 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                               }
                               className="h-[24px] w-[24px] rounded-full object-cover"
                             /> */}
-                            <Avatar
-                              size={30}
-                              src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
-                            >
-                              {item?.companyManager?.firstName?.charAt(0)}
-                              {item?.companyManager?.lastName?.charAt(0)}
-                            </Avatar>
-                            <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
-                          </div>
-                        ))}
+                              <Avatar
+                                size={30}
+                                src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`}
+                              >
+                                {item?.firstName?.charAt(0)}
+                                {item?.lastName?.charAt(0)}
+                              </Avatar>
+                              <p>{item?.firstName + " " + item?.lastName}</p>
+                            </div>
+                          ))}
                     </div>
                   ),
                   key: "users",

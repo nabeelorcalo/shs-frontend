@@ -44,7 +44,10 @@ import {
 } from "../../../store/adminSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
+import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
+
 
 const statuses: any = {
   true: "#D83A52",
@@ -77,17 +80,22 @@ const AdminManagement = () => {
   const [studentPasswordResetChecked, setStudentPasswordResetChecked] = useState(false);
   const [companyPasswordResetChecked, setCompanyPasswordResetChecked] = useState(false);
   const [companyChecked, setCompanyChecked] = useState(false);
+  const [companyDetailChecked, setCompanyDetailChecked] = useState(false);
   const [universityChecked, setUniversityChecked] = useState(false);
   const [universityPasswordChecked, setUniversityPasswordChecked] = useState(false);
   const [delegatesChecked, setDelegatesChecked] = useState(false);
   const [agentManagementChecked, setAgentManagementChecked] = useState(false);
   const [issueManagementChecked, setIssueManagementChecked] = useState(false);
+  const [userManagementChecked, setUserManagementChecked] = useState(false);
   const [settingChecked, setSettingChecked] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [accessState, setAccessState] = useState('')
+  const [phone, setPhone] = useState('');
+  const { PhoneValidator} = usePhoneNumberHook();
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
+
 
   const pdfBody = adminSubAdmin[0].map((item: any) =>
     [
@@ -244,7 +252,7 @@ const AdminManagement = () => {
 
   const searchValue = (e: any) => {
     setSearchItem(e);
-    setFilter({ ...filter, page: 1 , search : e})
+    setFilter({ ...filter, page: 1, search: e })
     setTableParams((prevFilter: any) => ({
       ...prevFilter,
       pagination: {
@@ -286,7 +294,7 @@ const AdminManagement = () => {
     setFilter({
       page: 1,
       limit: 10,
-      date:"",
+      date: "",
       search: "",
       status: "",
     })
@@ -297,7 +305,7 @@ const AdminManagement = () => {
     let param: any = {}
     if (statusFilters) param['status'] = statusFilters;
     if (date) param['date'] = dayjs(date).format('YYYY-MM-DD');
-    setFilter({ ...filter, page: 1 , ...param});
+    setFilter({ ...filter, page: 1, ...param });
     setOpenDrawer(false)
   }
 
@@ -312,7 +320,7 @@ const AdminManagement = () => {
         },
         "company": {
           "companyPasswordReset": companyPasswordResetChecked,
-          "viewCompanyDetail": companyChecked
+          "viewCompanyDetail": companyDetailChecked
         },
         "univeristy": {
           "universityPasswordReset": universityPasswordChecked,
@@ -331,7 +339,11 @@ const AdminManagement = () => {
     }
     setOpenC(false);
     action.addAdminSystemAdmin(payloadBackend,
-      () => action.getSubAdminSUPERADMIN({ search: searchItem }, tableParams, setTableParams)
+      () => action.getSubAdminSUPERADMIN(
+        { search: searchItem },
+        tableParams,
+        setTableParams
+      )
     );
   };
 
@@ -401,8 +413,8 @@ const AdminManagement = () => {
                   }))
                 }}
               >
-                <Option value="active">Active</Option>
-                <Option value="inactive">Inactive</Option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
               </Select>
             </div>
           </Form.Item>
@@ -503,7 +515,11 @@ const AdminManagement = () => {
           name="basic"
           initialValues={{ remember: true }}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={(values) => setForm1Data(values)}
+          onFinish={(values) => {
+            setForm1Data(values)
+            setOpen(false);
+            setOpenC(true);
+          }}
           autoComplete="off"
         >
           <Row gutter={10}>
@@ -546,36 +562,27 @@ const AdminManagement = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
-              <Form.Item
-                name="phoneCode"
-                label="Phone Code"
-                initialValue={"+44"}
-              >
-                <CountryCodeSelect />
-              </Form.Item>
+            <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
+            <Form.Item
+              name="phoneNumber"
+              label="Phone Number"
+              className={ phone ? 'phone-input' : 'phone-input-error'}
+              rules={[
+                {
+                  validator: (_, value) => PhoneValidator(phone, value)
+                }
+              ]}
+            >
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry="pk"
+                // placeholder="+92 312-9966188"
+                // disableDialCodePrefill
+                onChange={(phone: string, country: any) => {setPhone(phone)}}
+                />
+                </Form.Item>
             </Col>
-            <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
-              <Form.Item
-                name="phoneNumber"
-                label=" Phone Number"
-                rules={[
-                  { required: true },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message:
-                      "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
-              </Form.Item>
-            </Col>
-            {/* </Row> */}
           </Row>
           <div className="flex justify-end gap-3">
             <ButtonThemeSecondary
@@ -585,10 +592,6 @@ const AdminManagement = () => {
             </ButtonThemeSecondary>
             <ButtonThemePrimary
               htmlType="submit"
-              onClick={() => {
-                setOpen(false);
-                setOpenC(true);
-              }}
             >
               Next
             </ButtonThemePrimary>
@@ -621,7 +624,24 @@ const AdminManagement = () => {
                 <Checkbox
                   checked={allChecked}
                   className="text-base font-normal primary-color"
-                  onChange={(e) => setAllChecked(e.target.checked)}
+                  onChange={(e) => {
+                    setAllChecked(e.target.checked)
+                    setDashboardChecked(e.target.checked)
+                    setStudentChecked(e.target.checked)
+                    setViewStudentDetailsChecked(e.target.checked)
+                    setStudentPasswordResetChecked(e.target.checked)
+                    setCompanyChecked(e.target.checked)
+                    setCompanyDetailChecked(e.target.checked)
+                    setCompanyPasswordResetChecked(e.target.checked)
+                    setUniversityChecked(e.target.checked)
+                    setUniversityPasswordChecked(e.target.checked)
+                    setDelegatesChecked(e.target.checked)
+                    setAgentManagementChecked(e.target.checked)
+                    setIssueManagementChecked(e.target.checked)
+                    setSettingChecked(e.target.checked)
+                    setUserManagementChecked(e.target.checked)
+                  }
+                  }
                 >
                   All
                 </Checkbox>
@@ -630,7 +650,13 @@ const AdminManagement = () => {
                 <Checkbox
                   checked={dashboardChecked}
                   className="text-base font-normal primary-color"
-                  onChange={(e) => setDashboardChecked(e.target.checked)}
+                  onChange={(e) => {
+                    setDashboardChecked(e.target.checked)
+                    if (!e.target.checked) {
+                      setAllChecked(false)
+                    }
+                  }
+                  }
                 >
                   Dashboard
                 </Checkbox>
@@ -639,9 +665,15 @@ const AdminManagement = () => {
                 <div>
                   <Checkbox
                     className="text-base font-normal primary-color"
+                    checked={userManagementChecked}
                     onClick={handleDropdownClick}
-                  // checked={false}
-                  // onChange={(e) => setUserManagementChecked(e.target.checked)}
+                    onChange={(e) => {
+                      setUserManagementChecked(e.target.checked)
+                      if (!e.target.checked) {
+                        setAllChecked(false)
+                      }
+                    }
+                    }
                   >
                     User Management
                     {showDropdown ? <DownOutlined /> : <RightOutlined />}
@@ -653,7 +685,12 @@ const AdminManagement = () => {
                           onClick={handleStudentDropdownClick}
                           className="text-base font-normal primary-color"
                           checked={studentChecked}
-                          onChange={(e) => setStudentChecked(e.target.checked)}
+                          onChange={(e) => {
+                            setStudentChecked(e.target.checked)
+                            if (!e.target.checked) {
+                              setAllChecked(false)
+                            }
+                          }}
                         >
                           Student
                           {showStudentDropDown ? (
@@ -668,8 +705,12 @@ const AdminManagement = () => {
                               <Checkbox
                                 className="text-base font-normal primary-color"
                                 checked={viewStudentDetailsChecked}
-                                onChange={(e) =>
+                                onChange={(e) => {
                                   setViewStudentDetailsChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 View Student details
@@ -679,10 +720,12 @@ const AdminManagement = () => {
                               <Checkbox
                                 className="text-base font-normal primary-color"
                                 checked={studentPasswordResetChecked}
-                                onChange={(e) =>
-                                  setStudentPasswordResetChecked(
-                                    e.target.checked
-                                  )
+                                onChange={(e) => {
+                                  setStudentPasswordResetChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 Student Password Reset
@@ -696,7 +739,12 @@ const AdminManagement = () => {
                           onClick={handleCompanyDropdownClick}
                           className="text-base font-normal primary-color"
                           checked={companyChecked}
-                          onChange={(e) => setCompanyChecked(e.target.checked)}
+                          onChange={(e) => {
+                            setCompanyChecked(e.target.checked)
+                            if (!e.target.checked) {
+                              setAllChecked(false)
+                            }
+                          }}
                         >
                           Company {showCompanyDropDown ? (
                             <DownOutlined />
@@ -709,9 +757,13 @@ const AdminManagement = () => {
                             <div className=" p-2 m-3">
                               <Checkbox
                                 className="text-base font-normal primary-color"
-                                checked={companyChecked}
-                                onChange={(e) =>
-                                  setCompanyChecked(e.target.checked)
+                                checked={companyDetailChecked}
+                                onChange={(e) => {
+                                  setCompanyDetailChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 View Company details
@@ -721,10 +773,12 @@ const AdminManagement = () => {
                               <Checkbox
                                 className="text-base font-normal primary-color"
                                 checked={companyPasswordResetChecked}
-                                onChange={(e) =>
-                                  setCompanyPasswordResetChecked(
-                                    e.target.checked
-                                  )
+                                onChange={(e) => {
+                                  setCompanyPasswordResetChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 Company Password Reset
@@ -738,8 +792,12 @@ const AdminManagement = () => {
                           onClick={handleUniversityDropdownClick}
                           className="text-base font-normal primary-color"
                           checked={universityChecked}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             setUniversityChecked(e.target.checked)
+                            if (!e.target.checked) {
+                              setAllChecked(false)
+                            }
+                          }
                           }
                         >
                           University {showUniversityDropDown ? (
@@ -754,8 +812,12 @@ const AdminManagement = () => {
                               <Checkbox
                                 className="text-base font-normal primary-color"
                                 checked={universityChecked}
-                                onChange={(e) =>
+                                onChange={(e) => {
                                   setUniversityChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 View University Detail
@@ -765,10 +827,12 @@ const AdminManagement = () => {
                               <Checkbox
                                 className="text-base font-normal primary-color"
                                 checked={universityPasswordChecked}
-                                onChange={(e) =>
-                                  setUniversityPasswordChecked(
-                                    e.target.checked
-                                  )
+                                onChange={(e) => {
+                                  setUniversityPasswordChecked(e.target.checked)
+                                  if (!e.target.checked) {
+                                    setAllChecked(false)
+                                  }
+                                }
                                 }
                               >
                                 University Password Reset
@@ -781,8 +845,12 @@ const AdminManagement = () => {
                         <Checkbox
                           className="text-base font-normal primary-color"
                           checked={delegatesChecked}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             setDelegatesChecked(e.target.checked)
+                            if (!e.target.checked) {
+                              setAllChecked(false)
+                            }
+                          }
                           }
                         >
                           Delegates
@@ -796,7 +864,13 @@ const AdminManagement = () => {
                 <Checkbox
                   className="text-base font-normal primary-color"
                   checked={agentManagementChecked}
-                  onChange={(e) => setAgentManagementChecked(e.target.checked)}
+                  onChange={(e) => {
+                    setAgentManagementChecked(e.target.checked)
+                    if (!e.target.checked) {
+                      setAllChecked(false)
+                    }
+                  }
+                  }
                 >
                   Agent Management
                 </Checkbox>
@@ -805,7 +879,13 @@ const AdminManagement = () => {
                 <Checkbox
                   className="text-base font-normal primary-color"
                   checked={issueManagementChecked}
-                  onChange={(e) => setIssueManagementChecked(e.target.checked)}
+                  onChange={(e) => {
+                    setIssueManagementChecked(e.target.checked)
+                    if (!e.target.checked) {
+                      setAllChecked(false)
+                    }
+                  }
+                  }
                 >
                   Issue Management
                 </Checkbox>
@@ -814,7 +894,13 @@ const AdminManagement = () => {
                 <Checkbox
                   className="text-base font-normal primary-color"
                   checked={settingChecked}
-                  onChange={(e) => setSettingChecked(e.target.checked)}
+                  onChange={(e) => {
+                    setSettingChecked(e.target.checked)
+                    if (!e.target.checked) {
+                      setAllChecked(false)
+                    }
+                  }
+                  }
                 >
                   Setting
                 </Checkbox>

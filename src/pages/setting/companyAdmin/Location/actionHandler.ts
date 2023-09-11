@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
 import { settingLocationState, settingInternsState } from "../../../../store";
 import { Notifications } from "../../../../components";
-import { useState } from "react";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -11,6 +11,7 @@ const useCustomHook = () => {
   const [settingLocation, setSettingLocationdata] = useRecoilState(settingLocationState);
   const [internsData, setInternsData] = useRecoilState(settingInternsState);
   const [loading, setLoading] = useState(false);
+
 
   // get setting locations
   const getSettingLocation = async (q: any = null) => {
@@ -23,8 +24,10 @@ const useCustomHook = () => {
 
   // post location
   const postSettingLocation = async (values: any) => {
+    console.log(values);
+
     setLoading(true)
-    const resp = await api.post(LOCATION, values, {
+    await api.post(LOCATION, values, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

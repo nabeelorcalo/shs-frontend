@@ -15,10 +15,13 @@ import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { PhoneInput } from 'react-international-phone';
 import { settingDepartmentState } from "../../../store";
-import { newCountryListState } from "../../../store/CountryList";
+import { newCountryListState, postalCodeState } from "../../../store/CountryList";
 import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
+import usePhoneNumberHook from "../../../helpers/phoneNumber";
+import countryCustomHook from '../../../helpers/countriesList';
 
 const breadcrumbArray = [
   { name: "New Manager" },
@@ -28,14 +31,23 @@ const breadcrumbArray = [
 const AddManager = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
+  const { getCountriesList } = countryCustomHook()
+  const { PhoneValidator } = usePhoneNumberHook();
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState('');
   const departmentData = useRecoilState<any>(settingDepartmentState);
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
   });
 
+  useEffect(() => {
+    getCountriesList()
+  }, [])
+  
   useEffect(() => {
     action.getSettingDepartment(1, "");
   }, []);
@@ -155,40 +167,25 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <div className="flex gap-x-2">
-                <Col xxl={5} xl={5} lg={5} md={5} xs={5}>
-                  <Form.Item
-                    name="phoneCode"
-                    label="Phone Code"
-                    initialValue={"+44"}
-                  >
-                    <CountryCodeSelect />
-                  </Form.Item>
+                <Col xl={24} xxl={24} lg={24} md={24} xs={24}>
+                <Form.Item
+              name="phoneNumber"
+              label=" Phone Number"
+              className={ phone ? 'phone-input' : 'phone-input-error'}
+              rules={[
+                {
+                  validator: (_, value) => PhoneValidator(phone, value)
+                }
+              ]}
+            >
+              <PhoneInput
+                value={phone}
+                className="w-auto"
+                defaultCountry="pk"
+                onChange={(phone: string, country: any) => {setPhone(phone)}}
+                />
+                </Form.Item>
                 </Col>
-                <Col xl={19} xxl={19} lg={19} md={17} xs={17}>
-                  <Form.Item
-                    name="phoneNumber"
-                    label="Phone Number"
-                    rules={[
-                      { required: true },
-                      {
-                        pattern: /^[+\d\s()-]+$/,
-                        message: "Please enter valid phone number  ",
-                      },
-                      {
-                        min: 6,
-                        message:
-                          "Please enter a valid phone number with a minimum of 6 digits",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="Enter Phone Number"
-                      className="text-input-bg-color light-grey-color pl-2 text-base w-full"
-                    />
-                  </Form.Item>
-                </Col>
-              </div>
             </Col>
           </Row>
           <Divider />
@@ -243,7 +240,22 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: true }]}
+                rules={[
+                  {
+                    validator: (_, value) => {
+                      const regex = new RegExp(postalCodes[country]);
+                      if (value === '') {
+                        return Promise.reject('Required Field');
+                      }
+
+                      if (regex.test(value)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject('Invalid postal code');
+                      }
+                    }
+                  }
+                ]}
               >
                 <Input
                   placeholder="Enter Post Code"
@@ -279,6 +291,7 @@ const AddManager = () => {
                   showSearch
                   options={countries}
                   placeholder={"Select Country"}
+                  onChange={(val: any) => setCountry(val)}
                 />
               </Form.Item>
             </Col>

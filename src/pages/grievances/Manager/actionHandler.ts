@@ -50,6 +50,7 @@ const useCustomHook = () => {
     GRIEVANCE_GRIEVANCE_GRAPH,
     GRIEVANCE_REPLY_LIST,
     GRIEVANCE_FEEDBACK,
+    INTERN_ATTENDEES_LIST,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -144,7 +145,9 @@ const useCustomHook = () => {
   };
 
   const getManagerList = (params: any) => {
-    api.get(GET_SINGLE_COMPANY_MANAGER_LIST, params).then(({ data }) => setManagersList(data));
+    api.get(INTERN_ATTENDEES_LIST, params).then(({ data }) => setManagersList(data));
+
+    // api.get(GET_SINGLE_COMPANY_MANAGER_LIST, params).then(({ data }) => setManagersList(data));
   };
 
   const createGrievance = (payload: any, onSuccess?: () => void) => {

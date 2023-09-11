@@ -82,22 +82,10 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width: 600px;
+        width: 64px;
         border-left: 1px solid #D9DBE9;
         padding-left: 20px;
-        @media (max-width: 1400px) {
-          width: 400px;
-        }
-        @media (max-width: 1200px) {
-          max-width: 400px;
-          width: 100%;
-        }
-        @media (max-width: 767px) {
-          padding-left: 15px;
-        }
-        @media (max-width: 600px) {
-          display: none;
-        }
+        
         .ant-select {
           .ant-select-selector {
             &:hover, &:focus {
@@ -146,6 +134,7 @@
           }
         }
         &.expand {
+          width: 600px;
           .ant-input-group-wrapper {
             .ant-input-wrapper {
               .ant-input-affix-wrapper {
@@ -156,6 +145,19 @@
               }
             }
           }
+        }
+        @media (max-width: 1400px) {
+          width: 400px;
+        }
+        @media (max-width: 1200px) {
+          max-width: 400px;
+          width: 100%;
+        }
+        @media (max-width: 767px) {
+          padding-left: 15px;
+        }
+        @media (max-width: 600px) {
+          display: none;
         }
       }
 

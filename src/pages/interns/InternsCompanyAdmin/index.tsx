@@ -271,6 +271,7 @@ const InternsCompanyAdmin = () => {
   const handleCancel = () => {
     setCertificateModal(false);
     setInternCertificate({});
+    setCertificateDetails({ ...certificateDetails, desc: '' })
     form.resetFields();
   };
 
@@ -686,9 +687,6 @@ const InternsCompanyAdmin = () => {
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
                 <ButtonThemeSecondary
-                  // type="default"
-                  // size="middle"
-                  // className="button-default-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setPreviewModal(false);
                   }}
@@ -696,9 +694,6 @@ const InternsCompanyAdmin = () => {
                   Back
                 </ButtonThemeSecondary>
                 <ButtonThemePrimary
-                  // type="primary"
-                  // size="middle"
-                  // className="button-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setSignatureModal(false);
                     setPreviewModal(false);
@@ -757,10 +752,13 @@ const InternsCompanyAdmin = () => {
               </ButtonThemeSecondary>
               <ButtonThemePrimary
                 onClick={() => {
+                  if (certificateDetails.txtSignature !== "" || certificateDetails.imgSignature !== "") {
+                    postSignature(certificateDetails.imgSignature);
+                    setPreviewModal(true);
+                    setPreviewFooter(true);
+
+                  }
                   // setCertificateDetails({ ...certificateDetails, signature: "" });
-                  postSignature(certificateDetails.imgSignature);
-                  setPreviewModal(true);
-                  setPreviewFooter(true);
                 }}
               >
                 Sign

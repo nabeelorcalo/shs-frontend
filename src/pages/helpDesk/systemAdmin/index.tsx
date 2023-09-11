@@ -49,7 +49,7 @@ const priorityOption = [
 
 const statusOptions = [
   { value: "PENDING", label: "Pending" },
-  { value: "INPROGRESS", label: "In Progress" },
+  { value: "IN PROGRESS", label: "In Progress" },
   { value: "RESOLVED", label: "Resolved" },
 ]
 
@@ -569,7 +569,7 @@ const HelpDesk = () => {
           </Row>
         </Col>
       </Row>
-      <LogIssueModal open={open} setOpen={setOpen} id={id} args={removeEmptyValues(filter)} setLoading={setLoading} />
+      {open && <LogIssueModal open={open} setOpen={setOpen} id={id} args={removeEmptyValues(filter)} setLoading={setLoading} />}
     </div>
   );
 };
