@@ -1,15 +1,15 @@
-import api from "../../api";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
-import { Notifications } from "../../components";
-import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
-import dayjs from "dayjs";
-import { currentUserState } from "../../store";
-import csv from "../../helpers/csv";
-import jsPDF from "jspdf";
+import { useRecoilState, useRecoilValue } from "recoil";
 import type { TablePaginationConfig } from "antd/es/table";
+import dayjs from "dayjs";
+import jsPDF from "jspdf";
+import endpoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
+import api from "../../api";
+import csv from "../../helpers/csv";
 import { getUserAvatar } from "../../helpers";
+import { currentUserState } from "../../store";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
 import { filterTypes, hiringList } from "./data";
 
 // end points for api calls

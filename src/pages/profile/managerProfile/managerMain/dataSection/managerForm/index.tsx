@@ -13,19 +13,22 @@ import { PhoneInput } from 'react-international-phone';
 import '../../../styles.scss';
 import { Option } from "antd/es/mentions";
 import useCustomHook from '../../../../actionHandler';
-import { newCountryListState } from '../../../../../../store/CountryList';
+import { newCountryListState, postalCodeState } from '../../../../../../store/CountryList';
+import countryCustomHook from '../../../../../../helpers/countriesList';
 import usePhoneNumberHook from "../../../../../../helpers/phoneNumber";
 const { TextArea } = Input;
 
 const MainForm = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const action = useCustomHook();
   const {
     PhoneValidator,
     countryFlagCode,
     extractCountryCode,
     extractPhoneNumber } = usePhoneNumberHook();
+    const { getCountriesList } = countryCustomHook()
   const [form] = Form.useForm();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
@@ -43,11 +46,16 @@ const MainForm = () => {
     departmentId,
     address,
     title } = useRecoilValue(currentUserState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const flag = countryFlagCode();
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department?.name, id: department?.id };
   });
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
 
   form.setFieldsValue({
     firstName,
@@ -225,7 +233,22 @@ const MainForm = () => {
                   <Form.Item
                     label="Post Code"
                     name="postCode"
-                    rules={[{ required: false }, { type: "string" }]}
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          const regex = new RegExp(postalCodes[countryList]);
+                          if (value === '') {
+                            return Promise.reject('Required Field');
+                          }
+
+                          if (regex.test(value)) {
+                            return Promise.resolve();
+                          } else {
+                            return Promise.reject('Invalid postal code');
+                          }
+                        }
+                      }
+                    ]}
                   >
                     <Input className="input-style" placeholder='Enter Postcode' />
                   </Form.Item>
@@ -258,6 +281,7 @@ const MainForm = () => {
                       showSearch
                       options={countries}
                       placeholder={"Select Country"}
+                      onChange={(val: any) => setCountryList(val)}
                     />
                   </Form.Item>
                 </Col>

@@ -46,7 +46,6 @@ const AddLocation: React.FC = () => {
     openModal: false,
     internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
   });
-
   const [form] = Form.useForm();
   const deselectArray: any = [];
 
@@ -70,11 +69,12 @@ const AddLocation: React.FC = () => {
   }
 
   useEffect(() => {
+    getCountriesList()
+  }, []);
+
+  useEffect(() => {
     getAllInterns()
   }, [states.openModal])
-  useEffect(() => {
-    getCountriesList()
-  })
 
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;

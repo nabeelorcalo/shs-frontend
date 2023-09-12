@@ -19,7 +19,7 @@ import CountryCodeSelect from '../../../../../components/CountryCodeSelect';
 import TextArea from "antd/es/input/TextArea";
 import UserSelector from '../../../../../components/UserSelector';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { newCountryListState } from '../../../../../store/CountryList';
+import { newCountryListState, postalCodeState } from '../../../../../store/CountryList';
 import '../../../style.scss';
 import { currentUserState } from '../../../../../store';
 import { RangePickerProps } from "antd/es/date-picker";
@@ -32,14 +32,18 @@ import { disabledDate } from '../../../../../helpers';
 import { IconDatePicker } from '../../../../../assets/images';
 import { useNavigate } from 'react-router-dom';
 import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
+import countryCustomHook from '../../../../../helpers/countriesList';
 
 const personalInformation = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const action = useCustomHook();
+  const { getCountriesList } = countryCustomHook()
   const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const [form] = Form.useForm();
   const flag = countryFlagCode();
   const { firstName,
@@ -201,7 +205,22 @@ const personalInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                {
+                  validator: (_, value) => {
+                    const regex = new RegExp(postalCodes[countryList]);
+                    if (value === '') {
+                      return Promise.reject('Required Field');
+                    }
+
+                    if (regex.test(value)) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject('Invalid postal code');
+                    }
+                  }
+                }
+              ]}
             >
               <Input placeholder="Enter PostCode" className="input-style" />
             </Form.Item>
@@ -242,6 +261,7 @@ const personalInformation = () => {
                 showSearch
                 options={countries}
                 placeholder={"Select Country"}
+                onChange={(val: any) => setCountryList(val)}
               />
             </Form.Item>
           </Col>

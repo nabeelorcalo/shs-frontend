@@ -153,7 +153,7 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode || "0"} {phoneNumber || "0"}
+              {phoneNumber || "N/A"}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">

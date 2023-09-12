@@ -138,7 +138,7 @@ const EditEvent = (props: any) => {
     const dateFrom = dayjs(selectedEvent?.dateFrom).utc();
     const dateTo = dayjs(selectedEvent?.dateTo).utc();
     if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
-      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+      setWeekDuration(Math.floor(dateTo?.diff(dateFrom, "day") / 7));
     } else {
       setWeekDuration(0);
     }

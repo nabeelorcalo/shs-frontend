@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  AutoComplete,
   Button,
   Col,
   Divider,
@@ -12,7 +11,7 @@ import {
   Typography,
 } from "antd";
 import { Option } from "antd/es/mentions";
-import { CommonDatePicker, DropDown } from "../../../../../components";
+import { CommonDatePicker } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import "../../../style.scss";
 import useCustomHook from "../../../actionHandler";
@@ -24,17 +23,12 @@ import {
   universitySystemAdminState,
 } from "../../../../../store";
 import { CaretDownOutlined } from "@ant-design/icons";
-import PersonalInformation from "../personalInformation/index";
-import UserSelector from "../../../../../components/UserSelector";
-import useCountriesCustomHook from "../../../../../helpers/countriesList";
-import { newCountryListState } from "../../../../../store/CountryList";
-import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
+import { newCountryListState, postalCodeState } from "../../../../../store/CountryList";
 import dayjs from "dayjs";
 import { RangePickerProps } from "antd/es/date-picker";
-import { Disable } from "../../../../../stories/Checkbox.stories";
-import { disabledDate } from "../../../../../helpers/helperFunctions";
 import { PhoneInput } from 'react-international-phone';
 import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
 
 const courses = [
   {
@@ -142,22 +136,24 @@ const GeneralInformation = () => {
   const [tableParams, setTableParams]: any = useRecoilState(systemCompanyPaginationState);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
-  const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
   const action = useCustomHook();
   const { PhoneValidator, countryFlagCode } = usePhoneNumberHook();
   const generalInformation = useRecoilState<any>(studentProfileState);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
-  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
+  const { getCountriesList } = useCountriesCustomHook();
   const [internshipStartValue, setInternshipStartValue] = useState();
   const [internshipEndValue, setInternshipEndValue] = useState();
   const [updateData, setUpdateData] = useState(false);
-  const [generalFlagCode, setGeneralFlagCode] = useState();
-  const [emergencyFlagCode, setEmergencyFlagCode] = useState();
   const [phone, setPhone] = useState('');
+  const [countryList, setCountryList] = useState('');
   const [form] = Form.useForm();
   const flag = countryFlagCode();
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -254,14 +250,12 @@ const GeneralInformation = () => {
         emergencyContactName,
         emergencyContactRelationship,
         emergencyContactPhoneCode,
-        emergencyContactPhoneNumber : emergencyContactPhoneCode+ emergencyContactPhoneNumber,
+        emergencyContactPhoneNumber: emergencyContactPhoneCode + emergencyContactPhoneNumber,
         emergencyContactPostCode,
         emergencyContactAddress,
         emergencyContactCity,
         emergencyContactCountry,
       });
-      // set(phoneCode);
-      // setEmergencyFlagCode(emergencyContactPhoneCode);
     });
   }, [form, updateData]);
   const nameValue = Form.useWatch("name", form);
@@ -294,7 +288,6 @@ const GeneralInformation = () => {
           phoneNumber,
           country,
         });
-        // setGeneralFlagCode(phoneCode);
       }
     }
   }, [nameValue]);
@@ -307,7 +300,7 @@ const GeneralInformation = () => {
         initialValues={{
           phoneNumber: generalInformation[0]?.general?.userUniversity?.university?.phoneCode +
             generalInformation[0]?.general?.userUniversity?.university?.phoneNumber,
-            emergencyContactPhoneNumber:generalInformation[0]?.general?.emergencyContactPhoneCode +
+          emergencyContactPhoneNumber: generalInformation[0]?.general?.emergencyContactPhoneCode +
             generalInformation[0]?.general?.emergencyContactPhoneNumber,
         }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
@@ -362,7 +355,22 @@ const GeneralInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                {
+                  validator: (_, value) => {
+                    const regex = new RegExp(postalCodes[countryList]);
+                    if (value === '') {
+                      return Promise.reject('Required Field');
+                    }
+
+                    if (regex.test(value)) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject('Invalid postal code');
+                    }
+                  }
+                }
+              ]}
             >
               <Input
                 placeholder="Enter Post code"
@@ -407,6 +415,7 @@ const GeneralInformation = () => {
                 showSearch
                 options={countries}
                 placeholder={"Select Country"}
+                onChange={(val: any) => setCountryList(val)}
                 disabled
               />
             </Form.Item>

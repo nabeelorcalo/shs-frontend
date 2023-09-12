@@ -25,13 +25,14 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
-import { newCountryListState } from "../../../store/CountryList";
+import { newCountryListState, postalCodeState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import '../style.scss';
 import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
 import usePhoneNumberHook from "../../../helpers/phoneNumber";
+import countryCustomHook from '../../../helpers/countriesList';
 
 const gender = [
   {
@@ -55,16 +56,23 @@ const ManagerProfile = () => {
   const { id } = useParams();
   const [managerIdData, setManagerIdData] = useState<any>();
   const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState('');
   const action = useCustomHook();
-  const { PhoneValidator,countryFlagCode } = usePhoneNumberHook();
+  const { PhoneValidator, countryFlagCode } = usePhoneNumberHook();
+  const { getCountriesList } = countryCustomHook()
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
+  const postalCodes = useRecoilValue<any>(postalCodeState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
   });
   const [form] = Form.useForm();
   const flag = countryFlagCode();
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
 
   useEffect(() => {
     action.getSettingDepartment(1, "");
@@ -275,7 +283,26 @@ const ManagerProfile = () => {
                   </Typography>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item label="Post Code" name="postCode">
+                  <Form.Item
+                    label="Post Code"
+                    name="postCode"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          const regex = new RegExp(postalCodes[country]);
+                          if (value === '') {
+                            return Promise.reject('Required Field');
+                          }
+    
+                          if (regex.test(value)) {
+                            return Promise.resolve();
+                          } else {
+                            return Promise.reject('Invalid postal code');
+                          }
+                        }
+                      }
+                    ]}
+                  >
                     <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
@@ -295,10 +322,11 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Country" name="country">
-                    <UserSelector
-                      hasSearch
+                    <Select
+                      showSearch
                       options={countries}
                       placeholder="Select Country"
+                      onChange={(val: any) => setCountry(val)}
                     />
                   </Form.Item>
                 </Col>

@@ -60,12 +60,12 @@ const index = (props: any) => {
 
   useEffect(() => {
     let disable: boolean;
-    const startOfMonth = state.currentDate.startOf("month").format("YYYY-MM-DD");
-    const endOfMonth = state.currentDate.endOf("month").format("YYYY-MM-DD");
+    const startOfMonth = state?.currentDate?.startOf("month")?.format("YYYY-MM-DD");
+    const endOfMonth = state?.currentDate?.endOf("month")?.format("YYYY-MM-DD");
 
     getLeaveStats(startOfMonth, endOfMonth).finally(() => setLeaveStatsLoading(false));
 
-    disable = state.currentDate.format("MMMM YYYY") === currentMonthYear ?? false;
+    disable = state?.currentDate?.format("MMMM YYYY") === currentMonthYear ?? false;
     setState((prevState) => ({
       ...prevState,
       isNextBtnDisable: disable,
@@ -86,8 +86,8 @@ const index = (props: any) => {
         ? event.target.name
         : event.target.parentElement.parentElement.name;
 
-    if (btn === "next") newDate = state.currentDate.add(1, "month");
-    else if (btn === "prev") newDate = state.currentDate.subtract(1, "month");
+    if (btn === "next") newDate = state?.currentDate?.add(1, "month");
+    else if (btn === "prev") newDate = state?.currentDate?.subtract(1, "month");
 
     setState((prevState) => ({
       ...prevState,
@@ -195,9 +195,9 @@ const index = (props: any) => {
           setState={setState}
           datePickerClassName="min-w-0"
           onClick={() => changeMonth(event)}
-          month={state.currentDate.format("MMMM YYYY")}
+          month={state?.currentDate?.format("MMMM YYYY")}
           picker="month"
-          isNextBtnDisabled={state.isNextBtnDisable}
+          isNextBtnDisabled={state?.isNextBtnDisable}
         />
       ) : (
         <></>
