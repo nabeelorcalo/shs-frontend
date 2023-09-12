@@ -31,7 +31,7 @@ const PasswordCritera = (props: any) => {
     },
     {
       id: hasSpecial,
-      error: " one special character",
+      error: "one special character",
     },
     {
       id: hasNumber,
