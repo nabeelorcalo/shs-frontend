@@ -1,7 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
-import { IconFacebook, IconYoutube, IconLinkedin, IconInstagram, IconTwitter } from '../../../assets/images'
+import {
+  IconFacebook,
+  IconYoutube,
+  IconLinkedin,
+  IconInstagram,
+  IconTwitter
+} from '../../../assets/images';
 import { Layout } from 'antd';
 const { Footer } = Layout;
 
@@ -32,16 +38,16 @@ const AppFooter: FC<FooterProps> = ({ collapsed, collapsedWidth }) => {
   }
 
   const socialIcons = [
-    { icon: <IconFacebook />, navigateTo: '' },
-    { icon: <IconTwitter />, navigateTo: '' },
-    { icon: <IconInstagram />, navigateTo: '' },
-    { icon: <IconLinkedin />, navigateTo: '' },
-    { icon: <IconYoutube />, navigateTo: '' },
+    { icon: <IconFacebook />, navigateTo: 'https://www.facebook.com/' },
+    { icon: <IconTwitter />, navigateTo: 'https://twitter.com/' },
+    { icon: <IconInstagram />, navigateTo: 'https://www.instagram.com/' },
+    { icon: <IconLinkedin />, navigateTo: 'https://www.linkedin.com/' },
+    { icon: <IconYoutube />, navigateTo: 'https://www.youtube.com/' },
   ]
   const footerMenu = [
-    {title:'Cookies Policy',navigateTo:''},
-    {title:'Privacy Policy',navigateTo:''},
-    {title:'Terms & Conditions',navigateTo:''},
+    {title:'Cookies Policy',navigateTo:'/'},
+    {title:'Privacy Policy',navigateTo:'/'},
+    {title:'Terms & Conditions',navigateTo:'/'},
   ]
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -49,7 +55,7 @@ const AppFooter: FC<FooterProps> = ({ collapsed, collapsedWidth }) => {
     <Footer>
       <ul className='social-links'>
         {socialIcons.map((item: any, index: number) => (
-          <Link to={item.navigateTo} key={index}>
+          <Link to={item.navigateTo} key={index} target={"_blank"}>
             <li>{item.icon}</li>
           </Link>
         ))}
