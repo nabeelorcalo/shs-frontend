@@ -6,7 +6,7 @@ import { getUserAvatar } from "../../helpers";
 import { useId } from "react";
 
 export const CandidateDetails = (props: any) => {
-  const { detailsData, getCompanyManagerList, companyManagerList, handleSelectAssignee, assignee, userData } = props;  
+  const { detailsData, getCompanyManagerList, companyManagerList, handleSelectAssignee, assignee, userData } = props;
   return (
     <div className="details mt-7 ">
       <div className="heading">
@@ -23,7 +23,7 @@ export const CandidateDetails = (props: any) => {
                     placement={"bottomRight"}
                     value={""}
                     items={[
-                      { label: <SearchBar handleChange={getCompanyManagerList?.companyManager} />, key: "search" },
+                      { label: <SearchBar handleChange={getCompanyManagerList} />, key: "search" },
                       {
                         label: (
                           <div className="max-h-[200px] overflow-y-scroll">
