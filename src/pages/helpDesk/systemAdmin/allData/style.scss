@@ -1,3 +1,8 @@
 .helpdesk-tooltip .ant-tooltip-inner {
-  text-align: center !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg{
+    display: none;
+  }
 }

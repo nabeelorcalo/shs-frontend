@@ -18,7 +18,7 @@ import "./style.scss";
 import usePhoneHook from "../../../../../helpers/phoneNumber";
 const { Paragraph } = Typography;
 
-const AddLocation: React.FC = () => {
+const AddLocation: React.FC = () => { 
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const { PhoneValidator, extractCountryCode, extractPhoneNumber, countryFlagCode } = usePhoneHook();
   const { getCountriesList } = countryCustomHook()
@@ -149,7 +149,7 @@ const AddLocation: React.FC = () => {
               >
                 <Input placeholder="Enter Title" className="input-style" />
               </Form.Item>
-            </Col>
+            </Col> 
           </Row>
           <Divider className="mt-1" />
           {/*------------------------ Address----------------------------- */}
@@ -199,7 +199,7 @@ const AddLocation: React.FC = () => {
                 <Form.Item
                   name="street"
                   className="w-full "
-                  required={false}
+                  required={false}   
                   label="Street"
                   rules={[{ required: true }, { type: "string" }]}
                 >
@@ -220,7 +220,7 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     label="Country"
                     required={false}
-                    name="country"
+                    name="country" 
                     rules={[{ required: true }, { type: "string" }]}
                   >
                     <Select
