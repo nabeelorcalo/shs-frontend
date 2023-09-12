@@ -58,6 +58,11 @@
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
+    .ant-btn-default:disabled {
+      background-color: $text-secondary-body-color !important;
+      color: $white-bg-color !important;
+      cursor: pointer !important;
+    }
   }
 
   .recent-card {
@@ -222,9 +227,4 @@
 
 .active {
   background-color: $text-success-placeholder-color !important;
-}
-.ant-btn-default:disabled{
-background-color: $text-secondary-body-color !important;
-color:$white-bg-color !important;
-cursor:  pointer !important;
 }

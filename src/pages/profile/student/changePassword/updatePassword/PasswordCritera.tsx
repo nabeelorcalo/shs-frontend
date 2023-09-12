@@ -15,7 +15,6 @@ const PasswordCritera = (props: any) => {
   const [hasSpecial, setHasSpecial] = useState(false);
   const [hasNumber, setHasNumber] = useState(false);
   const [hasDot, setHasDot] = useState(true);
-  const [hasNoSpace, setHasNoSpace] = useState(true);
 
   const stateArray = [
     {
@@ -42,10 +41,6 @@ const PasswordCritera = (props: any) => {
       id: hasDot,
       error: "cannot include a period",
     },
-    {
-      id: hasNoSpace,
-      error: "cannot include a space",
-    },
   ];
 
   useEffect(() => {
@@ -55,7 +50,6 @@ const PasswordCritera = (props: any) => {
     setHasLower(smallLetter.test(value));
     setHasSpecial(specialChar.test(value));
     setHasNumber(number.test(value));
-    setHasNoSpace(!/\s/.test(value));
   }, [value]);
 
   return (
