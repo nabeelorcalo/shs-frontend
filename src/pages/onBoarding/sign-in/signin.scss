@@ -28,6 +28,12 @@
     background: $text-input-bg-color !important;
   }
 
+  .forgot-password-container{
+   .ant-form-item-control-input{
+    align-items: flex-start;
+   }
+  }
+
   .login-form-button {
     padding: 10px 0px 30px 0px;
     background-color: $primary-bg-color;

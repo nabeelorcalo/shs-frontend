@@ -197,14 +197,14 @@ const SigninForm = (props: any) => {
                 </Checkbox>
               </Form.Item>
             </Col>
-            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24} className="forgot-password-container">
               <Form.Item>
                 <a
                   className="login-form-forgot text-center md:text-end"
                   href="/forgot-password"
                 >
                   <Typography className="primary-color">
-                    Forgot password ?
+                    Forgot password?
                   </Typography>
                 </a>
               </Form.Item>
