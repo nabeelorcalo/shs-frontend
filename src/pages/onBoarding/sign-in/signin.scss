@@ -24,8 +24,18 @@
     padding: 8px 16px 8px 16px !important;
   }
 
+  .ant-picker{
+    background-color: $text-input-bg-color;
+  }
+
   .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
+  }
+
+  .forgot-password-container{
+   .ant-form-item-control-input{
+    align-items: flex-start;
+   }
   }
 
   .login-form-button {
