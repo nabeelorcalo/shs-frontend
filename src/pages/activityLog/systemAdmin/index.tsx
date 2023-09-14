@@ -47,13 +47,13 @@ const ActivityLog = () => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
 
-  
+
   useEffect(() => {
     let args = removeEmptyValues(filter)
     getLogDetails(args, setLoading)
   }, [filter.search, filter.page])
 
-  useEffect(() => {
+  useEffect(() => { 
     return () => {
       resetList();
       resetTableParams();
@@ -66,13 +66,12 @@ const ActivityLog = () => {
     return number < 10 ? `0${number}` : number;
   };
 
+  const csvAllColum = ["ID", "Users", "User Role", "Activity", "Performed By", "Performer Role", "Date & time"]
   const columns = [
     {
       title: "ID",
       dataIndex: "ID",
       key: "key",
-      render: (_: any, data: any, index: any) =>
-        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
     },
     {
       title: "Users",
@@ -114,6 +113,7 @@ const ActivityLog = () => {
     return (
       {
         key: index,
+        ID: formatRowNumber((params?.page - 1) * params?.limit + index + 1),
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,
@@ -256,7 +256,7 @@ const ActivityLog = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { downloadPdfOrCsv(event, columns, logsTableData, "Activity Log Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, logsTableData, "Activity Log Detail") }}
               />
             </Col>
             <Col xs={24}>
