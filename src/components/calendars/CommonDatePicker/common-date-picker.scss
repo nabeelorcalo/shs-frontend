@@ -1,4 +1,4 @@
-@import '../../../scss/_colors.scss';
+@import "../../../scss/_colors.scss";
 
 .common-date-picker-wrapper {
   .ant-picker {
@@ -40,7 +40,6 @@
   }
 }
 
-
 .common-datepicker-popup-wrapper {
   background: $white-bg-color;
   border: 2px solid $text-error-line-color;
@@ -68,10 +67,12 @@
 
     .ant-picker-body {
       padding: 0 !important;
+      width: auto;
 
       .ant-picker-content {
         margin-top: 15px;
-        width: 100%;
+        width: auto;
+        height: auto;
 
         thead {
           tr {
