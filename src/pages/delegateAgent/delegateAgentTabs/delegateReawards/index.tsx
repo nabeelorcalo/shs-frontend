@@ -64,7 +64,7 @@ const Rewards = () => {
               id: item?.id
             })
           }}
-          className="underline decoration-1 text-primary font-normal text-base text-secondary-color cursor-pointer">
+          className="underline decoration-1 text-primary font-normal text-base text-secondary-color text-center cursor-pointer">
           Edit
         </Typography>
       ),
@@ -116,7 +116,7 @@ const Rewards = () => {
 
   return (
     <div className="rewards">
-      <GlobalTable tableData={rewardData[0]} columns={columns} />
+      <GlobalTable tableData={rewardData[0]} columns={columns}  />
       <Modal
         open={open.isOpen}
         closeIcon={
