@@ -116,7 +116,7 @@ const Rewards = () => {
 
   return (
     <div className="rewards">
-      <GlobalTable tableData={rewardData[0]} columns={columns}  />
+      <GlobalTable tableData={rewardData[0]} columns={columns} pagination={false}  />
       <Modal
         open={open.isOpen}
         closeIcon={
