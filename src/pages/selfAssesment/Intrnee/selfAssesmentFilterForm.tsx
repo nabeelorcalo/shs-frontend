@@ -13,14 +13,14 @@ const SelfAssesmentFilterForm = (props: any) => {
   const actions = useCustomHook();
   let itemArray: any = [];
   if (remarkedData.length !== 0) {
-    for(const remark of remarkedData) {
-      const item =  {
+    for (const remark of remarkedData) {
+      const item = {
         key: remark?.remarked?.id,
         value: remark?.remarked?.id,
         label: `${remark?.remarked?.firstName} ${remark?.remarked?.lastName}`,
         // avatar: <LeaveProfileImg/>
       };
-      if(itemArray.length !== remarkedData.length) itemArray.push(item);
+      if (itemArray.length !== remarkedData.length) itemArray.push(item);
     }
   }
 
@@ -28,7 +28,7 @@ const SelfAssesmentFilterForm = (props: any) => {
   const [filter, setFilter] = useRecoilState(filterData);
   const [openMonth, setOpenMonth] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     actions.getSelfAssessments();
   }, [filter])
 
@@ -42,11 +42,11 @@ const SelfAssesmentFilterForm = (props: any) => {
   }
   const getFilters = async () => {
     const values = await form.validateFields();
-    if(values.month) {
+    if (values.month) {
       values.month = dayjs(values?.month).toISOString().split('T')[0];
     }
-    if(filterValu?.status && filterValu.status !== 'Select') {
-      values.status =  filterValu?.status.toLowerCase();
+    if (filterValu?.status && filterValu.status !== 'Select') {
+      values.status = filterValu?.status.toLowerCase();
     }
     const data = pick(values, ['status', 'remarkedBy', 'month']);
     setFilter(data);
@@ -67,10 +67,10 @@ const SelfAssesmentFilterForm = (props: any) => {
             name="remarkedBy"
           >
             <UserSelector
-                placeholder="Select"
-                value={filterValu.remarkedBy}
-                options={itemArray}
-              />
+              placeholder="Select"
+              value={filterValu.remarkedBy}
+              options={itemArray}
+            />
           </Form.Item>
           <Form.Item
             label="Status"
@@ -92,13 +92,14 @@ const SelfAssesmentFilterForm = (props: any) => {
               open={openMonth}
               setOpen={setOpenMonth}
               picker='month'
+              dropdownClassName='max-w-[340px] max-h-[340px]'
             />
           </Form.Item>
           <Form.Item >
             <div className='flex items-center justify-end filter_btn_wrapper'>
               <ButtonThemeSecondary
                 htmlType="button"
-                onClick={()=>{ 
+                onClick={() => {
                   form.resetFields();
                   setFilterValue({ ...filterValu, status: "Select" });
                   setFilter({});
