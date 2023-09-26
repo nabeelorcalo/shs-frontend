@@ -176,7 +176,7 @@ const CompaniesSystemAdmin = () => {
           Notifications({
             icon: <Success />,
             title: "Success",
-            description: "User unblocked successfully",
+            description: "Company unblocked successfully",
             type: "success",
           });
         }}
@@ -212,7 +212,7 @@ const CompaniesSystemAdmin = () => {
           Notifications({
             icon: <Success />,
             title: "Success",
-            description: "User blocked successfully",
+            description: "Company blocked successfully",
             type: "success",
           });
         }}
