@@ -59,6 +59,9 @@ const Intern = () => {
     fetchInternTimeline({ startDate, endDate });
   };
   const handleAdd = () => {
+    if (isRunning) {
+      return;
+    }
     setAddModal(true);
     clearInterval(startTimeRef.current);
     setLapse(0);
