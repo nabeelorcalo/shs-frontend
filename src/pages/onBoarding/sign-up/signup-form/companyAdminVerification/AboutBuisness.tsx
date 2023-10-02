@@ -126,14 +126,14 @@ const AboutBuisness = (props: any) => {
     values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
       "YYYY-MM-DD"
     );
-    console.log("Form Items: ", values);
-    const res = await companyVerification({
+
+    const response = await companyVerification({
       companyNumber: values.registrationNumber,
     });
-
-    setBtnLoading(false);
-
-    if (!res || res == undefined) return;
+    if (!response || response.statusCode != 200) {
+      setBtnLoading(false);
+      return;
+    }
 
     setBtnLoading(false);
     setInitialValues({ ...initialValues, ...values });
