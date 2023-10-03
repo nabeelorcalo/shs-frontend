@@ -42,7 +42,7 @@ const AddLocation: React.FC = () => {
   const [files, setFiles] = useState<any>(null)
   const { makeRegex } = postalCode();
   const [states, setState] = useState<any>({
-    country: "United Kingdom",
+    country: state.country,
     phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
     interns: state?.interns ?? filteredInternsData,
     openModal: false,
