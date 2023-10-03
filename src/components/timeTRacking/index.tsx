@@ -1,15 +1,15 @@
 import { Card } from "antd";
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
-import "./style.scss";
 import Loader from "../Loader";
+import "./style.scss";
 
 export const TimeTracking = (props: any) => {
   const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout, isLoading } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useState(0);
-  const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
+  const [running, setRunning] = useState(false);
   const timerRef: any = useRef();
   const timerCountRef: any = useRef(true);
 
@@ -18,11 +18,16 @@ export const TimeTracking = (props: any) => {
   };
 
   useEffect(() => {
+
+    if (attendenceClockin?.clockIn && !attendenceClockin?.clockOut && !attendenceClockin?.isFinished) {
+      setRunning(true)
+    }
+
     if (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) {
       setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
     }
     // if timer is not running then set time tracked for today
-    if (!running) {
+    if (!running && attendenceClockin?.clockOut && attendenceClockin?.isFinished) {
       setLapse(
         lapseCount(
           attendenceClockin?.totalHoursToday,
@@ -38,14 +43,14 @@ export const TimeTracking = (props: any) => {
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    if (attendenceClockin?.clockIn && running && timerCountRef.current) {
+    if (attendenceClockin?.clockIn && !attendenceClockin?.clockOut && timerCountRef.current) {
       timerCountRef.current = false;
       const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.recentClockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
       const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
-      return setLapse(lapse + totalTimeTrackedToday + totalCurrentLapse - totalClockInLapse);
+      return setLapse(totalTimeTrackedToday + totalCurrentLapse - totalClockInLapse);
     }
   }, [JSON.stringify(attendenceClockin)]);
 
@@ -78,19 +83,6 @@ export const TimeTracking = (props: any) => {
     }
   };
   const formattedDate = dayjs(new Date()).format("dddd, DD MMMM");
-  // presist timer
-  function useLocalStorage(key: any, initialValue: any, parseValue = (v: any) => v) {
-    const [item, setValue] = useState(() => {
-      const value = parseValue(localStorage.getItem(key)) || initialValue;
-      localStorage.setItem(key, value);
-      return value;
-    });
-    const setItem = (newValue: any) => {
-      setValue(newValue);
-      window.localStorage.setItem(key, newValue);
-    };
-    return [item, setItem];
-  }
 
   // update timer count
   useEffect(() => {

@@ -163,8 +163,6 @@ const Detail = (props: any) => {
   };
   modifyTableData();
 
-  const downloadClick = () => { };
-
   const getColorAndIcon = (name: string) => {
     let color: string;
     let icon: any;

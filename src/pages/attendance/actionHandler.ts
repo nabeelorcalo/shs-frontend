@@ -177,10 +177,18 @@ const useCustomHook = () => {
       currentDate: dayjs().toISOString(),
       filterType: filterType?.split(' ').join('_').toUpperCase() || 'THIS_WEEK',
     };
+
     if (filterType && !timeFrameOptions.includes(filterType)) {
+      const [startDateStr, endDateStr] = filterType.split(',').map(str => str.trim());
+      const startDate = new Date(dayjs(startDateStr).toISOString());
+      const endDate = new Date(dayjs(endDateStr).toISOString());
+
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
+
       details.filterType = 'DATE_RANGE';
-      details.startDate = dayjs(filterType.split(',')[0].trim()).toISOString();
-      details.endDate = dayjs(filterType.split(',')[1].trim()).toISOString();
+      details.startDate = startDate.toISOString();
+      details.endDate = endDate.toISOString();
     }
 
     const { data } = await api.get(
