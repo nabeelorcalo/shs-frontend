@@ -29,6 +29,7 @@ import { RangePickerProps } from "antd/es/date-picker";
 import { PhoneInput } from 'react-international-phone';
 import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import postalCode from "../../../../../helpers/postalCodeRegex";
 
 const courses = [
   {
@@ -137,6 +138,7 @@ const GeneralInformation = () => {
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const action = useCustomHook();
+  const { makeRegex } = postalCode();
   const { PhoneValidator, countryFlagCode } = usePhoneNumberHook();
   const generalInformation = useRecoilState<any>(studentProfileState);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
@@ -355,14 +357,16 @@ const GeneralInformation = () => {
             <Form.Item
               label="Post Code"
               name="postCode"
+              
               rules={[
                 {
                   validator: (_, value) => {
-                    const regex = new RegExp(postalCodes[countryList]);
+                    let regex: any = makeRegex(countryList);
+                    regex = new RegExp(regex)
+
                     if (value === '') {
                       return Promise.reject('Required Field');
                     }
-
                     if (regex.test(value)) {
                       return Promise.resolve();
                     } else {

@@ -39,10 +39,8 @@ const useCustomHook = () => {
     UPDATE_MANAGER,
   } = apiEndpints;
 
-  const [studentProfile, setStudentProfile] =
-    useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] =
-    useRecoilState(getImmigrationState);
+  const [studentProfile, setStudentProfile] =useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] =useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
   const [internDocument, setInternDocument] = useRecoilState(

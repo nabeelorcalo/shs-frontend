@@ -24,6 +24,7 @@ import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { newCountryListState, postalCodeState } from "../../../../store/CountryList";
 import usePhoneNumberHook from "../../../../helpers/phoneNumber";
 import { PhoneInput } from 'react-international-phone';
+import postalCode from "../../../../helpers/postalCodeRegex";
 
 const { TextArea } = Input;
 
@@ -36,7 +37,7 @@ const UniversityProfileForm = (props: any) => {
   const { userUniversity } = useRecoilValue(currentUserState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
-  const postalCodes = useRecoilValue<any>(postalCodeState);
+  const { makeRegex } = postalCode();
   const [form] = Form.useForm();
   const flag = countryFlagCode();
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
@@ -158,11 +159,12 @@ const UniversityProfileForm = (props: any) => {
                     rules={[
                       {
                         validator: (_, value) => {
-                          const regex = new RegExp(postalCodes[countryList]);
+                          let regex: any = makeRegex(countryList);
+                          regex = new RegExp(regex)
+
                           if (value === '') {
                             return Promise.reject('Required Field');
                           }
-
                           if (regex.test(value)) {
                             return Promise.resolve();
                           } else {

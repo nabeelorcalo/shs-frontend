@@ -22,6 +22,8 @@ import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../c
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import usePhoneNumberHook from "../../../helpers/phoneNumber";
 import countryCustomHook from '../../../helpers/countriesList';
+// import postalCodeHook from '../../../helpers/postalCodeRegex';
+import postalCode from "../../../helpers/postalCodeRegex";
 
 const breadcrumbArray = [
   { name: "New Manager" },
@@ -33,6 +35,7 @@ const AddManager = () => {
   const action = useCustomHook();
   const { getCountriesList } = countryCustomHook()
   const { PhoneValidator } = usePhoneNumberHook();
+  const { makeRegex } = postalCode();
   const postalCodes = useRecoilValue<any>(postalCodeState);
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false);
@@ -47,7 +50,7 @@ const AddManager = () => {
   useEffect(() => {
     getCountriesList()
   }, [])
-  
+
   useEffect(() => {
     action.getSettingDepartment(1, "");
   }, []);
@@ -167,25 +170,25 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-                <Col xl={24} xxl={24} lg={24} md={24} xs={24}>
+              <Col xl={24} xxl={24} lg={24} md={24} xs={24}>
                 <Form.Item
-              name="phoneNumber"
-              label=" Phone Number"
-              className={ phone ? 'phone-input' : 'phone-input-error'}
-              rules={[
-                {
-                  validator: (_, value) => PhoneValidator(phone, value)
-                }
-              ]}
-            >
-              <PhoneInput
-                value={phone}
-                className="w-auto"
-                defaultCountry="pk"
-                onChange={(phone: string, country: any) => {setPhone(phone)}}
-                />
+                  name="phoneNumber"
+                  label=" Phone Number"
+                  className={phone ? 'phone-input' : 'phone-input-error'}
+                  rules={[
+                    {
+                      validator: (_, value) => PhoneValidator(phone, value)
+                    }
+                  ]}
+                >
+                  <PhoneInput
+                    value={phone}
+                    className="w-auto"
+                    defaultCountry="pk"
+                    onChange={(phone: string, country: any) => { setPhone(phone) }}
+                  />
                 </Form.Item>
-                </Col>
+              </Col>
             </Col>
           </Row>
           <Divider />
@@ -243,11 +246,12 @@ const AddManager = () => {
                 rules={[
                   {
                     validator: (_, value) => {
-                      const regex = new RegExp(postalCodes[country]);
+                      let regex: any = makeRegex(country);
+                      regex = new RegExp(regex)
+                      
                       if (value === '') {
                         return Promise.reject('Required Field');
                       }
-
                       if (regex.test(value)) {
                         return Promise.resolve();
                       } else {
@@ -298,19 +302,19 @@ const AddManager = () => {
           </Row>
           <Form.Item className="flex justify-center sm:justify-end items-center gap-x-3">
             <Space>
-            <ButtonThemeSecondary
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              Cancel
-            </ButtonThemeSecondary>
-            <ButtonThemePrimary
-              htmlType="submit"
-              loading={loading}
-            >
-              Save
-            </ButtonThemePrimary>
+              <ButtonThemeSecondary
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                Cancel
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
+                htmlType="submit"
+                loading={loading}
+              >
+                Save
+              </ButtonThemePrimary>
             </Space>
           </Form.Item>
         </Form>

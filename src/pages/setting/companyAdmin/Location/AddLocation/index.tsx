@@ -16,6 +16,7 @@ import UploadDocument from "../../../../../components/UploadDocument";
 import countryCustomHook from "../../../../../helpers/countriesList"
 import "./style.scss";
 import usePhoneHook from "../../../../../helpers/phoneNumber";
+import postalCode from "../../../../../helpers/postalCodeRegex";
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => { 
@@ -39,6 +40,7 @@ const AddLocation: React.FC = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [files, setFiles] = useState<any>(null)
+  const { makeRegex } = postalCode();
   const [states, setState] = useState<any>({
     country: "United Kingdom",
     phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
@@ -168,12 +170,12 @@ const AddLocation: React.FC = () => {
                 rules={[
                   {
                     validator: (_, value) => {
-                      const regex = new RegExp(postalCodes[states.country]);
+                      let regex: any = makeRegex(states.country);
+                      regex = new RegExp(regex)
 
                       if (value === '') {
                         return Promise.reject('Required Field');
                       }
-
                       if (regex.test(value)) {
                         return Promise.resolve();
                       } else {

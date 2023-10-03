@@ -24,6 +24,7 @@ import { currentUserState } from '../../../../../store';
 import CustomAutoComplete from '../../../../../components/CustomAutoComplete';
 import useCustomHook from '../../../actionHandler';
 import { useNavigate } from 'react-router-dom';
+import postalCode from '../../../../../helpers/postalCodeRegex';
 
 const businessTypeOptions: any[] = [
   {
@@ -82,6 +83,7 @@ const businessSectorOptions: any[] = [
 const companyInformation = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { makeRegex } = postalCode();
   const { getCompanyList, updateCompanyProfile } = useCustomHook();
   const [country, setCountry] = useState('');
   const [userState, setUserState] = useRecoilState(currentUserState)
@@ -278,11 +280,12 @@ const companyInformation = () => {
               rules={[
                 {
                   validator: (_, value) => {
-                    const regex = new RegExp(postalCodes[country]);
+                    let regex: any = makeRegex(country);
+                    regex = new RegExp(regex)
+                    
                     if (value === '') {
                       return Promise.reject('Required Field');
                     }
-
                     if (regex.test(value)) {
                       return Promise.resolve();
                     } else {

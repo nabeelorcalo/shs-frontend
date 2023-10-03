@@ -33,12 +33,14 @@ import { IconDatePicker } from '../../../../../assets/images';
 import { useNavigate } from 'react-router-dom';
 import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
 import countryCustomHook from '../../../../../helpers/countriesList';
+import postalCode from '../../../../../helpers/postalCodeRegex';
 
 const personalInformation = () => {
   const navigate = useNavigate();
   const [phone, setPhone] = useState('');
   const [countryList, setCountryList] = useState('');
   const action = useCustomHook();
+  const { makeRegex } = postalCode();
   const { getCountriesList } = countryCustomHook()
   const { PhoneValidator, countryFlagCode, extractCountryCode, extractPhoneNumber } = usePhoneNumberHook();
   const [userState, setUserState] = useRecoilState(currentUserState)
@@ -208,11 +210,12 @@ const personalInformation = () => {
               rules={[
                 {
                   validator: (_, value) => {
-                    const regex = new RegExp(postalCodes[countryList]);
+                    let regex: any = makeRegex(countryList);
+                    regex = new RegExp(regex)
+
                     if (value === '') {
                       return Promise.reject('Required Field');
                     }
-
                     if (regex.test(value)) {
                       return Promise.resolve();
                     } else {

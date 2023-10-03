@@ -33,6 +33,7 @@ import { CalendarIcon } from "../../../../../assets/images";
 import usePhoneNumberHook from "../../../../../helpers/phoneNumber";
 import { PhoneInput } from 'react-international-phone';
 import dayjs from "dayjs";
+import postalCode from "../../../../../helpers/postalCodeRegex";
 
 const visa = [
   {
@@ -63,6 +64,7 @@ const PersonalInformation = () => {
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const postalCodes = useRecoilValue<any>(postalCodeState);
+  const { makeRegex } = postalCode();
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
@@ -318,11 +320,12 @@ const PersonalInformation = () => {
               rules={[
                 {
                   validator: (_, value) => {
-                    const regex = new RegExp(postalCodes[countryList]);
+                    let regex: any = makeRegex(countryList);
+                    regex = new RegExp(regex)
+
                     if (value === '') {
                       return Promise.reject('Required Field');
                     }
-
                     if (regex.test(value)) {
                       return Promise.resolve();
                     } else {

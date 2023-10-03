@@ -16,6 +16,7 @@ import useCustomHook from '../../../../actionHandler';
 import { newCountryListState, postalCodeState } from '../../../../../../store/CountryList';
 import countryCustomHook from '../../../../../../helpers/countriesList';
 import usePhoneNumberHook from "../../../../../../helpers/phoneNumber";
+import postalCode from '../../../../../../helpers/postalCodeRegex';
 const { TextArea } = Input;
 
 const MainForm = () => {
@@ -23,6 +24,7 @@ const MainForm = () => {
   const [phone, setPhone] = useState('');
   const [countryList, setCountryList] = useState('');
   const action = useCustomHook();
+  const { makeRegex } = postalCode();
   const {
     PhoneValidator,
     countryFlagCode,
@@ -236,11 +238,12 @@ const MainForm = () => {
                     rules={[
                       {
                         validator: (_, value) => {
-                          const regex = new RegExp(postalCodes[countryList]);
+                          let regex: any = makeRegex(countryList);
+                          regex = new RegExp(regex)
+
                           if (value === '') {
                             return Promise.reject('Required Field');
                           }
-
                           if (regex.test(value)) {
                             return Promise.resolve();
                           } else {

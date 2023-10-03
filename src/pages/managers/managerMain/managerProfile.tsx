@@ -33,6 +33,7 @@ import { PhoneInput } from 'react-international-phone';
 const { Option } = Select;
 import usePhoneNumberHook from "../../../helpers/phoneNumber";
 import countryCustomHook from '../../../helpers/countriesList';
+import postalCode from "../../../helpers/postalCodeRegex";
 
 const gender = [
   {
@@ -57,6 +58,7 @@ const ManagerProfile = () => {
   const [managerIdData, setManagerIdData] = useState<any>();
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
+  const { makeRegex } = postalCode();
   const action = useCustomHook();
   const { PhoneValidator, countryFlagCode } = usePhoneNumberHook();
   const { getCountriesList } = countryCustomHook()
@@ -155,7 +157,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                 {managerIdData?.companyManager?.phoneNumber}
+                  {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
@@ -289,11 +291,12 @@ const ManagerProfile = () => {
                     rules={[
                       {
                         validator: (_, value) => {
-                          const regex = new RegExp(postalCodes[country]);
+                          let regex: any = makeRegex(country);
+                          regex = new RegExp(regex)
+
                           if (value === '') {
                             return Promise.reject('Required Field');
                           }
-    
                           if (regex.test(value)) {
                             return Promise.resolve();
                           } else {

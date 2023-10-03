@@ -14,7 +14,6 @@ import {
   EllipsisOutlined,
   CloseCircleFilled,
 } from "@ant-design/icons";
-
 import video from "../../../../assets/images/profile/student/Vedio.svg";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, studentProfileState } from "../../../../store";
