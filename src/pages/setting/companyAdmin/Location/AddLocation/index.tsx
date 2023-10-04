@@ -43,6 +43,7 @@ const AddLocation: React.FC = () => {
   const { makeRegex } = postalCode();
   const [states, setState] = useState<any>({
     country: state?.country || 'United Kingdom',
+    
     phone: state?.name && `${state?.phoneCode} ${state?.phoneNumber}`,
     interns: state?.interns ?? filteredInternsData,
     openModal: false,
