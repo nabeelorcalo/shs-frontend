@@ -67,6 +67,7 @@ export const ROUTES_CONSTANTS: any = {
   FORGOT_PASSWORD: "forgot-password",
   RESET_LINK_SENT: "reset-link-sent",
   CREATE_PASSWORD: "create-password",
+  Under_REVIEW_SCREEN:"under-review-screen",
   SUCCESSFULLY_CREATE_PASSWORD: "create-password-success",
   VERIFICATION_LINK_SENT: "verification-link-sent",
   VERIFICATION_LINK_SUCCESS: "verification-link-success",

@@ -111,9 +111,7 @@ const SelectUserType = (props: any) => {
           <Button
             onClick={() => {
               navigate(
-                `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${userTypeRole}${
-                  referenceToken ? referenceToken : ""
-                }`,
+                `/${ROUTES_CONSTANTS.Under_REVIEW_SCREEN}`
                 
               );
               

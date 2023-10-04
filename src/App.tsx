@@ -32,6 +32,7 @@ function App() {
       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
     } else if (
       !accessToken &&
+      // pathname !=  `/${ROUTES_CONSTANTS.Under_REVIEW_SCREEN}`
       pathname != `/${ROUTES_CONSTANTS.SIGNUP}` &&
       pathname != `/${ROUTES_CONSTANTS.VERIFICATION_STEPS}` &&
       pathname != `/${ROUTES_CONSTANTS.FORGOT_PASSWORD}` &&

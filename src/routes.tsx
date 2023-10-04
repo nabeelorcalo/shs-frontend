@@ -41,6 +41,7 @@ import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
 import ViewReciept from "./pages/delegateAgent/delegateAgentTabs/delegateWithDrawlRequest/viewReciept";
+import UnderReviewScreen from "./pages/onBoarding/sign-up/underReviewScreen";
 // import CompanyDetailPage from "./pages/companies/companiesSystemAdmin/detailPage";
 
 // Lazy load required end
@@ -381,6 +382,11 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
     path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
     element: <ResetLink />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.Under_REVIEW_SCREEN}`,
+    path: `${ROUTES_CONSTANTS.Under_REVIEW_SCREEN}`,
+    element: <UnderReviewScreen />,
   },
   // ------Remove below demo components------
   // Demo Graphs
